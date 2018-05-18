@@ -46,5 +46,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project_Json\Project_Json.csproj">
+      <Project>{a93dc17f-ed50-45a1-8ad8-c47bb20ec5c7}</Project>
+      <Name>Project_Json</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
