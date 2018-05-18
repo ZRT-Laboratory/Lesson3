@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Linq;
 
 namespace Lesson3
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] clArguments)
         {
-            Console.WriteLine("New lesson 3 command line.");
+            clArguments.ToList().ForEach(cl => Console.WriteLine("{0}", cl));
         }
     }
 }
