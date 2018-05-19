@@ -42,7 +42,7 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        public void InValidArguments()
+        public void InvalidArguments()
         {
             //arrange
             string[] argArray = new string[] { "json", _testFilePath, "xml", _testFilePath };
