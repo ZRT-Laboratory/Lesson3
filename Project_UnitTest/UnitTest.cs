@@ -75,7 +75,7 @@ namespace Project_UnitTest
         public void JsonArgument_WithTooManyArguments()
         {
             //assert
-            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePathFromArgument(new string[] { "-json", _testFilePath + _validJSONFile, "-test1", _testFilePath }, "-json")));
+            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePathFromArgument(new string[] { "-json", _testFilePath + _validJSONFile, "-test1", _testFilePath, "-test2", _testFilePath }, "-json")));
         }
 
         [TestMethod]
