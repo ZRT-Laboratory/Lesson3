@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Project_Xml;
 
 namespace Project_UnitTest
 {
@@ -53,5 +54,63 @@ namespace Project_UnitTest
             //assert
             Assert.IsFalse(valid);
         }
+
+        #region  ' Xml Tests '
+
+        [TestMethod]
+        public void XmlArgument_WithValidAbsolutePath()
+        {
+            //assert
+            Assert.IsTrue(File.Exists(new ArgumentXml().GetFilePathFromArgument(new string[] { "-xml", _testFilePath + _validXMLFile }, "-xml")));
+        }
+
+        [TestMethod]
+        public void XmlArgument_WithValidRelativePath()
+        {
+            //assert
+            Assert.IsTrue(Directory.Exists(new ArgumentXml().GetFilePathFromArgument(new string[] { "-xml", _testFilePath }, "-xml")));
+        }
+
+        [TestMethod]
+        public void XmlArgument_WithTooManyArguments()
+        {
+            //assert
+            Assert.IsTrue(File.Exists(new ArgumentXml().GetFilePathFromArgument(new string[] { "-xml", _testFilePath + _validXMLFile, "-test1", _testFilePath, "-test2", _testFilePath }, "-xml")));
+        }
+
+        [TestMethod]
+        public void XmlArgument_WithInvalidArgument()
+        {
+            //assert
+            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentXml().GetFilePathFromArgument(new string[] { "xml", _testFilePath }, "-xml")));
+        }
+
+        [TestMethod]
+        public void XmlArgument_WithMissingArgument()
+        {
+            //assert
+            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentXml().GetFilePathFromArgument(Array.Empty<string>(), "-xml")));
+        }
+
+        [TestMethod]
+        public void XmlFile_WithValidFormat()
+        {
+            //act
+            var xmlValueItems = new ArgumentXml().GetValuesFromFile(_testFilePath + _validXMLFile);
+
+            //assert
+            Assert.IsTrue(xmlValueItems.Length > 0);
+            CollectionAssert.AllItemsAreNotNull(xmlValueItems, "Null values in XML.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "No Exception was thrown.")]
+        public void XmlFile_WithInvalidFormat()
+        {
+            //act
+            var xmlValueItems = new ArgumentXml().GetValuesFromFile(_testFilePath + _invalidJSONFile);
+        }
+
+        #endregion
     }
 }
