@@ -96,11 +96,11 @@ namespace Project_UnitTest
         public void JsonFile_WithValidFormat()
         {
             //act
-            var jsonValueItems = new ArgumentJson().GetValuesFromFile(_testFilePath + _validJSONFile);
+            var jsonItems = new ArgumentJson().GetValuesFromFile(_testFilePath + _validJSONFile);
 
             //assert
-            Assert.IsTrue(jsonValueItems.Length > 0);
-            CollectionAssert.AllItemsAreNotNull(jsonValueItems, "Null values in XML.");
+            Assert.IsTrue(jsonItems.Length > 0);
+            CollectionAssert.AllItemsAreNotNull(jsonItems, "Null values in XML.");
         }
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace Project_UnitTest
         public void JsonFile_WithInvalidFormat()
         {
             //act
-            var xmlValueItems = new ArgumentJson().GetValuesFromFile(_testFilePath + _invalidJSONFile);
+            var xmlItems = new ArgumentJson().GetValuesFromFile(_testFilePath + _invalidJSONFile);
         }
 
         #endregion
