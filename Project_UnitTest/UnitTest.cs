@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Project_UnitTest
 {
@@ -26,32 +24,6 @@ namespace Project_UnitTest
             Assert.IsTrue(File.Exists(_testFilePath + _invalidJSONFile));
             Assert.IsTrue(File.Exists(_testFilePath + _validXMLFile));
             Assert.IsTrue(File.Exists(_testFilePath + _invalidXMLFile));
-        }
-
-        [TestMethod]
-        public void ValidArguments()
-        {
-            //arrange
-            string[] argArray = new string[] { "-json", _testFilePath, "-xml", _testFilePath };
-
-            //act
-            bool valid = argArray.Any(a => String.Compare(a, "-json", true) == 0) || argArray.Any(a => String.Compare(a, "-xml", true) == 0);
-
-            //assert
-            Assert.IsTrue(valid);
-        }
-
-        [TestMethod]
-        public void InvalidArguments()
-        {
-            //arrange
-            string[] argArray = new string[] { "json", _testFilePath, "xml", _testFilePath };
-
-            //act
-            bool valid = argArray.Any(a => String.Compare(a, "-json", true) == 0) || argArray.Any(a => String.Compare(a, "-xml", true) == 0);
-
-            //assert
-            Assert.IsFalse(valid);
         }
     }
 }
