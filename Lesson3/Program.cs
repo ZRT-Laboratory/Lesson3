@@ -1,36 +1,42 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Lesson3
+namespace Project_Console
 {
     class Program
     {
         static void Main(string[] clArguments)
         {
             bool validArguments = clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0);
-            bool validJsonPath = ValidFilePath(clArguments, "-json");
-            bool validXmlPath = ValidFilePath(clArguments, "-xml");
 
-            if (validArguments && (validJsonPath || validXmlPath))
+            if (validArguments)
             {
-                Console.WriteLine("Valid arguments.");
+                List<IFileHandling> fileHandlings = new List<IFileHandling>() { new ArgumentJson(), new ArgumentXml() };
+
+                List<string> jsonItems = new List<string>();
+                List<string> xmlItems = new List<string>();
+
+                foreach(IFileHandling ifh in fileHandlings)
+                {
+                    if (ifh is ArgumentJson)
+                    {
+                        jsonItems = ifh.GetParsedData(clArguments).ToList();
+                    }
+                    else if (ifh is ArgumentXml)
+                    {
+                        xmlItems = ifh.GetParsedData(clArguments).ToList();
+                    }
+                }
+
+                List<string> allItems = jsonItems.Concat(xmlItems).OrderBy(i => i).ToList();
+                allItems.ForEach(i => Console.WriteLine("{0}", i));
             }
             else
             {
                 Console.WriteLine("Invalid arguments.");
             }
 
-            bool ValidFilePath(string[] arguments, string clNameValue)
-            {
-                string filePath = clArguments.SkipWhile(a => string.Compare(a, clNameValue, true) != 0)
-                    .Skip(1)
-                    .DefaultIfEmpty("")
-                    .First()
-                    .ToString();
-
-                return Path.IsPathRooted(filePath);
-            }
         }
     }
 }

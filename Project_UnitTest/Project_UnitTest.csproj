@@ -68,6 +68,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lesson3\Project_Console.csproj">
+      <Project>{10C44A3A-C95A-4E9D-9DB4-35D07D997A88}</Project>
+      <Name>Project_Console</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
