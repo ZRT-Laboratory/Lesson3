@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Project_Json;
+using System;
+using System.IO;
 
 namespace Project_UnitTest
 {
@@ -30,73 +29,41 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        public void ValidArguments()
+        public void Arguments_WithValidArguments()
         {
             //arrange
-            string[] argArray = new string[] { "-json", _testFilePath, "-xml", _testFilePath };
-
-            //act
-            bool valid = argArray.Any(a => String.Compare(a, "-json", true) == 0) || argArray.Any(a => String.Compare(a, "-xml", true) == 0);
+            string[] argArray = new string[] { "-json", _testFilePath + _validJSONFile, "-xml", _testFilePath + _validXMLFile };
 
             //assert
-            Assert.IsTrue(valid);
+            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePath(argArray, "-json")));
         }
 
         [TestMethod]
-        public void InvalidArguments()
-        {
-            //arrange
-            string[] argArray = new string[] { "json", _testFilePath, "xml", _testFilePath };
-
-            //act
-            bool valid = argArray.Any(a => String.Compare(a, "-json", true) == 0) || argArray.Any(a => String.Compare(a, "-xml", true) == 0);
-
-            //assert
-            Assert.IsFalse(valid);
-        }
-
-        #region  ' Json Tests '
-
-        [TestMethod]
-        public void JsonArgument_WithValidAbsolutePath()
+        public void Arguments_WithTooManyArguments()
         {
             //assert
-            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePathFromArgument(new string[] { "-json", _testFilePath + _validJSONFile }, "-json")));
+            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePath(new string[] { "-json", _testFilePath + _validJSONFile, "-test1", _testFilePath, "-test2", _testFilePath }, "-json")));
         }
 
         [TestMethod]
-        public void JsonArgument_WithValidRelativePath()
+        public void Arguments_WithInvalidArgument()
         {
             //assert
-            Assert.IsTrue(Directory.Exists(new ArgumentJson().GetFilePathFromArgument(new string[] { "-json", _testFilePath }, "-json")));
+            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentJson().GetFilePath(new string[] { "json", _testFilePath }, "-json")));
         }
 
         [TestMethod]
-        public void JsonArgument_WithTooManyArguments()
+        public void Arguments_WithMissingArgument()
         {
             //assert
-            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePathFromArgument(new string[] { "-json", _testFilePath + _validJSONFile, "-test1", _testFilePath, "-test2", _testFilePath }, "-json")));
+            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentJson().GetFilePath(Array.Empty<string>(), "-json")));
         }
 
         [TestMethod]
-        public void JsonArgument_WithInvalidArgument()
-        {
-            //assert
-            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentJson().GetFilePathFromArgument(new string[] { "json", _testFilePath }, "-json")));
-        }
-
-        [TestMethod]
-        public void JsonArgument_WithMissingArgument()
-        {
-            //assert
-            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentJson().GetFilePathFromArgument(Array.Empty<string>(), "-json")));
-        }
-
-        [TestMethod]
-        public void JsonFile_WithValidFormat()
+        public void File_WithValidFormat()
         {
             //act
-            var jsonItems = new ArgumentJson().GetValuesFromFile(_testFilePath + _validJSONFile);
+            var jsonItems = new ArgumentJson().GetFileData(_testFilePath + _validJSONFile);
 
             //assert
             Assert.IsTrue(jsonItems.Length > 0);
@@ -105,12 +72,10 @@ namespace Project_UnitTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception), "No Exception was thrown.")]
-        public void JsonFile_WithInvalidFormat()
+        public void File_WithInvalidFormat()
         {
             //act
-            var xmlItems = new ArgumentJson().GetValuesFromFile(_testFilePath + _invalidJSONFile);
+            var xmlItems = new ArgumentJson().GetFileData(_testFilePath + _invalidJSONFile);
         }
-
-        #endregion
     }
 }

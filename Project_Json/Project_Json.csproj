@@ -43,13 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentJson.cs" />
+    <Compile Include="IFileHandling.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Project_Interface\Project_Interface.csproj">
-      <Project>{ba1afd02-52ee-4446-a7d2-48e5748780d5}</Project>
-      <Name>Project_Interface</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

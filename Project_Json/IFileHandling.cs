@@ -1,11 +1,11 @@
 ﻿namespace Project_Json
 {
-    interface IFileHandling
+    public interface IFileHandling
     {
-        string GetFilePathFromArgument(string[] clArguments, string clArgumentNameValue);
+        string[] GetFileData(string filePath);
 
-        string GetFileNameFromDialog(string filePath, string title);
+        string GetFilePath(string[] clArguments, string clArgumentNameValue);
 
-        string[] GetValuesFromFile(string fileName);
+        string[] GetParsedData(string[] clArguments);
     }
 }
