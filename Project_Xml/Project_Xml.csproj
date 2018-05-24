@@ -42,13 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentXml.cs" />
+    <Compile Include="IFileHandling.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Project_Interface\Project_Interface.csproj">
-      <Project>{4b15e8c2-da0c-4c1b-baed-b08b742b359e}</Project>
-      <Name>Project_Interface</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

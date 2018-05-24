@@ -1,31 +1,39 @@
-﻿using Project_Interface;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Project_Xml
 {
     public class ArgumentXml : IFileHandling
     {
-        public ArgumentXml()
-        { }
+        #region  ' IFileHandling  '
 
-        public ArgumentXml(string[] clArguments)
+        public string[] GetFileData(string filePath)
         {
-            ValueItems = Array.Empty<string>();
+            string[] xmlItems = Array.Empty<string>();
 
-            string filePath = GetFilePathFromArgument(clArguments, "-xml");
-            if (!string.IsNullOrEmpty(filePath))
+            try
             {
-                ValueItems = GetValuesFromFile(GetFileNameFromDialog(filePath, "Select XML File"));
+                if (File.Exists(filePath))
+                {
+                    //load xml document
+                    XDocument doc = XDocument.Load(filePath);
+
+                    //create a list of xml values
+                    xmlItems = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : "No Value").ToArray();
+                }
             }
+            catch
+            {
+                throw new XmlException("Error with XML file.");
+            }
+
+            return xmlItems;
         }
 
-        public string[] ValueItems { get; }
-
-        public string GetFilePathFromArgument(string[] clArguments, string clNameValue)
+        public string GetFilePath(string[] clArguments, string clNameValue)
         {
             string filePath = clArguments.SkipWhile(a => string.Compare(a, clNameValue, true) != 0)
                 .Skip(1)
@@ -36,33 +44,8 @@ namespace Project_Xml
             return filePath;
         }
 
-        public string GetFileNameFromDialog(string filePath, string title)
-        {
-            OpenFileDialog fd = new OpenFileDialog() { InitialDirectory = Path.GetDirectoryName(filePath), FileName = Path.GetFileName(filePath), Multiselect = false, Title = title };
-            return fd.ShowDialog() == DialogResult.OK ? fd.FileName : null;
-        }
+        public string[] GetParsedData(string[] clArguments) => GetFileData(GetFilePath(clArguments, "-xml")).ToArray();
 
-        public string[] GetValuesFromFile(string fileName)
-        {
-            string[] xmlItems = Array.Empty<string>();
-
-            try
-            {
-                if (!string.IsNullOrEmpty(fileName))
-                {
-                    //load xml document
-                    XDocument doc = XDocument.Load(fileName);
-
-                    //create a list of xml values
-                    xmlItems = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : "No Value").ToArray();
-                }
-            }
-            catch
-            {
-                throw new Exception("Error with XML file.");
-            }
-
-            return xmlItems;
-        }
+        #endregion
     }
 }
