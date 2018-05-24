@@ -32,24 +32,10 @@ namespace Project_UnitTest
         }        
 
         [TestMethod]
-        public void Arguments_WithValidAbsolutePath()
+        public void Arguments_WithValidArguments()
         {
             //assert
-            Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml", _testFilePath + _validXMLFile }, "-xml")));
-        }
-
-        [TestMethod]
-        public void Arguments_WithValidRelativePath()
-        {
-            //assert
-            Assert.IsTrue(Directory.Exists(_ifhXml.GetFilePath(new string[] { "-xml", _testFilePath }, "-xml")));
-        }
-
-        [TestMethod]
-        public void Arguments_WithTooManyArguments()
-        {
-            //assert
-            Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml", _testFilePath + _validXMLFile, "-test1", _testFilePath, "-test2", _testFilePath }, "-xml")));
+            Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml", _testFilePath + _validXMLFile, "-json", _testFilePath + _validJSONFile }, "-xml")));
         }
 
         [TestMethod]
@@ -60,6 +46,13 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
+        public void Arguments_WithTooManyArguments()
+        {
+            //assert
+            Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml", _testFilePath + _validXMLFile, "-test1", _testFilePath, "-test2", _testFilePath }, "-xml")));
+        }
+
+        [TestMethod]
         public void Arguments_WithMissingArgument()
         {
             //assert
@@ -67,7 +60,7 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        public void File_WithValidFormat()
+        public void File_WithValidXMLFormat()
         {
             //act
             var items = _ifhXml.GetFileData(_testFilePath + _validXMLFile);
@@ -79,7 +72,7 @@ namespace Project_UnitTest
 
         [TestMethod]
         [ExpectedException(typeof(XmlException), "No Exception was thrown.")]
-        public void File_WithInvalidFormat()
+        public void File_WithInvalidXMLFormat()
         {
             //act
             var items = _ifhXml.GetFileData(_testFilePath + _invalidJSONFile);
