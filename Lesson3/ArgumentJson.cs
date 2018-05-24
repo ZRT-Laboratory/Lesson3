@@ -28,7 +28,7 @@ namespace Project_Console
             }
             catch
             {
-                throw new Exception("Error with JSON file.");
+                throw new JsonSerializationException("Error with JSON file.");
             }
 
             return jsonItems;
@@ -45,10 +45,7 @@ namespace Project_Console
             return filePath;
         }
 
-        public string[] GetParsedData(string [] clArguments)
-        {
-            return GetFileData(GetFilePath(clArguments, "-json")).ToArray();
-        }
+        public string[] GetParsedData(string [] clArguments)=> GetFileData(GetFilePath(clArguments, "-json")).ToArray();
 
         #endregion
     }

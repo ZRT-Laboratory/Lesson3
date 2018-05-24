@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using Project_Console;
 using System;
 using System.IO;
+using System.Xml;
 
 namespace Project_UnitTest
 {
@@ -13,6 +15,9 @@ namespace Project_UnitTest
         const string _invalidJSONFile = "JSON_InvalidFormat.json";
         const string _validXMLFile = "XML_ValidFormat.xml";
         const string _invalidXMLFile = "XML_InvalidFormat.xml";
+
+        IFileHandling _ifhJson = new ArgumentJson();
+        IFileHandling _ifhXml = new ArgumentXml();
 
         public UnitTest()
         {
@@ -35,8 +40,8 @@ namespace Project_UnitTest
             string[] argArray = new string[] { "-json", _testFilePath + _validJSONFile, "-xml", _testFilePath + _validXMLFile };
 
             //assert
-            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePath(argArray, "-json")));
-            Assert.IsTrue(File.Exists(new ArgumentXml().GetFilePath(argArray, "-xml")));
+            Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(argArray, "-json")));
+            Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(argArray, "-xml")));
         }
 
         [TestMethod]
@@ -46,8 +51,8 @@ namespace Project_UnitTest
             string[] argArray = new string[] { "-json", _testFilePath + _validJSONFile, "-xml", _testFilePath + _validXMLFile, "-test", _testFilePath };
 
             //assert
-            Assert.IsTrue(File.Exists(new ArgumentJson().GetFilePath(argArray, "-json")));
-            Assert.IsTrue(File.Exists(new ArgumentXml().GetFilePath(argArray, "-xml")));
+            Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(argArray, "-json")));
+            Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(argArray, "-xml")));
         }
 
         [TestMethod]
@@ -57,8 +62,8 @@ namespace Project_UnitTest
             string[] argArray = new string[] { "json", _testFilePath, "xml", _testFilePath };
 
             //act
-            bool invalidArguments = string.IsNullOrEmpty(new ArgumentJson().GetFilePath(argArray, "-json")) &&
-                                    string.IsNullOrEmpty(new ArgumentXml().GetFilePath(argArray, "-xml"));
+            bool invalidArguments = string.IsNullOrEmpty(_ifhJson.GetFilePath(argArray, "-json")) &&
+                                    string.IsNullOrEmpty(_ifhXml.GetFilePath(argArray, "-xml"));
 
             //assert
             Assert.IsTrue(invalidArguments);
@@ -68,22 +73,22 @@ namespace Project_UnitTest
         public void Arguments_WithInvalidJSONArgument()
         {
             //assert
-            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentJson().GetFilePath(new string[] { "json", _testFilePath }, "-json")));
+            Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _testFilePath }, "-json")));
         }
 
         [TestMethod]
         public void Arguments_WithInvalidXMLArgument()
         {
             //assert
-            Assert.IsTrue(string.IsNullOrEmpty(new ArgumentXml().GetFilePath(new string[] { "xml", _testFilePath }, "-xml")));
+            Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(new string[] { "xml", _testFilePath }, "-xml")));
         }
 
         [TestMethod]
         public void Arguments_WithMissingArguments()
         {
             //act
-            bool missingArguments = string.IsNullOrEmpty(new ArgumentJson().GetFilePath(Array.Empty<string>(), "-json")) &&
-                                    string.IsNullOrEmpty(new ArgumentXml().GetFilePath(Array.Empty<string>(), "-xml"));
+            bool missingArguments = string.IsNullOrEmpty(_ifhJson.GetFilePath(Array.Empty<string>(), "-json")) &&
+                                    string.IsNullOrEmpty(_ifhXml.GetFilePath(Array.Empty<string>(), "-xml"));
 
             //assert
             Assert.IsTrue(missingArguments);
@@ -93,7 +98,7 @@ namespace Project_UnitTest
         public void File_WithValidXMLFormat()
         {
             //act
-            var xmlValueItems = new ArgumentXml().GetFileData(_testFilePath + _validXMLFile);
+            var xmlValueItems = _ifhXml.GetFileData(_testFilePath + _validXMLFile);
 
             //assert
             Assert.IsTrue(xmlValueItems.Length > 0);
@@ -101,18 +106,18 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "No Exception was thrown.")]
+        [ExpectedException(typeof(XmlException), "No Exception was thrown.")]
         public void File_WithInvalidXMLFormat()
         {
             //act
-            var xmlValueItems = new ArgumentXml().GetFileData(_testFilePath + _invalidXMLFile);
+            var xmlValueItems = _ifhXml.GetFileData(_testFilePath + _invalidXMLFile);
         }
 
         [TestMethod]
         public void File_WithValidJSONFormat()
         {
             //act
-            var jsonValueItems = new ArgumentJson().GetFileData(_testFilePath + _validJSONFile);
+            var jsonValueItems = _ifhJson.GetFileData(_testFilePath + _validJSONFile);
 
             //assert
             Assert.IsTrue(jsonValueItems.Length > 0);
@@ -120,11 +125,11 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "No Exception was thrown.")]
+        [ExpectedException(typeof(JsonSerializationException), "No Exception was thrown.")]
         public void File_WithInvalidJSONFormat()
         {
             //act
-            var xmlValueItems = new ArgumentJson().GetFileData(_testFilePath + _invalidJSONFile);
+            var xmlValueItems = _ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
         }
     }
 }

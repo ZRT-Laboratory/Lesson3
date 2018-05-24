@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Project_Console
@@ -26,7 +27,7 @@ namespace Project_Console
             }
             catch
             {
-                throw new Exception("Error with XML file.");
+                throw new XmlException("Error with XML file.");
             }
 
             return xmlItems;
@@ -43,10 +44,7 @@ namespace Project_Console
             return filePath;
         }
 
-        public string[] GetParsedData(string[] clArguments)
-        {
-            return GetFileData(GetFilePath(clArguments, "-xml")).ToArray();
-        }
+        public string[] GetParsedData(string[] clArguments) => GetFileData(GetFilePath(clArguments, "-xml")).ToArray();
 
         #endregion
     }
