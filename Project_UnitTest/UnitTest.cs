@@ -98,11 +98,11 @@ namespace Project_UnitTest
         public void File_WithValidXMLFormat()
         {
             //act
-            var xmlValueItems = _ifhXml.GetFileData(_testFilePath + _validXMLFile);
+            var items = _ifhXml.GetFileData(_testFilePath + _validXMLFile);
 
             //assert
-            Assert.IsTrue(xmlValueItems.Length > 0);
-            CollectionAssert.AllItemsAreNotNull(xmlValueItems, "Null values in XML.");
+            Assert.IsTrue(items.Length > 0);
+            CollectionAssert.AllItemsAreNotNull(items, "Null values in XML.");
         }
 
         [TestMethod]
@@ -110,18 +110,18 @@ namespace Project_UnitTest
         public void File_WithInvalidXMLFormat()
         {
             //act
-            var xmlValueItems = _ifhXml.GetFileData(_testFilePath + _invalidXMLFile);
+            var items = _ifhXml.GetFileData(_testFilePath + _invalidXMLFile);
         }
 
         [TestMethod]
         public void File_WithValidJSONFormat()
         {
             //act
-            var jsonValueItems = _ifhJson.GetFileData(_testFilePath + _validJSONFile);
+            var items = _ifhJson.GetFileData(_testFilePath + _validJSONFile);
 
             //assert
-            Assert.IsTrue(jsonValueItems.Length > 0);
-            CollectionAssert.AllItemsAreNotNull(jsonValueItems, "Null values in XML.");
+            Assert.IsTrue(items.Length > 0);
+            CollectionAssert.AllItemsAreNotNull(items, "Null values in XML.");
         }
 
         [TestMethod]
@@ -129,7 +129,7 @@ namespace Project_UnitTest
         public void File_WithInvalidJSONFormat()
         {
             //act
-            var xmlValueItems = _ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
+            var items = _ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
         }
     }
 }
