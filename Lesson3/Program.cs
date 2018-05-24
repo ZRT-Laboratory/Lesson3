@@ -15,9 +15,16 @@ namespace Project_Console
                 IFileHandling ifhJson = new ArgumentJson();
                 IFileHandling ifhXml = new ArgumentXml();
 
-                List<string> allItems = ifhJson.GetParsedData(clArguments).Concat(ifhXml.GetParsedData(clArguments)).OrderBy(ifh => ifh).ToList();
+                //merge the lists then order them so nulls are on the bottom
+                List<string> allItems = ifhJson.GetParsedData(clArguments)
+                    .Concat(ifhXml.GetParsedData(clArguments))
+                    .OrderBy(ifh => ifh)
+                    .ToList()
+                    .OrderBy(ai => ai == null)
+                    .ToList();
 
-                allItems.ForEach(i => Console.WriteLine("{0}", i));
+                //display the list and replace nulls with No Value
+                allItems.ForEach(i => Console.WriteLine("{0}", i ?? "No Value"));
             }
             else
             {
