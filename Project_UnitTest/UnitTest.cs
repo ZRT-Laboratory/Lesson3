@@ -60,7 +60,7 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        public void File_WithValidFormat()
+        public void File_WithValidJSONFormat()
         {
             //act
             var items = _ifhJson.GetFileData(_testFilePath + _validJSONFile);
@@ -72,7 +72,7 @@ namespace Project_UnitTest
 
         [TestMethod]
         [ExpectedException(typeof(JsonSerializationException), "No Exception was thrown.")]
-        public void File_WithInvalidFormat()
+        public void File_WithInvalidJSONFormat()
         {
             //act
             var items = _ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
