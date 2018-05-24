@@ -63,11 +63,11 @@ namespace Project_UnitTest
         public void File_WithValidFormat()
         {
             //act
-            var jsonItems = ifhJson.GetFileData(_testFilePath + _validJSONFile);
+            var items = ifhJson.GetFileData(_testFilePath + _validJSONFile);
 
             //assert
-            Assert.IsTrue(jsonItems.Length > 0);
-            CollectionAssert.AllItemsAreNotNull(jsonItems, "Null values in XML.");
+            Assert.IsTrue(items.Length > 0);
+            CollectionAssert.AllItemsAreNotNull(items, "Null values in XML.");
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace Project_UnitTest
         public void File_WithInvalidFormat()
         {
             //act
-            var xmlItems = ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
+            var items = ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
         }
     }
 }
