@@ -10,11 +10,12 @@ namespace Project_UnitTest
     [TestClass]
     public class UnitTest
     {
-        string _testFilePath = string.Empty;
         const string _validJSONFile = "JSON_ValidFormat.json";
         const string _invalidJSONFile = "JSON_InvalidFormat.json";
         const string _validXMLFile = "XML_ValidFormat.xml";
         const string _invalidXMLFile = "XML_InvalidFormat.xml";
+
+        string _testFilePath = string.Empty;
 
         IFileHandling _ifhJson = new ArgumentJson();
         IFileHandling _ifhXml = new ArgumentXml();
@@ -40,8 +41,21 @@ namespace Project_UnitTest
             string[] argArray = new string[] { "-json", _testFilePath + _validJSONFile, "-xml", _testFilePath + _validXMLFile };
 
             //assert
-            Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(argArray, "-json")));
-            Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(argArray, "-xml")));
+            Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(argArray, "-json")) && File.Exists(_ifhXml.GetFilePath(argArray, "-xml")));
+        }
+
+        [TestMethod]
+        public void Arguments_WithInvalidArguments()
+        {
+            //arrange
+            string[] argArray = new string[] { "json", _testFilePath + _validJSONFile, "xml", _testFilePath + _validXMLFile };
+
+            //act
+            bool invalidArguments = string.IsNullOrEmpty(_ifhJson.GetFilePath(argArray, "-json")) &&
+                                    string.IsNullOrEmpty(_ifhXml.GetFilePath(argArray, "-xml"));
+
+            //assert
+            Assert.IsTrue(invalidArguments);
         }
 
         [TestMethod]
@@ -56,31 +70,17 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        public void Arguments_WithInvalidArguments()
-        {
-            //arrange
-            string[] argArray = new string[] { "json", _testFilePath, "xml", _testFilePath };
-
-            //act
-            bool invalidArguments = string.IsNullOrEmpty(_ifhJson.GetFilePath(argArray, "-json")) &&
-                                    string.IsNullOrEmpty(_ifhXml.GetFilePath(argArray, "-xml"));
-
-            //assert
-            Assert.IsTrue(invalidArguments);
-        }
-
-        [TestMethod]
         public void Arguments_WithInvalidJSONArgument()
         {
             //assert
-            Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _testFilePath }, "-json")));
+            Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _testFilePath + _validJSONFile }, "-json")));
         }
 
         [TestMethod]
         public void Arguments_WithInvalidXMLArgument()
         {
             //assert
-            Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(new string[] { "xml", _testFilePath }, "-xml")));
+            Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(new string[] { "xml", _testFilePath + _validXMLFile }, "-xml")));
         }
 
         [TestMethod]

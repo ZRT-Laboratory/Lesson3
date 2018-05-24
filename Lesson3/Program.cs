@@ -12,24 +12,11 @@ namespace Project_Console
 
             if (validArguments)
             {
-                List<IFileHandling> fileHandlings = new List<IFileHandling>() { new ArgumentJson(), new ArgumentXml() };
+                IFileHandling ifhJson = new ArgumentJson();
+                IFileHandling ifhXml = new ArgumentXml();
 
-                List<string> jsonItems = new List<string>();
-                List<string> xmlItems = new List<string>();
+                List<string> allItems = ifhJson.GetParsedData(clArguments).Concat(ifhXml.GetParsedData(clArguments)).OrderBy(ifh => ifh).ToList();
 
-                foreach(IFileHandling ifh in fileHandlings)
-                {
-                    if (ifh is ArgumentJson)
-                    {
-                        jsonItems = ifh.GetParsedData(clArguments).ToList();
-                    }
-                    else if (ifh is ArgumentXml)
-                    {
-                        xmlItems = ifh.GetParsedData(clArguments).ToList();
-                    }
-                }
-
-                List<string> allItems = jsonItems.Concat(xmlItems).OrderBy(i => i).ToList();
                 allItems.ForEach(i => Console.WriteLine("{0}", i));
             }
             else
