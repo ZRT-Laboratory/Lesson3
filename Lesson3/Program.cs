@@ -14,7 +14,7 @@ namespace Project_Console
 
             if (validArguments)
             {
-                IFileHandling fileHandling = new ArgumentJson();
+                IFileHandling fileHandling = new ArgumentJson();                
 
                 List<string> allItems = fileHandling.GetParsedData(clArguments).OrderBy(fh => fh).ToList();
                 allItems.ForEach(i => Console.WriteLine("{0}", i));

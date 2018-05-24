@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using Project_Json;
 using System;
 using System.IO;
@@ -71,7 +72,7 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "No Exception was thrown.")]
+        [ExpectedException(typeof(JsonSerializationException), "No Exception was thrown.")]
         public void File_WithInvalidFormat()
         {
             //act
