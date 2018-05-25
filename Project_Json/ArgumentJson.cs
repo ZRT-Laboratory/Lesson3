@@ -11,7 +11,7 @@ namespace Project_Json
     {
         #region  ' IFileHandling  '
 
-        public string[] GetFileData(string filePath)
+        public string[] ParseFileData(string filePath)
         {
             string[] jsonItems = Array.Empty<string>();
 
@@ -45,7 +45,7 @@ namespace Project_Json
             return filePath;
         }
 
-        public string[] GetParsedData(string[] clArguments) => GetFileData(GetFilePath(clArguments, "-json")).ToArray();
+        public string[] GetParsedData(string[] clArguments) => ParseFileData(GetFilePath(clArguments, "-json")).ToArray();
 
         #endregion
     }

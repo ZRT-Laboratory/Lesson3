@@ -44,21 +44,11 @@ namespace Project_UnitTest
         public void Arguments_WithMissingArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(Array.Empty<string>(), "-json")));
 
         [TestMethod]
-        public void File_WithValidJSONFormat()
-        {
-            //act
-            var items = _ifhJson.GetFileData(_testFilePath + _validJSONFile);
-
-            //assert
-            Assert.IsTrue(items.Length > 0);
-        }
+        public void File_WithValidJSONFormat() => Assert.IsTrue(_ifhJson.ParseFileData(_testFilePath + _validJSONFile).Length > 0);
 
         [TestMethod]
         [ExpectedException(typeof(JsonSerializationException), "No Exception was thrown.")]
-        public void File_WithInvalidJSONFormat()
-        {
-            //act
-            var items = _ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
-        }
+        public void File_WithInvalidJSONFormat() => _ifhJson.ParseFileData(_testFilePath + _invalidJSONFile);
+
     }
 }
