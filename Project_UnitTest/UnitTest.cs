@@ -9,11 +9,12 @@ namespace Project_UnitTest
     [TestClass]
     public class UnitTest
     {
-        string _testFilePath = string.Empty;
         const string _validJSONFile = "JSON_ValidFormat.json";
         const string _invalidJSONFile = "JSON_InvalidFormat.json";
         const string _validXMLFile = "XML_ValidFormat.xml";
         const string _invalidXMLFile = "XML_InvalidFormat.xml";
+
+        string _testFilePath = string.Empty;
 
         IFileHandling _ifhJson = new ArgumentJson();
 
@@ -47,8 +48,6 @@ namespace Project_UnitTest
         public void File_WithValidJSONFormat() => Assert.IsTrue(_ifhJson.ParseFileData(_testFilePath + _validJSONFile).Length > 0);
 
         [TestMethod]
-        [ExpectedException(typeof(JsonSerializationException), "No Exception was thrown.")]
-        public void File_WithInvalidJSONFormat() => _ifhJson.ParseFileData(_testFilePath + _invalidJSONFile);
-
+        public void File_WithInvalidJSONFormat() => Assert.ThrowsException<JsonSerializationException>(() => _ifhJson.ParseFileData(_testFilePath + _invalidJSONFile));
     }
 }
