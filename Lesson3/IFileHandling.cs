@@ -2,7 +2,7 @@
 {
     public interface IFileHandling
     {
-        string[] GetFileData(string filePath);
+        string[] ParseFileData(string filePath);
 
         string GetFilePath(string[] clArguments, string clArgumentNameValue);
 

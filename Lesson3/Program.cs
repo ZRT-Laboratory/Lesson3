@@ -15,7 +15,7 @@ namespace Project_Console
                 IFileHandling ifhJson = new ArgumentJson();
                 IFileHandling ifhXml = new ArgumentXml();
 
-                //merge the lists then order them so nulls are on the bottom
+                ////create a merged list then order it so nulls are last in the list
                 List<string> allItems = ifhJson.GetParsedData(clArguments)
                     .Concat(ifhXml.GetParsedData(clArguments))
                     .OrderBy(ifh => ifh)

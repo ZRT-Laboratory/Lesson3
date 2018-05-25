@@ -87,39 +87,15 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        public void File_WithValidXMLFormat()
-        {
-            //act
-            var items = _ifhXml.GetFileData(_testFilePath + _validXMLFile);
-
-            //assert
-            Assert.IsTrue(items.Length > 0);
-        }
+        public void File_WithValidXMLFormat() => Assert.IsTrue(_ifhXml.ParseFileData(_testFilePath + _validXMLFile).Length > 0);
 
         [TestMethod]
-        [ExpectedException(typeof(XmlException), "No Exception was thrown.")]
-        public void File_WithInvalidXMLFormat()
-        {
-            //act
-            var items = _ifhXml.GetFileData(_testFilePath + _invalidXMLFile);
-        }
+        public void File_WithInvalidXMLFormat() => Assert.ThrowsException<XmlException>(() => _ifhXml.ParseFileData(_testFilePath + _invalidXMLFile));
 
         [TestMethod]
-        public void File_WithValidJSONFormat()
-        {
-            //act
-            var items = _ifhJson.GetFileData(_testFilePath + _validJSONFile);
-
-            //assert
-            Assert.IsTrue(items.Length > 0);
-        }
+        public void File_WithValidJSONFormat() => Assert.IsTrue(_ifhJson.ParseFileData(_testFilePath + _validJSONFile).Length > 0);
 
         [TestMethod]
-        [ExpectedException(typeof(JsonSerializationException), "No Exception was thrown.")]
-        public void File_WithInvalidJSONFormat()
-        {
-            //act
-            var items = _ifhJson.GetFileData(_testFilePath + _invalidJSONFile);
-        }
+        public void File_WithInvalidJSONFormat() => Assert.ThrowsException<JsonSerializationException>(() => _ifhJson.ParseFileData(_testFilePath + _invalidJSONFile));
     }
 }
