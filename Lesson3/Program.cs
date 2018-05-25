@@ -16,8 +16,15 @@ namespace Project_Console
             {
                 IFileHandling ifhXml =  new ArgumentXml();
 
-                List<string> allItems = ifhXml.GetParsedData(clArguments).OrderBy(ifh => ifh).ToList();
-                allItems.ForEach(i => Console.WriteLine("{0}", i));
+                //create a list then order it so nulls are last in the list
+                List<string> allItems = ifhXml.GetParsedData(clArguments)
+                    .OrderBy(ifh => ifh)
+                    .ToList()
+                    .OrderBy(ai => ai == null)
+                    .ToList();
+
+                //display the list and replace nulls with No Value
+                allItems.ForEach(i => Console.WriteLine("{0}", i ?? "No Value"));
             }
             else
             {

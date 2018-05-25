@@ -67,7 +67,6 @@ namespace Project_UnitTest
 
             //assert
             Assert.IsTrue(items.Length > 0);
-            CollectionAssert.AllItemsAreNotNull(items, "Null values in XML.");
         }
 
         [TestMethod]

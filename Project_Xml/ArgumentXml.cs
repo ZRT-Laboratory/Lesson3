@@ -22,7 +22,7 @@ namespace Project_Xml
                     XDocument doc = XDocument.Load(filePath);
 
                     //create a list of xml values
-                    xmlItems = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : "No Value").ToArray();
+                    xmlItems = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : null).ToArray();
                 }
             }
             catch
