@@ -14,10 +14,17 @@ namespace Project_Console
 
             if (validArguments)
             {
-                IFileHandling ifhJson = new ArgumentJson();                
+                IFileHandling ifhJson = new ArgumentJson();
 
-                List<string> allItems = ifhJson.GetParsedData(clArguments).OrderBy(fh => fh).ToList();
-                allItems.ForEach(i => Console.WriteLine("{0}", i));
+                //create a list then order it so nulls are last in the list
+                List<string> allItems = ifhJson.GetParsedData(clArguments)
+                    .OrderBy(fh => fh)
+                    .ToList()
+                    .OrderBy(ai => ai == null)
+                    .ToList();
+
+                //display the list and replace nulls with No Value
+                allItems.ForEach(i => Console.WriteLine("{0}", i ?? "No Value"));
             }
             else
             {
