@@ -45,7 +45,7 @@ namespace Project_Console
             return filePath;
         }
 
-        public string[] GetParsedData(string [] clArguments)=> GetFileData(GetFilePath(clArguments, "-json")).ToArray();
+        public string[] GetParsedData(string [] clArguments) => GetFileData(GetFilePath(clArguments, "-json")).ToArray();
 
         #endregion
     }

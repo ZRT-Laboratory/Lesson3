@@ -70,18 +70,10 @@ namespace Project_UnitTest
         }
 
         [TestMethod]
-        public void Arguments_WithInvalidJSONArgument()
-        {
-            //assert
-            Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _testFilePath + _validJSONFile }, "-json")));
-        }
+        public void Arguments_WithInvalidJSONArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _testFilePath + _validJSONFile }, "-json")));
 
         [TestMethod]
-        public void Arguments_WithInvalidXMLArgument()
-        {
-            //assert
-            Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(new string[] { "xml", _testFilePath + _validXMLFile }, "-xml")));
-        }
+        public void Arguments_WithInvalidXMLArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(new string[] { "xml", _testFilePath + _validXMLFile }, "-xml")));
 
         [TestMethod]
         public void Arguments_WithMissingArguments()
