@@ -44,21 +44,10 @@ namespace Project_UnitTest
         public void Arguments_WithMissingArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(Array.Empty<string>(), "-xml")));
 
         [TestMethod]
-        public void File_WithValidXMLFormat()
-        {
-            //act
-            var items = _ifhXml.GetFileData(_testFilePath + _validXMLFile);
-
-            //assert
-            Assert.IsTrue(items.Length > 0);
-        }
+        public void File_WithValidXMLFormat() => Assert.IsTrue(_ifhXml.ParseFileData(_testFilePath + _validXMLFile).Length > 0);
 
         [TestMethod]
         [ExpectedException(typeof(XmlException), "No Exception was thrown.")]
-        public void File_WithInvalidXMLFormat()
-        {
-            //act
-            var items = _ifhXml.GetFileData(_testFilePath + _invalidJSONFile);
-        }
+        public void File_WithInvalidXMLFormat() => _ifhXml.ParseFileData(_testFilePath + _invalidJSONFile);
     }
 }

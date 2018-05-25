@@ -10,7 +10,7 @@ namespace Project_Xml
     {
         #region  ' IFileHandling  '
 
-        public string[] GetFileData(string filePath)
+        public string[] ParseFileData(string filePath)
         {
             string[] xmlItems = Array.Empty<string>();
 
@@ -44,7 +44,7 @@ namespace Project_Xml
             return filePath;
         }
 
-        public string[] GetParsedData(string[] clArguments) => GetFileData(GetFilePath(clArguments, "-xml")).ToArray();
+        public string[] GetParsedData(string[] clArguments) => ParseFileData(GetFilePath(clArguments, "-xml")).ToArray();
 
         #endregion
     }
