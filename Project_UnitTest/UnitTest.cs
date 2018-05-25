@@ -9,11 +9,12 @@ namespace Project_UnitTest
     [TestClass]
     public class UnitTest
     {
-        string _testFilePath = string.Empty;
         const string _validJSONFile = "JSON_ValidFormat.json";
         const string _invalidJSONFile = "JSON_InvalidFormat.json";
         const string _validXMLFile = "XML_ValidFormat.xml";
         const string _invalidXMLFile = "XML_InvalidFormat.xml";
+
+        string _testFilePath = string.Empty;
 
         IFileHandling _ifhXml = new ArgumentXml();
 
@@ -47,7 +48,6 @@ namespace Project_UnitTest
         public void File_WithValidXMLFormat() => Assert.IsTrue(_ifhXml.ParseFileData(_testFilePath + _validXMLFile).Length > 0);
 
         [TestMethod]
-        [ExpectedException(typeof(XmlException), "No Exception was thrown.")]
-        public void File_WithInvalidXMLFormat() => _ifhXml.ParseFileData(_testFilePath + _invalidJSONFile);
+        public void File_WithInvalidXMLFormat() => Assert.ThrowsException<XmlException>(() => _ifhXml.ParseFileData(_testFilePath + _invalidJSONFile));
     }
 }
