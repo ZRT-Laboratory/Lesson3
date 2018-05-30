@@ -43,8 +43,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArgumentJson.cs" />
-    <Compile Include="ArgumentXml.cs" />
+    <Compile Include="Argument.cs" />
     <Compile Include="IFileHandling.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

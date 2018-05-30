@@ -1,11 +1,11 @@
-﻿namespace Project_Console
+﻿using System.Collections.Generic;
+
+namespace Project_Console
 {
     public interface IFileHandling
     {
-        string[] ParseFileData(string filePath);
+        void DisplayData(List<string> valueItems);
 
         string GetFilePath(string[] clArguments, string clArgumentNameValue);
-
-        string[] GetParsedData(string[] clArguments);
     }
 }

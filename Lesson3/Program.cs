@@ -8,29 +8,21 @@ namespace Project_Console
     {
         static void Main(string[] clArguments)
         {
-            bool validArguments = clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0);
+            IFileHandling ifh = new Argument();
+            List<string> allItems = new List<string>();
 
-            if (validArguments)
+            if (clArguments.Any(a => String.Compare(a, "-json", true) == 0))
             {
-                IFileHandling ifhJson = new ArgumentJson();
-                IFileHandling ifhXml = new ArgumentXml();
-
-                ////create a merged list then order it so nulls are last in the list
-                List<string> allItems = ifhJson.GetParsedData(clArguments)
-                    .Concat(ifhXml.GetParsedData(clArguments))
-                    .OrderBy(ifh => ifh)
-                    .ToList()
-                    .OrderBy(ai => ai == null)
-                    .ToList();
-
-                //display the list and replace nulls with No Value
-                allItems.ForEach(i => Console.WriteLine("{0}", i ?? "No Value"));
-            }
-            else
-            {
-                Console.WriteLine("Invalid arguments.");
+                allItems.Add(ifh.GetFilePath(clArguments, "-json"));
             }
 
+            if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
+            {
+                allItems.Add(ifh.GetFilePath(clArguments, "-xml"));
+            }
+
+            allItems.OrderBy(vi => vi);
+            ifh.DisplayData(allItems);
         }
     }
 }
