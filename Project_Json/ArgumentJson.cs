@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Project_Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,8 +10,6 @@ namespace Project_Json
 {
     public class ArgumentJson : IFileHandling
     {
-        #region  ' IFileHandling  '
-
         public string[] ParseFileData(string filePath)
         {
             string[] jsonItems = Array.Empty<string>();
@@ -33,6 +32,14 @@ namespace Project_Json
 
             return jsonItems;
         }
+
+        #region  ' IFileHandling  '
+
+        public void DisplayData(List<string> valueItems)
+        {
+            //display the list and replace nulls with No Value
+            valueItems.ForEach(vi => Console.WriteLine("{0}", vi ?? "No Value"));
+        }        
 
         public string GetFilePath(string[] clArguments, string clNameValue)
         {
