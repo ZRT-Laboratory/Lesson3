@@ -4,7 +4,7 @@ namespace Project_Console
 {
     public interface IFileHandling
     {
-        void DisplayData(List<string> valueItems);
+        void DisplayData(List<string> parsedData);
 
         string GetFilePath(string[] clArguments, string clArgumentNameValue);
     }

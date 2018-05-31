@@ -9,20 +9,19 @@ namespace Project_Console
         static void Main(string[] clArguments)
         {
             IFileHandling ifh = new Argument();
-            List<string> allItems = new List<string>();
+            List<string> parsedData = new List<string>();
 
             if (clArguments.Any(a => String.Compare(a, "-json", true) == 0))
             {
-                allItems.Add(ifh.GetFilePath(clArguments, "-json"));
+                parsedData.Add(ifh.GetFilePath(clArguments, "-json"));
             }
 
             if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                allItems.Add(ifh.GetFilePath(clArguments, "-xml"));
+                parsedData.Add(ifh.GetFilePath(clArguments, "-xml"));
             }
 
-            allItems.OrderBy(vi => vi);
-            ifh.DisplayData(allItems);
+            ifh.DisplayData(parsedData);
         }
     }
 }

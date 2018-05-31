@@ -8,9 +8,9 @@ namespace Project_Console
     {
         #region  ' IFileHandling '
 
-        public void DisplayData(List<string> valueItems)
+        public void DisplayData(List<string> parsedData)
         {
-            valueItems.ForEach(vi => Console.WriteLine("{0}", vi));
+            parsedData.ForEach(vi => Console.WriteLine("{0}", vi));
         }
 
         public string GetFilePath(string[] clArguments, string clNameValue)
