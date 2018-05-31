@@ -40,13 +40,13 @@ namespace Project_UnitTest
         public void Arguments_WithValidArguments() => Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile }, "-json")));
 
         [TestMethod]
-        public void Arguments_WithInvalidArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _validJSONFile }, "-json")));
+        public void Arguments_WithInvalidArgument() => Assert.IsFalse(File.Exists(_ifhJson.GetFilePath(new string[] { "json", _validJSONFile }, "-json")));
 
         [TestMethod]
         public void Arguments_WithTooManyArguments() => Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(new string[] { "-json", _validJSONFile, "-test1", _validJSONFile, "-test2", _validJSONFile }, "-json")));
 
         [TestMethod]
-        public void Arguments_WithMissingArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(Array.Empty<string>(), "-json")));
+        public void Arguments_WithMissingArgument() => Assert.IsFalse(File.Exists(_ifhJson.GetFilePath(Array.Empty<string>(), "-json")));
 
         [TestMethod]
         public void File_WithValidJSONFormat() => Assert.IsTrue(_ifhJson.GetParsedData(new string[] { "-json", _validJSONFile }).Length > 0);
