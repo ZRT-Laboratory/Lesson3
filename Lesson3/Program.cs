@@ -16,14 +16,14 @@ namespace Project_Console
                 IFileHandling ifh = new ArgumentJson();
 
                 //create a list then order it so nulls are last in the list
-                List<string> allItems = ifh.GetParsedData(clArguments)
+                List<string> parsedData = ifh.GetParsedData(clArguments)
                     .OrderBy(fh => fh)
                     .ToList()
                     .OrderBy(ai => ai == null)
                     .ToList();
 
                 //display the list and replace nulls with No Value
-                ifh.DisplayData(allItems);
+                ifh.DisplayData(parsedData);
             }
             else
             {

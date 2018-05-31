@@ -4,7 +4,7 @@ namespace Project_Interface
 {
     public interface IFileHandling
     {
-        void DisplayData(List<string> dataItems);
+        void DisplayData(List<string> parsedData);
 
         string GetFilePath(string[] clArguments, string clArgumentNameValue);
 

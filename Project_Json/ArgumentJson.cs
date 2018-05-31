@@ -12,7 +12,7 @@ namespace Project_Json
     {
         public string[] ParseFileData(string filePath)
         {
-            string[] jsonItems = Array.Empty<string>();
+            string[] parsedData = Array.Empty<string>();
 
             try
             {
@@ -22,7 +22,7 @@ namespace Project_Json
                     var jobjects = JsonConvert.DeserializeObject<List<JObject>>(File.ReadAllText(filePath));
 
                     //create a list of json values
-                    jsonItems = jobjects.Select(jo => jo).Properties().Select(p => !string.IsNullOrEmpty(p.Value.ToString()) ? p.Value.ToString() : null).ToArray();
+                    parsedData = jobjects.Select(jo => jo).Properties().Select(p => !string.IsNullOrEmpty(p.Value.ToString()) ? p.Value.ToString() : null).ToArray();
                 }
             }
             catch
@@ -30,15 +30,15 @@ namespace Project_Json
                 throw new JsonSerializationException("Error with JSON file.");
             }
 
-            return jsonItems;
+            return parsedData;
         }
 
         #region  ' IFileHandling  '
 
-        public void DisplayData(List<string> valueItems)
+        public void DisplayData(List<string> parsedData)
         {
             //display the list and replace nulls with No Value
-            valueItems.ForEach(vi => Console.WriteLine("{0}", vi ?? "No Value"));
+            parsedData.ForEach(vi => Console.WriteLine("{0}", vi ?? "No Value"));
         }        
 
         public string GetFilePath(string[] clArguments, string clNameValue)

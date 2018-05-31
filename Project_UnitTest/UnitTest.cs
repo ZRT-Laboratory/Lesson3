@@ -15,18 +15,16 @@ namespace Project_UnitTest
         string _validXMLFile = string.Empty;
         string _invalidXMLFile = string.Empty;
 
-        string _testFilePath = string.Empty;
-
         IFileHandling _ifhJson = new ArgumentJson();
 
         public UnitTest()
         {
-            _testFilePath = Directory.GetCurrentDirectory() + @"\TestFiles\";
+            string testFilePath = Directory.GetCurrentDirectory() + @"\TestFiles\";
 
-            _validJSONFile = _testFilePath + "JSON_ValidFormat.json";
-            _invalidJSONFile = _testFilePath + "JSON_InvalidFormat.json";
-            _validXMLFile = _testFilePath + "XML_ValidFormat.xml";
-            _invalidXMLFile = _testFilePath + "XML_InvalidFormat.xml";
+            _validJSONFile = testFilePath + "JSON_ValidFormat.json";
+            _invalidJSONFile = testFilePath + "JSON_InvalidFormat.json";
+            _validXMLFile = testFilePath + "XML_ValidFormat.xml";
+            _invalidXMLFile = testFilePath + "XML_InvalidFormat.xml";
         }
 
         [TestMethod]
@@ -42,10 +40,10 @@ namespace Project_UnitTest
         public void Arguments_WithValidArguments() => Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile }, "-json")));
 
         [TestMethod]
-        public void Arguments_WithInvalidArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _testFilePath }, "-json")));
+        public void Arguments_WithInvalidArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(new string[] { "json", _validJSONFile }, "-json")));
 
         [TestMethod]
-        public void Arguments_WithTooManyArguments() => Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(new string[] { "-json", _validJSONFile, "-test1", _testFilePath, "-test2", _testFilePath }, "-json")));
+        public void Arguments_WithTooManyArguments() => Assert.IsTrue(File.Exists(_ifhJson.GetFilePath(new string[] { "-json", _validJSONFile, "-test1", _validJSONFile, "-test2", _validJSONFile }, "-json")));
 
         [TestMethod]
         public void Arguments_WithMissingArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhJson.GetFilePath(Array.Empty<string>(), "-json")));
