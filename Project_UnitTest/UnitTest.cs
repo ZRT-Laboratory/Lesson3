@@ -40,13 +40,13 @@ namespace Project_UnitTest
         public void Arguments_WithValidArguments() => Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml",  _validXMLFile, "-json",  _validJSONFile }, "-xml")));
 
         [TestMethod]
-        public void Arguments_WithInvalidArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(new string[] { "xml", _validXMLFile }, "-xml")));
+        public void Arguments_WithInvalidArgument() => Assert.IsFalse(File.Exists(_ifhXml.GetFilePath(new string[] { "xml", _validXMLFile }, "-xml")));
 
         [TestMethod]
         public void Arguments_WithTooManyArguments() => Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml",  _validXMLFile, "-test1", _validXMLFile, "-test2", _validXMLFile }, "-xml")));
 
         [TestMethod]
-        public void Arguments_WithMissingArgument() => Assert.IsTrue(string.IsNullOrEmpty(_ifhXml.GetFilePath(Array.Empty<string>(), "-xml")));
+        public void Arguments_WithMissingArgument() => Assert.IsFalse(File.Exists(_ifhXml.GetFilePath(Array.Empty<string>(), "-xml")));
 
         [TestMethod]
         public void File_WithValidXMLFormat() => Assert.IsTrue(_ifhXml.GetParsedData(new string[] { "-xml", _validXMLFile }).Length > 0);
