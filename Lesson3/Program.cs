@@ -1,4 +1,5 @@
-﻿using Project_Xml;
+﻿using Project_Interface;
+using Project_Xml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,19 @@ namespace Project_Console
         [STAThread]
         static void Main(string[] clArguments)
         {
-            bool validArguments = clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0);
-
-            if (validArguments)
+            if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                IFileHandling ifhXml =  new ArgumentXml();
+                IFileHandling ifh =  new ArgumentXml();
 
                 //create a list then order it so nulls are last in the list
-                List<string> allItems = ifhXml.GetParsedData(clArguments)
-                    .OrderBy(ifh => ifh)
+                List<string> parsedData = ifh.GetParsedData(clArguments)
+                    .OrderBy(fh => fh)
                     .ToList()
                     .OrderBy(ai => ai == null)
                     .ToList();
 
                 //display the list and replace nulls with No Value
-                allItems.ForEach(i => Console.WriteLine("{0}", i ?? "No Value"));
+                ifh.DisplayData(parsedData);
             }
             else
             {

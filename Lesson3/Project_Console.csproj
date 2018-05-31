@@ -47,6 +47,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Project_Interface\Project_Interface.csproj">
+      <Project>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</Project>
+      <Name>Project_Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Project_Xml\Project_Xml.csproj">
       <Project>{b7a28822-43c6-45ec-9689-aeafeeb20906}</Project>
       <Name>Project_Xml</Name>

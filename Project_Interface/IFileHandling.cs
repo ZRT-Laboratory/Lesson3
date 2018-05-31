@@ -1,11 +1,13 @@
-﻿namespace Project_Interface
+﻿using System.Collections.Generic;
+
+namespace Project_Interface
 {
     public interface IFileHandling
     {
-        string GetFilePathFromArgument(string[] clArguments, string clArgumentNameValue);
+        void DisplayData(List<string> parsedData);
 
-        string GetFileNameFromDialog(string filePath, string title);
+        string GetFilePath(string[] clArguments, string clArgumentNameValue);
 
-        string[] GetValuesFromFile(string fileName);
+        string[] GetParsedData(string[] clArguments);
     }
 }

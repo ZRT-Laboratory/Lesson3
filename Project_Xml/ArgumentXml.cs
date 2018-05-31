@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Project_Interface;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -8,11 +10,9 @@ namespace Project_Xml
 {
     public class ArgumentXml : IFileHandling
     {
-        #region  ' IFileHandling  '
-
         public string[] ParseFileData(string filePath)
         {
-            string[] xmlItems = Array.Empty<string>();
+            string[] parsedData = Array.Empty<string>();
 
             try
             {
@@ -22,7 +22,7 @@ namespace Project_Xml
                     XDocument doc = XDocument.Load(filePath);
 
                     //create a list of xml values
-                    xmlItems = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : null).ToArray();
+                    parsedData = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : null).ToArray();
                 }
             }
             catch
@@ -30,7 +30,15 @@ namespace Project_Xml
                 throw new XmlException("Error with XML file.");
             }
 
-            return xmlItems;
+            return parsedData;
+        }
+
+        #region  ' IFileHandling  '
+
+        public void DisplayData(List<string> parsedData)
+        {
+            //display the list and replace nulls with No Value
+            parsedData.ForEach(vi => Console.WriteLine("{0}", vi ?? "No Value"));
         }
 
         public string GetFilePath(string[] clArguments, string clNameValue)
