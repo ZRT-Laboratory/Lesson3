@@ -11,9 +11,7 @@ namespace Project_Console
         [STAThread]
         static void Main(string[] clArguments)
         {
-            bool haveValidArguments = clArguments.Any(a => String.Compare(a, "-json", true) == 0);
-
-            if (haveValidArguments)
+            if (clArguments.Any(a => String.Compare(a, "-json", true) == 0))
             {
                 IFileHandling ifh = new ArgumentJson();
 
