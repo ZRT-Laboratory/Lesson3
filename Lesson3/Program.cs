@@ -13,10 +13,10 @@ namespace Project_Console
         {
             if (clArguments.Any(a => String.Compare(a, "-json", true) == 0))
             {
-                IFileHandling ifh = new ArgumentJson();
+                IFileHandling ifh = new ArgumentJson(clArguments);
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifh.GetParsedData(clArguments)
+                List<string> parsedData = ifh.GetParsedData("-json")
                     .OrderBy(fh => fh)
                     .ToList()
                     .OrderBy(ai => ai == null)
