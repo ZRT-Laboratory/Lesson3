@@ -13,9 +13,7 @@ namespace Project_UnitTest
         string _validJSONFile = string.Empty;
         string _invalidJSONFile = string.Empty;
         string _validXMLFile = string.Empty;
-        string _invalidXMLFile = string.Empty;
-
-        IFileHandling _ifhXml = new ArgumentXml();
+        string _invalidXMLFile = string.Empty;       
 
         public UnitTest()
         {
@@ -37,21 +35,64 @@ namespace Project_UnitTest
         }        
 
         [TestMethod]
-        public void Arguments_WithValidArguments() => Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml",  _validXMLFile, "-json",  _validJSONFile }, "-xml")));
+        public void Arguments_WithValidArguments()
+        {
+            //arrange
+            IFileHandling ifh = new ArgumentXml(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+
+            //assert
+            Assert.IsTrue(File.Exists(ifh.GetFilePath("-json")) && File.Exists(ifh.GetFilePath("-xml")));
+        }
 
         [TestMethod]
-        public void Arguments_WithInvalidArgument() => Assert.IsFalse(File.Exists(_ifhXml.GetFilePath(new string[] { "xml", _validXMLFile }, "-xml")));
+        public void Arguments_WithInvalidXMLArgument()
+        {
+            //arrange
+            IFileHandling ifh = new ArgumentXml(new string[] { "-json", _validJSONFile, "xml", _validXMLFile, });
+
+            //assert
+            Assert.IsFalse(File.Exists(ifh.GetFilePath("-xml")));
+            Assert.IsTrue(File.Exists(ifh.GetFilePath("-json")));
+        }
 
         [TestMethod]
-        public void Arguments_WithTooManyArguments() => Assert.IsTrue(File.Exists(_ifhXml.GetFilePath(new string[] { "-xml",  _validXMLFile, "-test1", _validXMLFile, "-test2", _validXMLFile }, "-xml")));
+        public void Arguments_WithTooManyArguments()
+        {
+            //arrange
+            IFileHandling ifh = new ArgumentXml(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test2", _validJSONFile });
+
+            //assert
+            Assert.IsTrue(File.Exists(ifh.GetFilePath("-json")) && File.Exists(ifh.GetFilePath("-xml")));
+        }
 
         [TestMethod]
-        public void Arguments_WithMissingArgument() => Assert.IsFalse(File.Exists(_ifhXml.GetFilePath(Array.Empty<string>(), "-xml")));
+        public void Arguments_WithMissingArgument()
+        {
+            //arrange
+            IFileHandling ifh = new ArgumentXml(Array.Empty<string>());
+
+            //assert
+            Assert.IsFalse(File.Exists(ifh.GetFilePath("-json")) && File.Exists(ifh.GetFilePath("-xml")));
+        }
 
         [TestMethod]
-        public void File_WithValidXMLFormat() => Assert.IsTrue(_ifhXml.GetParsedData(new string[] { "-xml", _validXMLFile }).Length > 0);
+        public void File_WithValidXMLFormat()
+        {
+            //arrange
+            IFileHandling ifh = new ArgumentXml(new string[] { "-xml", _validXMLFile });
+
+            //assert
+            Assert.IsTrue(ifh.GetParsedData("-xml").Length > 0);
+        }
 
         [TestMethod]
-        public void File_WithInvalidXMLFormat() => Assert.ThrowsException<XmlException>(() => _ifhXml.GetParsedData(new string[] { "-xml", _invalidXMLFile }));
+        public void File_WithInvalidXMLFormat()
+        {
+            //arrange
+            IFileHandling ifh = new ArgumentXml(new string[] { "-xml", _invalidXMLFile });
+
+            //assert
+            Assert.ThrowsException<XmlException>(() => ifh.GetParsedData("-xml"));
+        }
     }
 }

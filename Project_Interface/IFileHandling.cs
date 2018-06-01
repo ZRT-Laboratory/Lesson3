@@ -6,8 +6,8 @@ namespace Project_Interface
     {
         void DisplayData(List<string> parsedData);
 
-        string GetFilePath(string[] clArguments, string clArgumentNameValue);
+        string GetFilePath(string clArgumentNameValue);
 
-        string[] GetParsedData(string[] clArguments);
+        string[] GetParsedData(string clArgumentNameValue);
     }
 }

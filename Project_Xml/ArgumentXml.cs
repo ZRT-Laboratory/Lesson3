@@ -10,6 +10,13 @@ namespace Project_Xml
 {
     public class ArgumentXml : IFileHandling
     {
+        string[] _clArguments = null;
+
+        public ArgumentXml(string[] clArguments)
+        {
+            _clArguments = clArguments;
+        }
+
         public string[] ParseFileData(string filePath)
         {
             string[] parsedData = Array.Empty<string>();
@@ -41,9 +48,9 @@ namespace Project_Xml
             parsedData.ForEach(vi => Console.WriteLine("{0}", vi ?? "No Value"));
         }
 
-        public string GetFilePath(string[] clArguments, string clNameValue)
+        public string GetFilePath(string clArgumentNameValue)
         {
-            string filePath = clArguments.SkipWhile(a => string.Compare(a, clNameValue, true) != 0)
+            string filePath = _clArguments.SkipWhile(a => string.Compare(a, clArgumentNameValue, true) != 0)
                 .Skip(1)
                 .DefaultIfEmpty("")
                 .First()
@@ -52,7 +59,7 @@ namespace Project_Xml
             return filePath;
         }
 
-        public string[] GetParsedData(string[] clArguments) => ParseFileData(GetFilePath(clArguments, "-xml")).ToArray();
+        public string[] GetParsedData(string clArgumentNameValue) => ParseFileData(GetFilePath(clArgumentNameValue)).ToArray();
 
         #endregion
     }
