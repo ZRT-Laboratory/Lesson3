@@ -6,6 +6,8 @@ namespace Project_Console
     {
         void DisplayData(List<string> parsedData);
 
-        string GetFilePath(string[] clArguments, string clArgumentNameValue);
+        string GetFilePath(string clArgumentNameValue);
+
+        string[] GetParsedData(string clArgumentNameValue);
     }
 }

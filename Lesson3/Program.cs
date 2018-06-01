@@ -8,20 +8,24 @@ namespace Project_Console
     {
         static void Main(string[] clArguments)
         {
-            IFileHandling ifh = new Argument();
-            List<string> parsedData = new List<string>();
-
-            if (clArguments.Any(a => String.Compare(a, "-json", true) == 0))
+            if (clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                parsedData.Add(ifh.GetFilePath(clArguments, "-json"));
-            }
+                IFileHandling ifh = new Argument(clArguments);
 
-            if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
+                //create a list then order it so nulls are last in the list
+                List<string> parsedData = ifh.GetParsedData("-json")
+                    .Concat(ifh.GetParsedData("-xml"))
+                    .OrderBy(fh => fh)
+                    .ToList()
+                    .OrderBy(ai => ai == null)
+                    .ToList();
+
+                ifh.DisplayData(parsedData);
+            }
+            else
             {
-                parsedData.Add(ifh.GetFilePath(clArguments, "-xml"));
+                Console.WriteLine("Invalid arguments.");
             }
-
-            ifh.DisplayData(parsedData);
         }
     }
 }

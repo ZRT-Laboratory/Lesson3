@@ -6,6 +6,18 @@ namespace Project_Console
 {
     public class Argument : IFileHandling
     {
+        string[] _clArguments = null;
+
+        public Argument(string[] clArguments)
+        {
+            _clArguments = clArguments;
+        }
+
+        public string[] ParseFileData(string filePath)
+        {
+            return new string[] { filePath };
+        }
+
         #region  ' IFileHandling '
 
         public void DisplayData(List<string> parsedData)
@@ -13,9 +25,9 @@ namespace Project_Console
             parsedData.ForEach(vi => Console.WriteLine("{0}", vi));
         }
 
-        public string GetFilePath(string[] clArguments, string clNameValue)
+        public string GetFilePath(string clArgumentNameValue)
         {
-            string filePath = clArguments.SkipWhile(a => string.Compare(a, clNameValue, true) != 0)
+            string filePath = _clArguments.SkipWhile(a => string.Compare(a, clArgumentNameValue, true) != 0)
                 .Skip(1)
                 .DefaultIfEmpty("")
                 .First()
@@ -23,6 +35,8 @@ namespace Project_Console
 
             return filePath;
         }
+
+        public string[] GetParsedData(string clArgumentNameValue) => ParseFileData(GetFilePath(clArgumentNameValue)).ToArray();
 
         #endregion
     }
