@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Project.ConsoleApp;
 using Project.Interface;
 using System;
 using System.IO;
