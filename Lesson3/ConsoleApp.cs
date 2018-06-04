@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Project.ConsoleApp
 {
-    public class Program
+    public class ConsoleApp
     {
         [STAThread]
         public static void Main(string[] clArguments)
