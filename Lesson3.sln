@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Console", "Lesson3\Project_Console.csproj", "{10C44A3A-C95A-4E9D-9DB4-35D07D997A88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.ConsoleApp", "Lesson3\Project.ConsoleApp.csproj", "{10C44A3A-C95A-4E9D-9DB4-35D07D997A88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Json", "Project_Json\Project_Json.csproj", "{A93DC17F-ED50-45A1-8AD8-C47BB20EC5C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Json", "Project_Json\Project.Json.csproj", "{A93DC17F-ED50-45A1-8AD8-C47BB20EC5C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_UnitTest", "Project_UnitTest\Project_UnitTest.csproj", "{230761A9-F9BC-4F70-84FA-34F2E905828F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Json.Test", "Project_UnitTest\Project.Json.Test.csproj", "{230761A9-F9BC-4F70-84FA-34F2E905828F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Interface", "Project_Interface\Project_Interface.csproj", "{BA1AFD02-52EE-4446-A7D2-48E5748780D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Interface", "Project_Interface\Project.Interface.csproj", "{BA1AFD02-52EE-4446-A7D2-48E5748780D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

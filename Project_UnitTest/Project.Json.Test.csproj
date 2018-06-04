@@ -7,8 +7,8 @@
     <ProjectGuid>{230761A9-F9BC-4F70-84FA-34F2E905828F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Project_UnitTest</RootNamespace>
-    <AssemblyName>Project_UnitTest</AssemblyName>
+    <RootNamespace>Project.Json.Test</RootNamespace>
+    <AssemblyName>Project.Json.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,7 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="JsonTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,17 +62,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lesson3\Project_Console.csproj">
+    <ProjectReference Include="..\Lesson3\Project.ConsoleApp.csproj">
       <Project>{10c44a3a-c95a-4e9d-9db4-35d07d997a88}</Project>
-      <Name>Project_Console</Name>
+      <Name>Project.ConsoleApp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Project_Interface\Project_Interface.csproj">
+    <ProjectReference Include="..\Project_Interface\Project.Interface.csproj">
       <Project>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</Project>
-      <Name>Project_Interface</Name>
+      <Name>Project.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Project_Json\Project_Json.csproj">
+    <ProjectReference Include="..\Project_Json\Project.Json.csproj">
       <Project>{a93dc17f-ed50-45a1-8ad8-c47bb20ec5c7}</Project>
-      <Name>Project_Json</Name>
+      <Name>Project.Json</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
