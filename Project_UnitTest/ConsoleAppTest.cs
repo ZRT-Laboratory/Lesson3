@@ -1,19 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Project_Console;
+using Project.ConsoleApp;
 using System;
 using System.IO;
 
 namespace Project_UnitTest
 {
     [TestClass]
-    public class ConsoleTest
+    public class ConsoleAppTest
     {
         string _validJSONFile = string.Empty;
         string _invalidJSONFile = string.Empty;
         string _validXMLFile = string.Empty;
         string _invalidXMLFile = string.Empty;        
 
-        public ConsoleTest()
+        public ConsoleAppTest()
         {
             string testFilePath = Directory.GetCurrentDirectory() + @"\TestFiles\";
 
@@ -38,7 +38,7 @@ namespace Project_UnitTest
             //assert
             try
             {
-                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+                ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
             }
             catch(ArgumentException aex)
             {
@@ -52,7 +52,7 @@ namespace Project_UnitTest
             //assert
             try
             {
-                Program.Main(new string[] { "json", _validJSONFile, "xml", _validXMLFile });
+                ConsoleApp.Main(new string[] { "json", _validJSONFile, "xml", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -66,7 +66,7 @@ namespace Project_UnitTest
             //assert
             try
             {
-                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test", _validXMLFile });
+                ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -80,7 +80,7 @@ namespace Project_UnitTest
             //assert
             try
             {
-                Program.Main(Array.Empty<string>());
+                ConsoleApp.Main(Array.Empty<string>());
             }
             catch (ArgumentException aex)
             {

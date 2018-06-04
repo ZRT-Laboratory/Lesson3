@@ -7,8 +7,8 @@
     <ProjectGuid>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Project_Interface</RootNamespace>
-    <AssemblyName>Project_Interface</AssemblyName>
+    <RootNamespace>Project.Interface</RootNamespace>
+    <AssemblyName>Project.Interface</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

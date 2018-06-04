@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Project_Interface;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Project_Interface;
 
-namespace Project_Console
+namespace Project.ConsoleApp
 {
-    public class Program
+    public class ConsoleApp
     {
         public static void Main(string[] clArguments)
         {

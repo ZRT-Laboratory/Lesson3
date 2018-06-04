@@ -1,7 +1,7 @@
 ﻿using Project_Interface;
 using System.Linq;
 
-namespace Project_Console
+namespace Project.ConsoleApp
 {
     public class Parser : IFileHandling
     {
