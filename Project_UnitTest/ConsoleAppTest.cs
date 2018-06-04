@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Project.ConsoleApp;
 using System;
 using System.IO;
 
-namespace Project_UnitTest
+namespace Project.ConsoleApp.Test
 {
     [TestClass]
     public class ConsoleAppTest
