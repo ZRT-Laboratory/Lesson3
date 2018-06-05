@@ -10,6 +10,7 @@ namespace Project.Json.Test
     [TestClass]
     public class JsonTest
     {
+
         string _validJSONFile = string.Empty;
         string _invalidJSONFile = string.Empty;
         string _validXMLFile = string.Empty;
@@ -40,7 +41,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-               Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
             }
             catch (ArgumentException aex)
             {

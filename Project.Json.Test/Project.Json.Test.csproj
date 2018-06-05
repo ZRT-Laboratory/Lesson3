@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{230761A9-F9BC-4F70-84FA-34F2E905828F}</ProjectGuid>
+    <ProjectGuid>{F7308EB8-6C36-4286-BAF8-37D907FAAA00}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Project.Json.Test</RootNamespace>
@@ -53,6 +53,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestFiles\XML_InvalidFormat.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\XML_ValidFormat.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <Content Include="TestFiles\JSON_InvalidFormat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -67,21 +73,13 @@
       <Name>Project.ConsoleApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Project_Interface\Project.Interface.csproj">
-      <Project>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</Project>
+      <Project>{ba1afd02-52ee-4446-a7d2-48e5748780d5}</Project>
       <Name>Project.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Project_Json\Project.Json.csproj">
       <Project>{a93dc17f-ed50-45a1-8ad8-c47bb20ec5c7}</Project>
       <Name>Project.Json</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TestFiles\XML_InvalidFormat.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\XML_ValidFormat.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
