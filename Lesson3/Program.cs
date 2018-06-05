@@ -11,7 +11,7 @@ namespace Project.ConsoleApp
         [STAThread]
         public static void Main(string[] clArguments)
         {
-            if (clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
+            if (clArguments.Any(a => String.Compare(a, "-json", true) == 0))
             {
                 IFileHandling ifh = new JsonParser(clArguments);
 

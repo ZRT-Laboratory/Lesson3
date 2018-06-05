@@ -10,11 +10,8 @@ namespace Project.Json.Test
     [TestClass]
     public class JsonTest
     {
-
         string _validJSONFile = string.Empty;
         string _invalidJSONFile = string.Empty;
-        string _validXMLFile = string.Empty;
-        string _invalidXMLFile = string.Empty;
 
         public JsonTest()
         {
@@ -22,8 +19,6 @@ namespace Project.Json.Test
 
             _validJSONFile = testFilePath + "JSON_ValidFormat.json";
             _invalidJSONFile = testFilePath + "JSON_InvalidFormat.json";
-            _validXMLFile = testFilePath + "XML_ValidFormat.xml";
-            _invalidXMLFile = testFilePath + "XML_InvalidFormat.xml";
         }
 
         [TestMethod]
@@ -31,8 +26,6 @@ namespace Project.Json.Test
         {
             Assert.IsTrue(File.Exists(_validJSONFile));
             Assert.IsTrue(File.Exists(_invalidJSONFile));
-            Assert.IsTrue(File.Exists(_validXMLFile));
-            Assert.IsTrue(File.Exists(_invalidXMLFile));
         }
 
         [TestMethod]
@@ -41,7 +34,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+                Program.Main(new string[] { "-json", _validJSONFile});
             }
             catch (ArgumentException aex)
             {
@@ -55,7 +48,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-                Program.Main(new string[] { "json", _validJSONFile, "xml", _validXMLFile });
+                Program.Main(new string[] { "json", _validJSONFile});
             }
             catch (ArgumentException aex)
             {
@@ -69,7 +62,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test", _validXMLFile });
+                Program.Main(new string[] { "-json", _validJSONFile, "-test1", _validJSONFile, "-test2", _validJSONFile });
             }
             catch (ArgumentException aex)
             {
