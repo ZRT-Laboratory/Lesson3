@@ -29,7 +29,7 @@ namespace Project.Json.Test
         }
 
         [TestMethod]
-        public void Arguments_WithValidArguments()
+        public void Arguments_WithValidJSONArgument()
         {
             //assert
             try
@@ -43,12 +43,26 @@ namespace Project.Json.Test
         }
 
         [TestMethod]
-        public void Arguments_WithInvalidArguments()
+        public void Arguments_WithInvalidJSONArgument()
         {
             //assert
             try
             {
                 Program.Main(new string[] { "json", _validJSONFile});
+            }
+            catch (ArgumentException aex)
+            {
+                Assert.IsTrue(aex.Message == "Invalid arguments.");
+            }
+        }
+
+        [TestMethod]
+        public void Arguments_WithMissingJSONArgument()
+        {
+            //assert
+            try
+            {
+                Program.Main(Array.Empty<string>());
             }
             catch (ArgumentException aex)
             {
@@ -67,20 +81,6 @@ namespace Project.Json.Test
             catch (ArgumentException aex)
             {
                 Assert.Fail(aex.Message);
-            }
-        }
-
-        [TestMethod]
-        public void Arguments_WithMissingArguments()
-        {
-            //assert
-            try
-            {
-                Program.Main(Array.Empty<string>());
-            }
-            catch (ArgumentException aex)
-            {
-                Assert.IsTrue(aex.Message == "Invalid arguments.");
             }
         }
 
