@@ -53,20 +53,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TestFiles\JSON_InvalidFormat.json">
+    <Content Include="TestFiles\JSON_InvalidFormat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestFiles\JSON_ValidFormat.json">
+    </Content>
+    <Content Include="TestFiles\JSON_ValidFormat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestFiles\XML_InvalidFormat.xml">
+    <Content Include="TestFiles\XML_InvalidFormat.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestFiles\XML_ValidFormat.xml">
+    </Content>
+    <Content Include="TestFiles\XML_ValidFormat.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lesson3\Project.ConsoleApp.csproj">
