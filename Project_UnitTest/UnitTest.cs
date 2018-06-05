@@ -4,18 +4,19 @@ using Project.ConsoleApp;
 using System;
 using System.IO;
 using System.Xml;
+using Project.Xml;
 
-namespace Project.Xml.Test
+namespace Project_UnitTest
 {
     [TestClass]
-    public class XmlTest
+    public class UnitTest
     {
         string _validJSONFile = string.Empty;
         string _invalidJSONFile = string.Empty;
         string _validXMLFile = string.Empty;
         string _invalidXMLFile = string.Empty;       
 
-        public XmlTest()
+        public UnitTest()
         {
             string testFilePath = Directory.GetCurrentDirectory() + @"\TestFiles\";
 

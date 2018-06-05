@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{00C19801-112D-403C-A502-03DB46D21AE9}</ProjectGuid>
+    <ProjectGuid>{B858506A-8E5A-479D-A63C-FE0E2F10E1CF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Project.Xml.Test</RootNamespace>
@@ -54,12 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="TestFiles\JSON_InvalidFormat.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\JSON_ValidFormat.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestFiles\XML_InvalidFormat.xml">
@@ -75,7 +69,7 @@
       <Name>Project.ConsoleApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Project_Interface\Project.Interface.csproj">
-      <Project>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</Project>
+      <Project>{ba1afd02-52ee-4446-a7d2-48e5748780d5}</Project>
       <Name>Project.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Project_Xml\Project.Xml.csproj">
