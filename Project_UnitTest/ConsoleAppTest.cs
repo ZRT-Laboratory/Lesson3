@@ -37,7 +37,7 @@ namespace Project.ConsoleApp.Test
             //assert
             try
             {
-                ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
             }
             catch(ArgumentException aex)
             {
@@ -51,7 +51,7 @@ namespace Project.ConsoleApp.Test
             //assert
             try
             {
-                ConsoleApp.Main(new string[] { "json", _validJSONFile, "xml", _validXMLFile });
+                Program.Main(new string[] { "json", _validJSONFile, "xml", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -65,7 +65,7 @@ namespace Project.ConsoleApp.Test
             //assert
             try
             {
-                ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test", _validXMLFile });
+                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -79,7 +79,7 @@ namespace Project.ConsoleApp.Test
             //assert
             try
             {
-                ConsoleApp.Main(Array.Empty<string>());
+                Program.Main(Array.Empty<string>());
             }
             catch (ArgumentException aex)
             {

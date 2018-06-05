@@ -14,7 +14,7 @@ namespace Project.ConsoleApp
 
         public string[] ParseFileData(string filePath)
         {
-            return new string[] { filePath };
+            return !string.IsNullOrEmpty(filePath) ? new string[] { filePath } : System.Array.Empty<string>();
         }
 
         #region  ' IFileHandling '        

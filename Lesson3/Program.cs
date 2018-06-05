@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Project.ConsoleApp
 {
-    public class ConsoleApp
+    public class Program
     {
         public static void Main(string[] clArguments)
         {
@@ -13,13 +13,11 @@ namespace Project.ConsoleApp
             {
                     IFileHandling ifh = new Parser(clArguments);
 
-                    //create a list then order it so nulls are last in the list
-                    List<string> parsedData = ifh.GetParsedData(GetFilePath(clArguments, "-json"))
-                        .Concat(ifh.GetParsedData(GetFilePath(clArguments, "-xml")))
-                        .OrderBy(fh => fh)
-                        .ToList()
-                        .OrderBy(ai => ai == null)
-                        .ToList();
+                //create a list then order it so nulls are last in the list
+                List<string> parsedData = ifh.GetParsedData(GetFilePath(clArguments, "-json"))
+                    .Concat(ifh.GetParsedData(GetFilePath(clArguments, "-xml")))
+                    .OrderBy(fh => fh)
+                    .ToList();
 
                     parsedData.ForEach(vi => Console.WriteLine("{0}", vi));
             }
