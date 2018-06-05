@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{10C44A3A-C95A-4E9D-9DB4-35D07D997A88}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Project_Console</RootNamespace>
-    <AssemblyName>Project_Console</AssemblyName>
+    <RootNamespace>Project.ConsoleApp</RootNamespace>
+    <AssemblyName>Project.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -40,20 +40,20 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="ConsoleApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Project_Interface\Project_Interface.csproj">
+    <ProjectReference Include="..\Project_Interface\Project.Interface.csproj">
       <Project>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</Project>
-      <Name>Project_Interface</Name>
+      <Name>Project.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Project_Xml\Project_Xml.csproj">
+    <ProjectReference Include="..\Project_Xml\Project.Xml.csproj">
       <Project>{b7a28822-43c6-45ec-9689-aeafeeb20906}</Project>
-      <Name>Project_Xml</Name>
+      <Name>Project.Xml</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
