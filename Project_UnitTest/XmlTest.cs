@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Project.Interface;
+using Project.ConsoleApp;
 using System;
 using System.IO;
 using System.Xml;
@@ -39,7 +40,7 @@ namespace Project.Xml.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -53,7 +54,7 @@ namespace Project.Xml.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(new string[] { "-json", _validJSONFile, "xml", _validXMLFile, });
+                Program.Main(new string[] { "-json", _validJSONFile, "xml", _validXMLFile, });
             }
             catch (ArgumentException aex)
             {
@@ -67,7 +68,7 @@ namespace Project.Xml.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test2", _validJSONFile });
+                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test2", _validJSONFile });
             }
             catch (ArgumentException aex)
             {
@@ -81,7 +82,7 @@ namespace Project.Xml.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(Array.Empty<string>());
+                Program.Main(Array.Empty<string>());
             }
             catch (ArgumentException aex)
             {
