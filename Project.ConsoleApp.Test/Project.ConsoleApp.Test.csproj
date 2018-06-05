@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{00C19801-112D-403C-A502-03DB46D21AE9}</ProjectGuid>
+    <ProjectGuid>{848FB1C5-E2FA-4510-A0DB-40FA52F1C98A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Project.ConsoleApp.Test</RootNamespace>
@@ -44,10 +44,8 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleAppTest.cs" />
@@ -55,29 +53,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="TestFiles\JSON_InvalidFormat.json">
+    <None Include="TestFiles\JSON_InvalidFormat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\JSON_ValidFormat.json">
+    </None>
+    <None Include="TestFiles\JSON_ValidFormat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestFiles\XML_InvalidFormat.xml">
+    <None Include="TestFiles\XML_InvalidFormat.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\XML_ValidFormat.xml">
+    </None>
+    <None Include="TestFiles\XML_ValidFormat.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lesson3\Project.ConsoleApp.csproj">
-      <Project>{10C44A3A-C95A-4E9D-9DB4-35D07D997A88}</Project>
+      <Project>{10c44a3a-c95a-4e9d-9db4-35d07d997a88}</Project>
       <Name>Project.ConsoleApp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Project_Interface\Project.Interface.csproj">
-      <Project>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</Project>
-      <Name>Project.Interface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

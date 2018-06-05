@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 
+
 namespace Project.ConsoleApp.Test
 {
     [TestClass]
@@ -10,7 +11,7 @@ namespace Project.ConsoleApp.Test
         string _validJSONFile = string.Empty;
         string _invalidJSONFile = string.Empty;
         string _validXMLFile = string.Empty;
-        string _invalidXMLFile = string.Empty;        
+        string _invalidXMLFile = string.Empty;
 
         public ConsoleAppTest()
         {
@@ -39,10 +40,10 @@ namespace Project.ConsoleApp.Test
             {
                 Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
             }
-            catch(ArgumentException aex)
+            catch (ArgumentException aex)
             {
                 Assert.Fail(aex.Message);
-            }            
+            }
         }
 
         [TestMethod]
