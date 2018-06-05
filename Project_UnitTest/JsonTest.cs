@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Project.Interface;
 using System;
 using System.IO;
+using Project.ConsoleApp;
 
 namespace Project.Json.Test
 {
@@ -39,7 +40,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+               Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -53,7 +54,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(new string[] { "json", _validJSONFile, "xml", _validXMLFile });
+                Program.Main(new string[] { "json", _validJSONFile, "xml", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -67,7 +68,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test", _validXMLFile });
+                Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile, "-test", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
@@ -81,7 +82,7 @@ namespace Project.Json.Test
             //assert
             try
             {
-                ConsoleApp.ConsoleApp.Main(Array.Empty<string>());
+                Program.Main(Array.Empty<string>());
             }
             catch (ArgumentException aex)
             {
