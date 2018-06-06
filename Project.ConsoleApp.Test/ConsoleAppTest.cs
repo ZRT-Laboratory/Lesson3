@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 
-
 namespace Project.ConsoleApp.Test
 {
     [TestClass]
