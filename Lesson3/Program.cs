@@ -14,10 +14,10 @@ namespace Project.ConsoleApp
         {
             if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                IFileHandling ifh =  new XmlParser(clArguments);
+                IFileHandling ifhXml =  new XmlParser(clArguments);
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifh.GetParsedData(GetFilePath(clArguments, "-xml"))
+                List<string> parsedData = ifhXml.GetParsedData(GetFilePath(clArguments, "-xml"))
                     .OrderBy(fh => fh)
                     .ToList()
                     .OrderBy(ai => ai == null)
