@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 
-
 namespace Project.ConsoleApp.Test
 {
     [TestClass]
@@ -39,6 +38,7 @@ namespace Project.ConsoleApp.Test
             try
             {
                 Program.Main(new string[] { "-json", _validJSONFile, "-xml", _validXMLFile });
+                
             }
             catch (ArgumentException aex)
             {
