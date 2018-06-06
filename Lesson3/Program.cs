@@ -1,5 +1,5 @@
 ﻿using Project.ConsoleApp.Parser;
-using Project_Interface;
+using Project.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

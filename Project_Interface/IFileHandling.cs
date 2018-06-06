@@ -1,4 +1,4 @@
-﻿namespace Project_Interface
+﻿namespace Project.Interface
 {
     public interface IFileHandling
     {
