@@ -12,11 +12,11 @@ namespace Project.ConsoleApp
         {
             if (clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                IFileHandling ifh = new ConsoleAppParser(clArguments);
+                IFileHandling ifhApp = new ConsoleAppParser(clArguments);
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifh.GetParsedData(GetFilePath(clArguments, "-json"))
-                    .Concat(ifh.GetParsedData(GetFilePath(clArguments, "-xml")))
+                List<string> parsedData = ifhApp.GetParsedData(GetFilePath(clArguments, "-json"))
+                    .Concat(ifhApp.GetParsedData(GetFilePath(clArguments, "-xml")))
                     .OrderBy(fh => fh)
                     .ToList();
 
