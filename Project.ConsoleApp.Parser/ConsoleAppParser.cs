@@ -1,13 +1,15 @@
-﻿using Project_Interface;
+﻿using System;
+using System.Collections.Generic;
+using Project_Interface;
 using System.Linq;
 
-namespace Project.ConsoleApp
+namespace Project.ConsoleApp.Parser
 {
-    public class Parser : IFileHandling
+    public class ConsoleAppParser : IFileHandling
     {
         string[] _clArguments = null;
 
-        public Parser(string[] clArguments)
+        public ConsoleAppParser(string[] clArguments)
         {
             _clArguments = clArguments;
         }

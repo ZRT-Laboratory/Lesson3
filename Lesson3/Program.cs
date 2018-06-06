@@ -1,4 +1,5 @@
-﻿using Project_Interface;
+﻿using Project.ConsoleApp.Parser;
+using Project_Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Project.ConsoleApp
         {
             if (clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                    IFileHandling ifh = new Parser(clArguments);
+                IFileHandling ifh = new ConsoleAppParser(clArguments);
 
                 //create a list then order it so nulls are last in the list
                 List<string> parsedData = ifh.GetParsedData(GetFilePath(clArguments, "-json"))
