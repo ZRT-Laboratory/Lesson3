@@ -1,7 +1,7 @@
-﻿using Project.ConsoleApp.Parser;
-using Project.Interface;
+﻿using Project.Interface;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Project.ConsoleApp
@@ -12,22 +12,25 @@ namespace Project.ConsoleApp
         {
             if (clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                IFileHandling ifhApp = new ConsoleAppParser(clArguments);
+                //use interface
+                IFileHandling ifhJson = GetJsonParser();
+                IFileHandling ifhXml = GetXmlParser();
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifhApp.GetParsedData(GetFilePath(clArguments, "-json"))
-                    .Concat(ifhApp.GetParsedData(GetFilePath(clArguments, "-xml")))
+                List<string> parsedData = ifhJson?.GetParsedData(GetFilePath("-json"))
+                    .Concat(ifhXml?.GetParsedData(GetFilePath("-xml")))
                     .OrderBy(fh => fh)
+                    .ThenBy(fh => fh == null)
                     .ToList();
 
-                    parsedData.ForEach(vi => Console.WriteLine("{0}", vi));
+                Console.WriteLine("Valid arguments.");
             }
             else
             {
                 throw new ArgumentException("Invalid arguments.");
             }
 
-            string GetFilePath(string[] arguments, string argumentNameValue)
+            string GetFilePath(string argumentNameValue)
             {
                 string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
                     .Skip(1)
@@ -35,8 +38,17 @@ namespace Project.ConsoleApp
                     .First()
                     .ToString();
 
+                if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
+                {
+                    throw new ArgumentException("Invalid file name", argumentNameValue);
+                }
+
                 return filePath;
             }
+
+            IFileHandling GetJsonParser() => null;
+
+            IFileHandling GetXmlParser() => null;            
         }      
     }
 }
