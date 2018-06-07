@@ -23,7 +23,7 @@ namespace Project.ConsoleApp
                     .ThenBy(fh => fh == null)
                     .ToList();
 
-                Console.WriteLine("Valid arguments.");
+                parsedData?.ForEach(pd => Console.WriteLine("{0}", pd));
             }
             else
             {
