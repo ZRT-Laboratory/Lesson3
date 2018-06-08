@@ -11,99 +11,69 @@ namespace Project.Xml.Test
     [TestClass]
     public class XmlTest
     {
-        static string _validXMLFile = string.Empty;
-        static string _invalidXMLFile = string.Empty;
-
-        [ClassInitialize]
-        public static void ClassInit(TestContext tc)
-        {
-            //create valid XML file
-            _validXMLFile = Path.GetTempFileName();
-            using (StreamWriter writer = new StreamWriter(_validXMLFile, true))
-            {
-                writer.WriteLine("<xml>");
-                writer.WriteLine("<orange id = 'Round Orange' />");
-                writer.WriteLine("<orange id = 'Naval Orange' />");
-                writer.WriteLine("<orange id = 'Blood Orange' />");
-                writer.WriteLine("<orange />");
-                writer.WriteLine("</xml>");
-            }
-
-            //create invalid XML file
-            _invalidXMLFile = Path.GetTempFileName();
-            using (StreamWriter writer = new StreamWriter(_invalidXMLFile, true))
-            {
-                writer.WriteLine("<xml>");
-                writer.WriteLine("<orange id = 'Round Orange' />");
-                writer.WriteLine("<orange id = 'Naval Orange' />");
-                writer.WriteLine("<orange id = 'Blood Orange' >");
-                writer.WriteLine("</xml>");
-            }
-        }
-
-        [ClassCleanup]
-        public static void ClassCleanUp()
-        {
-            if (File.Exists(_validXMLFile))
-            {
-                File.Delete(_validXMLFile);
-            }
-
-            if (File.Exists(_invalidXMLFile))
-            {
-                File.Delete(_invalidXMLFile);
-            }
-        }        
-
-        [TestMethod]
-        public void AllTestFilesExist()
-        {
-            //assert
-            Assert.IsTrue(File.Exists(_validXMLFile));
-            Assert.IsTrue(File.Exists(_invalidXMLFile));
-        }
+        #region " Test Methods "
 
         [TestMethod]
         public void Arguments_WithValidXMLArgument()
         {
+            //arrange
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
+
             try
             {
                 //act
-                Program.Main(new string[] { "-xml", _validXMLFile });
+                Program.Main(new string[] { "-xml", xmlFile });
             }
             catch (ArgumentException aex)
             {
                 //assert
                 Assert.Fail(aex.Message);
+            }
+            finally
+            {
+                DeleteTempFile(xmlFile);
             }
         }
 
         [TestMethod]
         public void Arguments_WithInvalidXMLArgument()
         {
+            //arrange
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" } );
+
             //assert
-            Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "xml", _validXMLFile, }));
+            try
+            {
+                Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "xml", xmlFile, }));
+            }
+            finally
+            {
+                DeleteTempFile(xmlFile);
+            }
         }
 
         [TestMethod]
-        public void Arguments_WithMissingXMLArgument()
-        {
-            //assert
-            Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
-        }
+        public void Arguments_WithMissingXMLArgument() => Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
 
         [TestMethod]
         public void Arguments_WithTooManyArguments()
         {
+            //arrange
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
+
             try
             {
                 //act
-                Program.Main(new string[] { "-xml", _validXMLFile, "-test1", _validXMLFile, "-test2", _validXMLFile, });
+                Program.Main(new string[] { "-xml", xmlFile, "-test1", xmlFile, "-test2", xmlFile, });
             }
             catch (ArgumentException aex)
             {
                 //assert
                 Assert.Fail(aex.Message);
+            }
+            finally
+            {
+                DeleteTempFile(xmlFile);
             }
         }
 
@@ -112,9 +82,18 @@ namespace Project.Xml.Test
         {
             //arrange
             IFileHandling ifhXml = new XmlParser();
+            
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
 
             //assert
-            Assert.IsTrue(ifhXml.GetParsedData(_validXMLFile).Length > 0);
+            try
+            {
+                Assert.IsTrue(ifhXml.GetParsedData(xmlFile).Length > 0);
+            }
+            finally
+            {
+                DeleteTempFile(xmlFile);
+            }
         }
 
         [TestMethod]
@@ -123,8 +102,17 @@ namespace Project.Xml.Test
             //arrange
             IFileHandling ifh = new XmlParser();
 
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' >", "</xml>" });
+
             //assert
-            Assert.ThrowsException<XmlException>(() => ifh.GetParsedData(_invalidXMLFile));
+            try
+            {
+                Assert.ThrowsException<XmlException>(() => ifh.GetParsedData(xmlFile));
+            }
+            finally
+            {
+                DeleteTempFile(xmlFile);
+            }
         }
 
         [TestMethod]
@@ -132,20 +120,11 @@ namespace Project.Xml.Test
         {
             //arrange
             IFileHandling ifhXml = new XmlParser();
-            
-            string xmlFile = Path.GetTempFileName();
-            using (StreamWriter writer = new StreamWriter(xmlFile, true))
-            {
-                writer.WriteLine("<xml>");
-                writer.WriteLine("<orange id = 'Yellow Orange' />");
-                writer.WriteLine("<orange id = 'Black Orange' />");
-                writer.WriteLine("<orange id = 'Blue Orange' />");
-                writer.WriteLine("<orange />");
-                writer.WriteLine("</xml>");
-            }
+
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "<orange id = 'Naval Orange' />", "<orange id = 'Blood Orange' />", "<orange />", "</xml>" });
 
             //create the expected sorted results
-            string[] expectedResults = new string[] { "Black Orange", "Blue Orange", "Yellow Orange", null };
+            string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", null };
 
             //act
             //create a list then order it so nulls are last in the list
@@ -156,10 +135,58 @@ namespace Project.Xml.Test
                 .ToArray();
 
             //assert
-            for (int i =0; i < expectedResults.Length; i++)
+            try
             {
-                Assert.AreEqual(testResults[i], expectedResults[i]);
+                for (int i = 0; i < expectedResults.Length; i++)
+                {
+                    Assert.AreEqual(testResults[i], expectedResults[i]);
+                }
+            }
+            finally
+            {
+                DeleteTempFile(xmlFile);
             }
         }
+
+        #endregion
+
+        #region  " Non Test Methods "
+
+        /// <summary>
+        /// CreateTempFile
+        /// </summary>
+        /// <param name="fileData">array containing data you want to write to the file. pass an empty array if no data needed</param>
+        /// <returns>filepath of new temp file</returns>
+        string CreateTempFile(string[] fileData)
+        {
+            string file = Path.GetTempFileName();
+
+            if (fileData.Length > 0)
+            {
+                using (StreamWriter writer = new StreamWriter(file, true))
+                {
+                    foreach (string dataItem in fileData)
+                    {
+                        writer.WriteLine(dataItem);
+                    }
+                }
+            }
+
+            return file;
+        }
+
+        /// <summary>
+        /// DeleteTempFile
+        /// </summary>
+        /// <param name="file">temp file name to delete</param>
+        void DeleteTempFile(string file)
+        {
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+            }
+        }
+
+        #endregion
     }
 }
