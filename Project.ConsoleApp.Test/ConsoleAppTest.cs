@@ -9,9 +9,9 @@ namespace Project.ConsoleApp.Test
         [TestMethod]
         public void Arguments_WithValidArguments()
         {
-            //act
             try
             {
+                //act
                 Program.Main(new string[] { "-json", string.Empty, "-xml", string.Empty });
                 
             }
@@ -32,11 +32,10 @@ namespace Project.ConsoleApp.Test
         [TestMethod]
         public void Arguments_WithTooManyArguments()
         {
-            //act
             try
             {
+                //act
                 Program.Main(new string[] { "-json", string.Empty, "-xml", string.Empty, "-test", string.Empty });
-
             }
             catch (ArgumentException aex)
             {

@@ -19,8 +19,8 @@ namespace Project.ConsoleApp
                 //create a list then order it so nulls are last in the list
                 List<string> parsedData = ifhJson?.GetParsedData(GetFilePath("-json"))
                     .Concat(ifhXml?.GetParsedData(GetFilePath("-xml")))
-                    .OrderBy(fh => fh)
-                    .ThenBy(fh => fh == null)
+                    .OrderBy(ifh => ifh)
+                    .ThenBy(ifh => ifh == null)
                     .ToList();
 
                 parsedData?.ForEach(pd => Console.WriteLine("{0}", pd));
