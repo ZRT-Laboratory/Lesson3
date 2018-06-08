@@ -24,6 +24,7 @@ namespace Project.Json.Test
         [TestMethod]
         public void AllTestFilesExist()
         {
+            //assert
             Assert.IsTrue(File.Exists(_validJSONFile));
             Assert.IsTrue(File.Exists(_invalidJSONFile));
         }
@@ -31,13 +32,14 @@ namespace Project.Json.Test
         [TestMethod]
         public void Arguments_WithValidJSONArgument()
         {
-            //assert
             try
             {
+                //act
                 Program.Main(new string[] { "-json", _validJSONFile});
             }
             catch (ArgumentException aex)
             {
+                //assert
                 Assert.Fail(aex.Message);
             }
         }
@@ -46,14 +48,7 @@ namespace Project.Json.Test
         public void Arguments_WithInvalidJSONArgument()
         {
             //assert
-            try
-            {
-                Program.Main(new string[] { "json", _validJSONFile});
-            }
-            catch (ArgumentException aex)
-            {
-                Assert.IsTrue(aex.Message == "Invalid arguments.");
-            }
+            Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "json", _validJSONFile, }));
         }
 
         [TestMethod]
@@ -66,13 +61,14 @@ namespace Project.Json.Test
         [TestMethod]
         public void Arguments_WithTooManyArguments()
         {
-            //assert
             try
             {
+                //act
                 Program.Main(new string[] { "-json", _validJSONFile, "-test1", _validJSONFile, "-test2", _validJSONFile });
             }
             catch (ArgumentException aex)
             {
+                //assert
                 Assert.Fail(aex.Message);
             }
         }
