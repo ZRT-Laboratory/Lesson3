@@ -9,13 +9,6 @@ namespace Project.Xml
 {
     public class XmlParser : IFileHandling
     {
-        string[] _clArguments = null;
-
-        public XmlParser(string[] clArguments)
-        {
-            _clArguments = clArguments;
-        }
-
         public string[] ParseFileData(string filePath)
         {
             string[] parsedData = Array.Empty<string>();

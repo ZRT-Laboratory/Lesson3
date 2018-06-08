@@ -24,6 +24,7 @@ namespace Project.Xml.Test
         [TestMethod]
         public void AllTestFilesExist()
         {
+            //assert
             Assert.IsTrue(File.Exists(_validXMLFile));
             Assert.IsTrue(File.Exists(_invalidXMLFile));
         }
@@ -31,13 +32,14 @@ namespace Project.Xml.Test
         [TestMethod]
         public void Arguments_WithValidXMLArgument()
         {
-            //assert
+            //act
             try
             {
                 Program.Main(new string[] { "-xml", _validXMLFile });
             }
             catch (ArgumentException aex)
             {
+                //assert
                 Assert.Fail(aex.Message);
             }
         }
@@ -46,40 +48,27 @@ namespace Project.Xml.Test
         public void Arguments_WithInvalidXMLArgument()
         {
             //assert
-            try
-            {
-                Program.Main(new string[] { "xml", _validXMLFile, });
-            }
-            catch (ArgumentException aex)
-            {
-                Assert.IsTrue(aex.Message == "Invalid arguments.");
-            }
+            Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "xml", _validXMLFile, }));
         }
 
         [TestMethod]
         public void Arguments_WithMissingXMLArgument()
         {
             //assert
-            try
-            {
-                Program.Main(Array.Empty<string>());
-            }
-            catch (ArgumentException aex)
-            {
-                Assert.IsTrue(aex.Message == "Invalid arguments.");
-            }
+            Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
         }
 
         [TestMethod]
         public void Arguments_WithTooManyArguments()
         {
-            //assert
+            //act
             try
             {
                 Program.Main(new string[] { "-xml", _validXMLFile, "-test1", _validXMLFile, "-test2", _validXMLFile, });
             }
             catch (ArgumentException aex)
             {
+                //assert
                 Assert.Fail(aex.Message);
             }
         }
@@ -88,7 +77,7 @@ namespace Project.Xml.Test
         public void File_WithValidXMLFormat()
         {
             //arrange
-            IFileHandling ifh = new XmlParser(new string[] { "-xml", _validXMLFile });
+            IFileHandling ifh = new XmlParser();
 
             //assert
             Assert.IsTrue(ifh.GetParsedData(_validXMLFile).Length > 0);
@@ -98,7 +87,7 @@ namespace Project.Xml.Test
         public void File_WithInvalidXMLFormat()
         {
             //arrange
-            IFileHandling ifh = new XmlParser(new string[] { "-xml", _invalidXMLFile });
+            IFileHandling ifh = new XmlParser();
 
             //assert
             Assert.ThrowsException<XmlException>(() => ifh.GetParsedData(_invalidXMLFile));
