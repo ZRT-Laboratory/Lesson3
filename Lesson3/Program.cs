@@ -14,7 +14,7 @@ namespace Project.ConsoleApp
         {
             if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                IFileHandling ifhXml =  new XmlParser();
+                IFileHandling ifhXml = GetXmlParser();
 
                 //create a list then order it so nulls are last in the list
                 List<string> parsedData = ifhXml?.GetParsedData(GetFilePath("-xml"))
@@ -45,6 +45,12 @@ namespace Project.ConsoleApp
                 }
 
                 return filePath;
+            }
+
+            IFileHandling GetXmlParser()
+            {
+                IFileHandling xml = new XmlParser();
+                return xml;
             }
         }      
     }
