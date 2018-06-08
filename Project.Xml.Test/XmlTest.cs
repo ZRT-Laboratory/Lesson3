@@ -32,9 +32,9 @@ namespace Project.Xml.Test
         [TestMethod]
         public void Arguments_WithValidXMLArgument()
         {
-            //act
             try
             {
+                //act
                 Program.Main(new string[] { "-xml", _validXMLFile });
             }
             catch (ArgumentException aex)
@@ -61,9 +61,9 @@ namespace Project.Xml.Test
         [TestMethod]
         public void Arguments_WithTooManyArguments()
         {
-            //act
             try
             {
+                //act
                 Program.Main(new string[] { "-xml", _validXMLFile, "-test1", _validXMLFile, "-test2", _validXMLFile, });
             }
             catch (ArgumentException aex)
