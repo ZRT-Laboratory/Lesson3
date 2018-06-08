@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Project.Interface;
 using Project.ConsoleApp;
+using Project.Interface;
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace Project.Xml.Test
@@ -10,16 +11,49 @@ namespace Project.Xml.Test
     [TestClass]
     public class XmlTest
     {
-        string _validXMLFile = string.Empty;
-        string _invalidXMLFile = string.Empty;
+        static string _validXMLFile = string.Empty;
+        static string _invalidXMLFile = string.Empty;
 
-        public XmlTest()
+        [ClassInitialize]
+        public static void ClassInit(TestContext tc)
         {
-            string testFilePath = Directory.GetCurrentDirectory() + @"\TestFiles\";
+            //create valid XML file
+            _validXMLFile = Path.GetTempFileName();
+            using (StreamWriter writer = new StreamWriter(_validXMLFile, true))
+            {
+                writer.WriteLine("<xml>");
+                writer.WriteLine("<orange id = 'Round Orange' />");
+                writer.WriteLine("<orange id = 'Naval Orange' />");
+                writer.WriteLine("<orange id = 'Blood Orange' />");
+                writer.WriteLine("<orange />");
+                writer.WriteLine("</xml>");
+            }
 
-            _validXMLFile = testFilePath + "XML_ValidFormat.xml";
-            _invalidXMLFile = testFilePath + "XML_InvalidFormat.xml";
+            //create invalid XML file
+            _invalidXMLFile = Path.GetTempFileName();
+            using (StreamWriter writer = new StreamWriter(_invalidXMLFile, true))
+            {
+                writer.WriteLine("<xml>");
+                writer.WriteLine("<orange id = 'Round Orange' />");
+                writer.WriteLine("<orange id = 'Naval Orange' />");
+                writer.WriteLine("<orange id = 'Blood Orange' >");
+                writer.WriteLine("</xml>");
+            }
         }
+
+        [ClassCleanup]
+        public static void ClassCleanUp()
+        {
+            if (File.Exists(_validXMLFile))
+            {
+                File.Delete(_validXMLFile);
+            }
+
+            if (File.Exists(_invalidXMLFile))
+            {
+                File.Delete(_invalidXMLFile);
+            }
+        }        
 
         [TestMethod]
         public void AllTestFilesExist()
@@ -77,10 +111,10 @@ namespace Project.Xml.Test
         public void File_WithValidXMLFormat()
         {
             //arrange
-            IFileHandling ifh = new XmlParser();
+            IFileHandling ifhXml = new XmlParser();
 
             //assert
-            Assert.IsTrue(ifh.GetParsedData(_validXMLFile).Length > 0);
+            Assert.IsTrue(ifhXml.GetParsedData(_validXMLFile).Length > 0);
         }
 
         [TestMethod]
@@ -91,6 +125,41 @@ namespace Project.Xml.Test
 
             //assert
             Assert.ThrowsException<XmlException>(() => ifh.GetParsedData(_invalidXMLFile));
+        }
+
+        [TestMethod]
+        public void File_WithValidXMLDataSortedProperly()
+        {
+            //arrange
+            IFileHandling ifhXml = new XmlParser();
+            
+            string xmlFile = Path.GetTempFileName();
+            using (StreamWriter writer = new StreamWriter(xmlFile, true))
+            {
+                writer.WriteLine("<xml>");
+                writer.WriteLine("<orange id = 'Yellow Orange' />");
+                writer.WriteLine("<orange id = 'Black Orange' />");
+                writer.WriteLine("<orange id = 'Blue Orange' />");
+                writer.WriteLine("<orange />");
+                writer.WriteLine("</xml>");
+            }
+
+            //create the expected sorted results
+            string[] expectedResults = new string[] { "Black Orange", "Blue Orange", "Yellow Orange", null };
+
+            //act
+            //create a list then order it so nulls are last in the list
+            string[] testResults = ifhXml.GetParsedData(xmlFile)
+                .OrderBy(ifh => ifh)
+                .ToArray()
+                .OrderBy(ifh => ifh == null)
+                .ToArray();
+
+            //assert
+            for (int i =0; i < expectedResults.Length; i++)
+            {
+                Assert.AreEqual(testResults[i], expectedResults[i]);
+            }
         }
     }
 }

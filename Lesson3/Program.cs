@@ -14,17 +14,17 @@ namespace Project.ConsoleApp
         {
             if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
-                IFileHandling ifhXml = GetXmlParser();
+                IFileHandling ifhXml = new XmlParser();
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifhXml?.GetParsedData(GetFilePath("-xml"))
+                List<string> parsedData = ifhXml.GetParsedData(GetFilePath("-xml"))
                     .OrderBy(ifh => ifh)
                     .ToList()
                     .OrderBy(ifh => ifh == null)
                     .ToList();
 
                 //display the list and replace nulls with No Value
-                parsedData?.ForEach(pd => Console.WriteLine("{0}", pd ?? "No Value"));
+                parsedData.ForEach(pd => Console.WriteLine("{0}", pd ?? "No Value"));
             }
             else
             {
@@ -42,16 +42,10 @@ namespace Project.ConsoleApp
                 if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
                 {
                     throw new ArgumentException("Invalid file name", argumentNameValue);
-                }
+                }                
 
                 return filePath;
             }
-
-            IFileHandling GetXmlParser()
-            {
-                IFileHandling xml = new XmlParser();
-                return xml;
-            }
-        }      
+        }
     }
 }
