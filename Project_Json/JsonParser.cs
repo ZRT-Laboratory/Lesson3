@@ -10,13 +10,6 @@ namespace Project.Json
 {
     public class JsonParser : IFileHandling
     {
-        string[] _clArguments = null;
-
-        public JsonParser(string[] clArguments)
-        {
-            _clArguments = clArguments;
-        }
-
         public string[] ParseFileData(string filePath)
         {
             string[] parsedData = Array.Empty<string>();

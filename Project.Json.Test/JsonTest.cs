@@ -60,14 +60,7 @@ namespace Project.Json.Test
         public void Arguments_WithMissingJSONArgument()
         {
             //assert
-            try
-            {
-                Program.Main(Array.Empty<string>());
-            }
-            catch (ArgumentException aex)
-            {
-                Assert.IsTrue(aex.Message == "Invalid arguments.");
-            }
+            Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
         }
 
         [TestMethod]
@@ -88,20 +81,20 @@ namespace Project.Json.Test
         public void File_WithValidJSONFormat()
         {
             //arrange
-            IFileHandling ifh = new JsonParser(new string[] { "-json", _validJSONFile });
+            IFileHandling ifhJson = new JsonParser();
 
             //assert
-            Assert.IsTrue(ifh.GetParsedData(_validJSONFile).Length > 0);
+            Assert.IsTrue(ifhJson.GetParsedData(_validJSONFile).Length > 0);
         }
 
         [TestMethod]
         public void File_WithInvalidJSONFormat()
         {
             //arrange
-            IFileHandling ifh = new JsonParser(new string[] { "-json", _invalidJSONFile });
+            IFileHandling ifhJson = new JsonParser();
 
             //assert
-            Assert.ThrowsException<JsonSerializationException>(() => ifh.GetParsedData(_invalidJSONFile));
+            Assert.ThrowsException<JsonSerializationException>(() => ifhJson.GetParsedData(_invalidJSONFile));
         }
     }
 }
