@@ -17,7 +17,7 @@ namespace Project.ConsoleApp
                 IFileHandling ifhXml = new XmlParser();
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifhXml.GetParsedData(GetFilePath("-xml"))
+                List<string> parsedData = ifhXml.GetParsedData(GetFileData(GetFilePath("-xml")))
                     .OrderBy(ifh => ifh)
                     .ToList()
                     .OrderBy(ifh => ifh == null)
@@ -39,12 +39,24 @@ namespace Project.ConsoleApp
                     .First()
                     .ToString();
 
-                if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
+                if (!File.Exists(filePath))
                 {
                     throw new ArgumentException("Invalid file name", argumentNameValue);
                 }                
 
                 return filePath;
+            }
+
+            string GetFileData(string filePath)
+            {
+                string fileData = string.Empty;
+
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    fileData = reader.ReadToEnd();
+                }
+                
+                return fileData;
             }
         }
     }

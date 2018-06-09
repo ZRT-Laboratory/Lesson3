@@ -9,18 +9,15 @@ namespace Project.Xml
 {
     public class XmlParser : IFileHandling
     {
-        public string[] ParseFileData(string filePath)
+        public string[] ParseFileData(string fileData)
         {
             string[] parsedData = Array.Empty<string>();
 
             try
             {
-                if (File.Exists(filePath))
+                if (!string.IsNullOrEmpty(fileData))
                 {
-                    //load xml document
-                    XDocument doc = XDocument.Load(filePath);
-
-                    //create a list of xml values
+                    XDocument doc = XDocument.Parse(fileData);
                     parsedData = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : null).ToArray();
                 }
             }
@@ -34,7 +31,7 @@ namespace Project.Xml
 
         #region  ' IFileHandling  '
 
-        public string[] GetParsedData(string filePath) => ParseFileData(filePath).ToArray();
+        public string[] GetParsedData(string fileData) => ParseFileData(fileData).ToArray();
 
         #endregion
     }
