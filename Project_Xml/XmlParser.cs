@@ -18,8 +18,13 @@ namespace Project.Xml
             {
                 if (!string.IsNullOrEmpty(fileData))
                 {
-                    XDocument doc = XDocument.Parse(fileData);
-                    parsedData = doc.Root.Elements().Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : null).ToArray();
+                    //create array of xml items
+                    parsedData = XDocument.Parse(fileData)
+                        .Root
+                        .Elements()
+                        .Select(xel => xel.Attributes("id")
+                        .Any() ? xel.Attribute("id").Value : null)
+                        .ToArray();
                 }
             }
             catch
