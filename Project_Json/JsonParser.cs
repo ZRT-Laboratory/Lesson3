@@ -3,23 +3,25 @@ using Newtonsoft.Json.Linq;
 using Project.Interface;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Project.Json
 {
     public class JsonParser : IFileHandling
     {
-        public string[] ParseFileData(string filePath)
+        #region  ' IFileHandling  '
+
+        public string[] GetParsedData(string fileData)
         {
             string[] parsedData = Array.Empty<string>();
 
             try
             {
-                if (File.Exists(filePath))
+                if (!string.IsNullOrEmpty(fileData))
                 {
-                    //load json file and retrieve objects
-                    var jobjects = JsonConvert.DeserializeObject<List<JObject>>(File.ReadAllText(filePath));
+                    //create json objects from string data
+                    var jobjects = new List<JObject>();
+                    JsonConvert.PopulateObject(fileData, jobjects);
 
                     //create a list of json values
                     parsedData = jobjects.Select(jo => jo).Properties().Select(p => !string.IsNullOrEmpty(p.Value.ToString()) ? p.Value.ToString() : null).ToArray();
@@ -32,10 +34,6 @@ namespace Project.Json
 
             return parsedData;
         }
-
-        #region  ' IFileHandling  '
-
-        public string[] GetParsedData(string filePath) => ParseFileData(filePath).ToArray();
 
         #endregion
     }
