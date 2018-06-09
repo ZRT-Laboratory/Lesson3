@@ -39,7 +39,7 @@ namespace Project.Xml.Test
         public void Arguments_WithInvalidXMLArgument()
         {
             //arrange
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" } );
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
 
             //assert
             try
@@ -82,18 +82,9 @@ namespace Project.Xml.Test
         {
             //arrange
             IFileHandling ifhXml = new XmlParser();
-            
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
 
             //assert
-            try
-            {
-                Assert.IsTrue(ifhXml.GetParsedData(xmlFile).Length > 0);
-            }
-            finally
-            {
-                DeleteTempFile(xmlFile);
-            }
+            Assert.IsTrue(ifhXml.GetParsedData("<xml>, <orange id = 'Round Orange' />, </xml>").Length > 0);
         }
 
         [TestMethod]
@@ -102,17 +93,8 @@ namespace Project.Xml.Test
             //arrange
             IFileHandling ifh = new XmlParser();
 
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' >", "</xml>" });
-
             //assert
-            try
-            {
-                Assert.ThrowsException<XmlException>(() => ifh.GetParsedData(xmlFile));
-            }
-            finally
-            {
-                DeleteTempFile(xmlFile);
-            }
+            Assert.ThrowsException<XmlException>(() => ifh.GetParsedData("<xml>, <orange id = 'Round Orange' >, </xml>"));
         }
 
         [TestMethod]
@@ -121,30 +103,24 @@ namespace Project.Xml.Test
             //arrange
             IFileHandling ifhXml = new XmlParser();
 
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "<orange id = 'Naval Orange' />", "<orange id = 'Blood Orange' />", "<orange />", "</xml>" });
+            //create xml string
+            string xml = "<xml> <orange id = 'Round Orange' /><orange id = 'Naval Orange' /><orange id = 'Blood Orange' /><orange /></xml>";
 
-            //create the expected sorted results
+            //create the expected in the proper sort order
             string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", null };
 
             //act
             //create a list then order it so nulls are last in the list
-            string[] testResults = ifhXml.GetParsedData(xmlFile)
+            string[] testResults = ifhXml.GetParsedData(xml)
                 .OrderBy(ifh => ifh)
                 .ToArray()
                 .OrderBy(ifh => ifh == null)
                 .ToArray();
 
             //assert
-            try
+            for (int i = 0; i < expectedResults.Length; i++)
             {
-                for (int i = 0; i < expectedResults.Length; i++)
-                {
-                    Assert.AreEqual(testResults[i], expectedResults[i]);
-                }
-            }
-            finally
-            {
-                DeleteTempFile(xmlFile);
+                Assert.AreEqual(testResults[i], expectedResults[i]);
             }
         }
 
