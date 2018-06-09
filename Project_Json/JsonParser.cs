@@ -19,12 +19,11 @@ namespace Project.Json
             {
                 if (!string.IsNullOrEmpty(fileData))
                 {
-                    //create json objects from string data
-                    var jobjects = new List<JObject>();
-                    JsonConvert.PopulateObject(fileData, jobjects);
-
                     //create a list of json values
-                    parsedData = jobjects.Select(jo => jo).Properties().Select(p => !string.IsNullOrEmpty(p.Value.ToString()) ? p.Value.ToString() : null).ToArray();
+                    parsedData = JsonConvert.DeserializeObject<JObject[]>(fileData)
+                        .Select(jo => jo).Properties()
+                        .Select(p => !string.IsNullOrEmpty(p.Value.ToString()) ? p.Value.ToString() : null)
+                        .ToArray();
                 }
             }
             catch
