@@ -2,6 +2,6 @@
 {
     public interface IFileHandling
     {
-        string[] GetParsedData(string filePath);
+        string[] GetParsedData(string fileData);
     }
 }

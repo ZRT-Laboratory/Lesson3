@@ -17,7 +17,7 @@ namespace Project.ConsoleApp
                 IFileHandling ifhJson = new JsonParser();
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifhJson?.GetParsedData(GetFilePath("-json"))
+                List<string> parsedData = ifhJson?.GetParsedData(GetFileData(GetFilePath("-json")))
                     .OrderBy(ifh => ifh)
                     .ToList()
                     .OrderBy(ifh => ifh == null)
@@ -46,6 +46,21 @@ namespace Project.ConsoleApp
 
                 return filePath;
             }
+
+            string GetFileData(string filePath)
+            {
+                string fileData = string.Empty;
+
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        fileData = reader.ReadToEnd();
+                    }
+                }
+
+                return fileData;
+            }       
         }      
     }
 }
