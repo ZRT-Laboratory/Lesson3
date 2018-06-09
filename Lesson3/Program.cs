@@ -39,7 +39,7 @@ namespace Project.ConsoleApp
                     .First()
                     .ToString();
 
-                if (!File.Exists(filePath))
+                if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
                 {
                     throw new ArgumentException("Invalid file name", argumentNameValue);
                 }                
@@ -51,9 +51,12 @@ namespace Project.ConsoleApp
             {
                 string fileData = string.Empty;
 
-                using (StreamReader reader = new StreamReader(filePath))
+                if (!string.IsNullOrEmpty(filePath))
                 {
-                    fileData = reader.ReadToEnd();
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        fileData = reader.ReadToEnd();
+                    }
                 }
                 
                 return fileData;
