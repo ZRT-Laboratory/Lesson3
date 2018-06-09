@@ -1,6 +1,5 @@
 ﻿using Project.Interface;
 using System;
-using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
@@ -9,7 +8,9 @@ namespace Project.Xml
 {
     public class XmlParser : IFileHandling
     {
-        public string[] ParseFileData(string fileData)
+        #region  ' IFileHandling  '
+
+        public string[] GetParsedData(string fileData)
         {
             string[] parsedData = Array.Empty<string>();
 
@@ -28,10 +29,6 @@ namespace Project.Xml
 
             return parsedData;
         }
-
-        #region  ' IFileHandling  '
-
-        public string[] GetParsedData(string fileData) => ParseFileData(fileData).ToArray();
 
         #endregion
     }
