@@ -17,8 +17,8 @@ namespace Project.ConsoleApp
                 IFileHandling ifhXml = GetXmlParser();
 
                 //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifhJson?.GetParsedData(GetFilePath("-json"))
-                    .Concat(ifhXml?.GetParsedData(GetFilePath("-xml")))
+                List<string> parsedData = ifhJson?.GetParsedData(GetFileData(GetFilePath("-json")))
+                    .Concat(ifhXml?.GetParsedData(GetFileData(GetFilePath("-xml"))))
                     .OrderBy(ifh => ifh)
                     .ThenBy(ifh => ifh == null)
                     .ToList();
@@ -44,6 +44,21 @@ namespace Project.ConsoleApp
                 }
 
                 return filePath;
+            }
+
+            string GetFileData(string filePath)
+            {
+                string fileData = string.Empty;
+
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        fileData = reader.ReadToEnd();
+                    }
+                }
+
+                return fileData;
             }
 
             IFileHandling GetJsonParser() => null;
