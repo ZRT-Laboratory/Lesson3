@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Project.ConsoleApp;
 using Project.Interface;
 using System;
 using System.IO;
-using Project.ConsoleApp;
-using System.Linq;
 
 namespace Project.Json.Test
 {
@@ -98,7 +97,7 @@ namespace Project.Json.Test
         }
 
         [TestMethod]
-        public void File_WithValidJSONDataSortedProperly()
+        public void File_WithValidJSONNonNumericDataSorted()
         {
             //arrange
             IFileHandling ifhJson = new JsonParser();
@@ -108,6 +107,52 @@ namespace Project.Json.Test
 
             //create the expected results in the expected sort order
             string[] expectedResults = new string[] { "Granny Smith Apple","Green Apple", "Red Apple",null };
+
+            //act
+            //create the testresults sorted with nulls at the end
+            string[] testResults = Program.GetSortedData(ifhJson.GetParsedData(json)).ToArray();
+
+            //assert
+            for (int i = 0; i < expectedResults.Length; i++)
+            {
+                Assert.AreEqual(testResults[i], expectedResults[i]);
+            }
+        }
+
+        [TestMethod]
+        public void File_WithValidJSONNumericDataSorted()
+        {
+            //arrange
+            IFileHandling ifhJson = new JsonParser();
+
+            //create json string
+            string json = "[{'Age':55},{'Age':92},{'Age':25},{'Age':null}]";
+
+            //create the expected results in the expected sort order
+            string[] expectedResults = new string[] { "25", "55", "92", null };
+
+            //act
+            //create the testresults sorted with nulls at the end
+            string[] testResults = Program.GetSortedData(ifhJson.GetParsedData(json)).ToArray();
+
+            //assert
+            for (int i = 0; i < expectedResults.Length; i++)
+            {
+                Assert.AreEqual(testResults[i], expectedResults[i]);
+            }
+        }
+
+        [TestMethod]
+        public void File_WithValidJSONAlphaNumericDataSorted()
+        {
+            //arrange
+            IFileHandling ifhJson = new JsonParser();
+
+            //create json string
+            string json = "[{'Name':'Red Apple'},{'Name':'Green Apple'},{'Name':null},{'Age':92},{'Age':55},{'Age':null}]";
+
+            //create the expected results in the expected sort order
+            string[] expectedResults = new string[] { "55", "92", "Green Apple", "Red Apple", null, null};
 
             //act
             //create the testresults sorted with nulls at the end
