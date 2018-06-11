@@ -17,8 +17,8 @@ namespace Project.ConsoleApp
             if (fileData != null)
             {
                 sortedData = fileData
-                    .OrderBy(ifh => ifh == null)
-                    .ThenBy(ifh => ifh)
+                    .OrderBy(fd => fd == null)
+                    .ThenBy(fd => fd)
                     .ToList();
             }
 
@@ -33,7 +33,7 @@ namespace Project.ConsoleApp
                 IFileHandling ifhXml = new XmlParser();
 
                 //get file data sorted with nulls at the end of the list
-                List<string> parsedData = GetSortedData(ifhXml?.GetParsedData(GetFileData(GetFilePath("-xml"))).ToArray()).ToList();
+                List<string> parsedData = GetSortedData(ifhXml?.GetParsedData(GetFileData(GetFilePath("-xml")))).ToList();
 
                 //display the list and replace nulls with No Value
                 parsedData.ForEach(pd => Console.WriteLine("{0}", pd ?? "No Value"));

@@ -22,8 +22,7 @@ namespace Project.Xml
                     parsedData = XDocument.Parse(fileData)
                         .Root
                         .Elements()
-                        .Select(xel => xel.Attributes("id")
-                        .Any() ? xel.Attribute("id").Value : null)
+                        .Select(xel => xel.Attributes("id").Any() ? xel.Attribute("id").Value : null)
                         .ToArray();
                 }
             }
