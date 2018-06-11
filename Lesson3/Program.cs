@@ -16,8 +16,8 @@ namespace Project.ConsoleApp
             if (fileData != null)
             {
                 sortedData = fileData
-                    .OrderBy(ifh => ifh == null)
-                    .ThenBy(ifh => ifh)
+                    .OrderBy(fd => fd == null)
+                    .ThenBy(fd => fd)
                     .ToList();
             }
 
