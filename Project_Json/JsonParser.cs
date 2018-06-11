@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using Project.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Project.Json
@@ -22,7 +21,7 @@ namespace Project.Json
                     //create a list of json values
                     parsedData = JsonConvert.DeserializeObject<JObject[]>(fileData)
                         .Select(jo => jo).Properties()
-                        .Select(p => !string.IsNullOrEmpty(p.Value.ToString()) ? p.Value.ToString() : null)
+                        .Select(jo => !string.IsNullOrEmpty(jo.Value.ToString()) ? jo.Value.ToString() : null)
                         .ToArray();
                 }
             }
