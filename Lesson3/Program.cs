@@ -9,6 +9,22 @@ namespace Project.ConsoleApp
 {
     public class Program
     {
+        public static List<string> GetSortedData(string[] fileData)
+        {
+            List<string> sortedData = new List<string>();
+
+            //create a list then order it so nulls are last in the list
+            if (fileData != null)
+            {
+                sortedData = fileData
+                    .OrderBy(ifh => ifh == null)
+                    .ThenBy(ifh => ifh)
+                    .ToList();
+            }
+
+            return sortedData;
+        }
+
         [STAThread]
         public static void Main(string[] clArguments)
         {
@@ -16,12 +32,8 @@ namespace Project.ConsoleApp
             {
                 IFileHandling ifhXml = new XmlParser();
 
-                //create a list then order it so nulls are last in the list
-                List<string> parsedData = ifhXml.GetParsedData(GetFileData(GetFilePath("-xml")))
-                    .OrderBy(ifh => ifh)
-                    .ToList()
-                    .OrderBy(ifh => ifh == null)
-                    .ToList();
+                //get file data sorted with nulls at the end of the list
+                List<string> parsedData = GetSortedData(ifhXml?.GetParsedData(GetFileData(GetFilePath("-xml"))).ToArray()).ToList();
 
                 //display the list and replace nulls with No Value
                 parsedData.ForEach(pd => Console.WriteLine("{0}", pd ?? "No Value"));

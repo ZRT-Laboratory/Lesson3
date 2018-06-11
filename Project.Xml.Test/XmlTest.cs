@@ -106,18 +106,15 @@ namespace Project.Xml.Test
             //create xml string
             string xml = "<xml> <orange id = 'Round Orange' /><orange id = 'Naval Orange' /><orange id = 'Blood Orange' /><orange /></xml>";
 
-            //create the expected in the proper sort order
+            //create the expected results in the expected sort order
             string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", null };
 
             //act
-            //create a list then order it so nulls are last in the list
-            string[] testResults = ifhXml.GetParsedData(xml)
-                .OrderBy(ifh => ifh)
-                .ToArray()
-                .OrderBy(ifh => ifh == null)
-                .ToArray();
+            //create the testresults sorted with nulls at the end
+            string[] testResults = Program.GetSortedData(ifhXml.GetParsedData(xml)).ToArray();
 
             //assert
+            //validate that the sorted testresults match the sorted expected results
             for (int i = 0; i < expectedResults.Length; i++)
             {
                 Assert.AreEqual(testResults[i], expectedResults[i]);
