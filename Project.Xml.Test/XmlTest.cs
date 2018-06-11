@@ -3,7 +3,6 @@ using Project.ConsoleApp;
 using Project.Interface;
 using System;
 using System.IO;
-using System.Linq;
 using System.Xml;
 
 namespace Project.Xml.Test
@@ -17,7 +16,7 @@ namespace Project.Xml.Test
         public void Arguments_WithValidXMLArgument()
         {
             //arrange
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange'/>", "<orange id = 'Naval Orange'/>", "</xml>" });
 
             try
             {
@@ -39,7 +38,7 @@ namespace Project.Xml.Test
         public void Arguments_WithInvalidXMLArgument()
         {
             //arrange
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange'/>", "<orange id = 'Naval Orange'/>", "</xml>" });
 
             //assert
             try
@@ -59,7 +58,7 @@ namespace Project.Xml.Test
         public void Arguments_WithTooManyArguments()
         {
             //arrange
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "</xml>" });
+            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange'/>", "<orange id = 'Naval Orange'/>", "</xml>" });
 
             try
             {
@@ -84,7 +83,7 @@ namespace Project.Xml.Test
             IFileHandling ifhXml = new XmlParser();
 
             //assert
-            Assert.IsTrue(ifhXml.GetParsedData("<xml>, <orange id = 'Round Orange' />, </xml>").Length > 0);
+            Assert.IsTrue(ifhXml.GetParsedData("<xml>,<orange id = 'Round Orange'/>,<orange id = 'Naval Orange'/>,</xml>").Length > 0);
         }
 
         [TestMethod]
@@ -98,7 +97,7 @@ namespace Project.Xml.Test
         }
 
         [TestMethod]
-        public void File_WithValidXMLDataSortedProperly()
+        public void File_WithValidXMLNonNumericDataSorted()
         {
             //arrange
             IFileHandling ifhXml = new XmlParser();
@@ -108,6 +107,54 @@ namespace Project.Xml.Test
 
             //create the expected results in the expected sort order
             string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", null };
+
+            //act
+            //create the testresults sorted with nulls at the end
+            string[] testResults = Program.GetSortedData(ifhXml.GetParsedData(xml)).ToArray();
+
+            //assert
+            //validate that the sorted testresults match the sorted expected results
+            for (int i = 0; i < expectedResults.Length; i++)
+            {
+                Assert.AreEqual(testResults[i], expectedResults[i]);
+            }
+        }
+
+        [TestMethod]
+        public void File_WithValidXMLNumericDataSorted()
+        {
+            //arrange
+            IFileHandling ifhXml = new XmlParser();
+
+            //create xml string
+            string xml = "<xml> <age id = '55' /><age id = '92' /><age id = '25' /><orange /></xml>";
+
+            //create the expected results in the expected sort order
+            string[] expectedResults = new string[] { "25", "55", "92", null };
+
+            //act
+            //create the testresults sorted with nulls at the end
+            string[] testResults = Program.GetSortedData(ifhXml.GetParsedData(xml)).ToArray();
+
+            //assert
+            //validate that the sorted testresults match the sorted expected results
+            for (int i = 0; i < expectedResults.Length; i++)
+            {
+                Assert.AreEqual(testResults[i], expectedResults[i]);
+            }
+        }
+
+        [TestMethod]
+        public void File_WithValidXMLAlphaNumericDataSorted()
+        {
+            //arrange
+            IFileHandling ifhXml = new XmlParser();
+
+            //create xml string
+            string xml = "<xml> <orange id = 'Round Orange' /><orange id = 'Naval Orange' /><orange /><age id = '55' /><age id = '92' /><age /></xml>";
+
+            //create the expected results in the expected sort order
+            string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Round Orange", null, null };
 
             //act
             //create the testresults sorted with nulls at the end
