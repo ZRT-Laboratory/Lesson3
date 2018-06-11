@@ -106,16 +106,12 @@ namespace Project.Json.Test
             //create json string
             string json = "[{'Name':'Red Apple'},{'Name':'Green Apple'},{'Name':'Granny Smith Apple'},{'Name':null}]";
 
-            //create the expected in the proper sort order
+            //create the expected results in the expected sort order
             string[] expectedResults = new string[] { "Granny Smith Apple","Green Apple", "Red Apple",null };
 
             //act
-            //create a list then order it so nulls are last in the list
-            string[] testResults = ifhJson.GetParsedData(json)
-                .OrderBy(ifh => ifh)
-                .ToArray()
-                .OrderBy(ifh => ifh == null)
-                .ToArray();
+            //create the testresults sorted with nulls at the end
+            string[] testResults = Program.GetSortedData(ifhJson.GetParsedData(json)).ToArray();
 
             //assert
             for (int i = 0; i < expectedResults.Length; i++)
