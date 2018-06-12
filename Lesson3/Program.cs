@@ -18,7 +18,7 @@ namespace Project.ConsoleApp
                 IFileHandling ifhJson = null;
                 IFileHandling ifhXml = new XmlParser();
 
-                string[] fileData = ifhJson?.GetParsedData(File.ReadAllText(GetFilePath("-json"))).Concat(ifhXml?.GetParsedData(File.ReadAllText(GetFilePath("-xml")))).ToArray();
+                string[] fileData = ifhXml.GetParsedData(File.ReadAllText(GetFilePath("-xml"))).ToArray();
 
                 List<string> parsedData = fileData?.OrderBy(fd => fd == null).ThenBy(fd => fd).ToList();
 

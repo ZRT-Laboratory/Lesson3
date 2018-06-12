@@ -2,7 +2,9 @@
 using Project.ConsoleApp;
 using Project.Interface;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace Project.Xml.Test
@@ -10,74 +12,7 @@ namespace Project.Xml.Test
     [TestClass]
     public class XmlTest
     {
-        #region " Test Methods "
-
-        [TestMethod]
-        public void Arguments_WithValidXMLArgument()
-        {
-            //arrange
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange'/>", "<orange id = 'Naval Orange'/>", "</xml>" });
-
-            try
-            {
-                //act
-                Program.Main(new string[] { "-xml", xmlFile });
-            }
-            catch (ArgumentException aex)
-            {
-                //assert
-                Assert.Fail(aex.Message);
-            }
-            finally
-            {
-                File.Delete(xmlFile);
-            }
-        }
-
-        [TestMethod]
-        public void Arguments_WithInvalidXMLArgument()
-        {
-            //arrange
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange'/>", "<orange id = 'Naval Orange'/>", "</xml>" });
-
-            //assert
-            try
-            {
-                Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "xml", xmlFile, }));
-            }
-            finally
-            {
-                File.Delete(xmlFile);
-            }
-        }
-
-        [TestMethod]
-        public void Arguments_WithMissingXMLArgument() => Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
-
-        [TestMethod]
-        public void Arguments_WithTooManyArguments()
-        {
-            //arrange
-            string xmlFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange'/>", "<orange id = 'Naval Orange'/>", "</xml>" });
-
-            try
-            {
-                //act
-                Program.Main(new string[] { "-xml", xmlFile, "-test1", xmlFile, "-test2", xmlFile, });
-            }
-            catch (ArgumentException aex)
-            {
-                //assert
-                Assert.Fail(aex.Message);
-            }
-            finally
-            {
-                File.Delete(xmlFile);
-            }
-        }
-
-        [TestMethod]
-        public void Arguments_WithInvalidXMLFileName() => Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "-xml", "BadFile.txt"}));
+        #region " Test Methods "        
 
         [TestMethod]
         public void File_WithValidXMLFormat()
@@ -113,7 +48,7 @@ namespace Project.Xml.Test
 
             //act
             //create the testresults sorted with nulls at the end
-            string[] testResults = Program.GetSortedData(ifhXml.GetParsedData(xml)).ToArray();
+            string[] testResults = ifhXml.GetParsedData(xml);            
 
             //assert
             //validate that the sorted testresults match the sorted expected results
@@ -137,7 +72,7 @@ namespace Project.Xml.Test
 
             //act
             //create the testresults sorted with nulls at the end
-            string[] testResults = Program.GetSortedData(ifhXml.GetParsedData(xml)).ToArray();
+            string[] testResults = ifhXml.GetParsedData(xml);
 
             //assert
             //validate that the sorted testresults match the sorted expected results
@@ -161,7 +96,7 @@ namespace Project.Xml.Test
 
             //act
             //create the testresults sorted with nulls at the end
-            string[] testResults = Program.GetSortedData(ifhXml.GetParsedData(xml)).ToArray();
+            string[] testResults = ifhXml.GetParsedData(xml);
 
             //assert
             //validate that the sorted testresults match the sorted expected results
@@ -169,6 +104,19 @@ namespace Project.Xml.Test
             {
                 Assert.AreEqual(testResults[i], expectedResults[i]);
             }
+        }
+
+        [TestMethod]
+        public void File_WithValidXMNoValue()
+        {
+            //arrange
+            IFileHandling ifhXml = new XmlParser();
+
+            List<string> parsedData = ifhXml.GetParsedData("<xml>,<orange id = 'Round Orange'/>,<orange />,,</xml>").ToList();
+            parsedData = parsedData.Select(x => x != null ? x : "No Value").ToList();
+
+            //assert
+            Assert.IsTrue(parsedData.Any(pd => pd == "No Value"));
         }
 
         #endregion
