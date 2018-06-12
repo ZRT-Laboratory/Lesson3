@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using Project.ConsoleApp;
 using Project.Interface;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Project.Json.Test
 {
@@ -11,73 +13,6 @@ namespace Project.Json.Test
     public class JsonTest
     {
         #region " Test Methods "
-
-        [TestMethod]
-        public void Arguments_WithValidJSONArgument()
-        {
-            //arrange
-            string jsonFile = CreateTempFile(new string[] { "[{'Name':'Red Apple'},{ 'Name':'Green Apple'}]" });
-
-            try
-            {
-                //act
-                Program.Main(new string[] { "-json", jsonFile });
-            }
-            catch (ArgumentException aex)
-            {
-                //assert
-                Assert.Fail(aex.Message);
-            }
-            finally
-            {
-                File.Delete(jsonFile);
-            }
-        }
-
-        [TestMethod]
-        public void Arguments_WithInvalidJSONArgument()
-        {
-            //arrange
-            string jsonFile = CreateTempFile(new string[] { "[{'Name':'Red Apple'},{ 'Name':'Green Apple'}]" });
-
-            //assert
-            try
-            {
-                Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "json", jsonFile }));
-            }
-            finally
-            {
-                File.Delete(jsonFile);
-            }
-        }
-
-        [TestMethod]
-        public void Arguments_WithMissingJSONArgument() => Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
-
-        [TestMethod]
-        public void Arguments_WithTooManyArguments()
-        {
-            //arrange
-            string jsonFile = CreateTempFile(new string[] { "[{'Name':'Red Apple'},{ 'Name':'Green Apple'}]" });
-
-            try
-            {
-                //act
-                Program.Main(new string[] { "-json", jsonFile, "-test1", jsonFile, "-test2", jsonFile });
-            }
-            catch (ArgumentException aex)
-            {
-                //assert
-                Assert.Fail(aex.Message);
-            }
-            finally
-            {
-                File.Delete(jsonFile);
-            }
-        }
-
-        [TestMethod]
-        public void Arguments_WithInvalidJSONFileName() => Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "-json", "BadFile.txt" }));
 
         [TestMethod]
         public void File_WithValidJSONFormat()
@@ -109,11 +44,11 @@ namespace Project.Json.Test
             string json = "[{'Name':'Red Apple'},{'Name':'Green Apple'},{'Name':'Granny Smith Apple'},{'Name':null}]";
 
             //create the expected results in the expected sort order
-            string[] expectedResults = new string[] { "Granny Smith Apple","Green Apple", "Red Apple",null };
+            string[] expectedResults = new string[] { "Granny Smith Apple","Green Apple", "Red Apple", null };
 
             //act
             //create the testresults sorted with nulls at the end
-            string[] testResults = Program.GetSortedData(ifhJson.GetParsedData(json)).ToArray();
+            string[] testResults = ifhJson.GetParsedData(json);
 
             //assert
             for (int i = 0; i < expectedResults.Length; i++)
@@ -136,7 +71,7 @@ namespace Project.Json.Test
 
             //act
             //create the testresults sorted with nulls at the end
-            string[] testResults = Program.GetSortedData(ifhJson.GetParsedData(json)).ToArray();
+            string[] testResults = ifhJson.GetParsedData(json);
 
             //assert
             for (int i = 0; i < expectedResults.Length; i++)
@@ -159,13 +94,26 @@ namespace Project.Json.Test
 
             //act
             //create the testresults sorted with nulls at the end
-            string[] testResults = Program.GetSortedData(ifhJson.GetParsedData(json)).ToArray();
+            string[] testResults = ifhJson.GetParsedData(json);
 
             //assert
             for (int i = 0; i < expectedResults.Length; i++)
             {
                 Assert.AreEqual(testResults[i], expectedResults[i]);
             }
+        }
+
+        [TestMethod]
+        public void File_WithValidJSONNoValue()
+        {
+            //arrange
+            IFileHandling ifhJson = new JsonParser();
+
+            List<string> parsedData = ifhJson.GetParsedData("[{ 'Name':'Red Apple'},{ 'Name':'Green Apple'},{'Name':null}]").ToList();
+            parsedData = parsedData.Select(x => x != null ? x : "No Value").ToList();
+
+            //assert
+            Assert.IsTrue(parsedData.Any(pd => pd == "No Value"));
         }
 
         #endregion
@@ -183,13 +131,7 @@ namespace Project.Json.Test
 
             if (fileData.Length > 0)
             {
-                using (StreamWriter writer = new StreamWriter(file, true))
-                {
-                    foreach (string dataItem in fileData)
-                    {
-                        writer.WriteLine(dataItem);
-                    }
-                }
+                File.WriteAllLines(file, fileData);
             }
 
             return file;
