@@ -30,7 +30,7 @@ namespace Project.Xml.Test
             }
             finally
             {
-                DeleteTempFile(xmlFile);
+                File.Delete(xmlFile);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Project.Xml.Test
             }
             finally
             {
-                DeleteTempFile(xmlFile);
+                File.Delete(xmlFile);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Project.Xml.Test
             }
             finally
             {
-                DeleteTempFile(xmlFile);
+                File.Delete(xmlFile);
             }
         }
 
@@ -196,18 +196,6 @@ namespace Project.Xml.Test
             }
 
             return file;
-        }
-
-        /// <summary>
-        /// DeleteTempFile
-        /// </summary>
-        /// <param name="file">temp file name to delete</param>
-        void DeleteTempFile(string file)
-        {
-            if (File.Exists(file))
-            {
-                File.Delete(file);
-            }
         }
 
         #endregion
