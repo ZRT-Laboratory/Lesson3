@@ -26,7 +26,7 @@ namespace Project.ConsoleApp.Test
             }
             finally
             {
-                DeleteTempFile(file);
+                File.Delete(file);
             }
         }
 
@@ -51,7 +51,7 @@ namespace Project.ConsoleApp.Test
             }
             finally
             {
-                DeleteTempFile(file);
+                File.Delete(file);
             }
         }
 
@@ -71,28 +71,10 @@ namespace Project.ConsoleApp.Test
 
             if (fileData.Length > 0)
             {
-                using (StreamWriter writer = new StreamWriter(file, true))
-                {
-                    foreach (string dataItem in fileData)
-                    {
-                        writer.WriteLine(dataItem);
-                    }
-                }
+                File.WriteAllLines(file, fileData);
             }
 
             return file;
-        }
-
-        /// <summary>
-        /// DeleteTempFile
-        /// </summary>
-        /// <param name="file">temp file name to delete</param>
-        void DeleteTempFile(string file)
-        {
-            if (File.Exists(file))
-            {
-                File.Delete(file);
-            }
         }
 
         #endregion
