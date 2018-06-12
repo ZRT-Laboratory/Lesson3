@@ -9,31 +9,18 @@ namespace Project.ConsoleApp
 {
     public class Program
     {
-        public static List<string> GetSortedData(string[] fileData)
-        {
-            List<string> sortedData = new List<string>();
-
-            //create a list then order it so nulls are last in the list
-            if (fileData != null)
-            {
-                sortedData = fileData
-                    .OrderBy(fd => fd == null)
-                    .ThenBy(fd => fd)
-                    .ToList();
-            }
-
-            return sortedData;
-        }
-
         [STAThread]
         public static void Main(string[] clArguments)
         {
-            if (clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
+            if (clArguments.Any(a => String.Compare(a, "-json", true) == 0) || clArguments.Any(a => String.Compare(a, "-xml", true) == 0))
             {
+                //use interface
+                IFileHandling ifhJson = null;
                 IFileHandling ifhXml = new XmlParser();
 
-                //get file data sorted with nulls at the end of the list
-                List<string> parsedData = GetSortedData(ifhXml?.GetParsedData(GetFileData(GetFilePath("-xml")))).ToList();
+                string[] fileData = ifhJson?.GetParsedData(File.ReadAllText(GetFilePath("-json"))).Concat(ifhXml?.GetParsedData(File.ReadAllText(GetFilePath("-xml")))).ToArray();
+
+                List<string> parsedData = fileData?.OrderBy(fd => fd == null).ThenBy(fd => fd).ToList();
 
                 //display the list and replace nulls with No Value
                 parsedData.ForEach(pd => Console.WriteLine("{0}", pd ?? "No Value"));
@@ -53,26 +40,11 @@ namespace Project.ConsoleApp
 
                 if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
                 {
-                    throw new ArgumentException("Invalid file name", argumentNameValue);
-                }                
+                    throw new FileNotFoundException("Invalid file name.", filePath);
+                }
 
                 return filePath;
             }
-
-            string GetFileData(string filePath)
-            {
-                string fileData = string.Empty;
-
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    using (StreamReader reader = new StreamReader(filePath))
-                    {
-                        fileData = reader.ReadToEnd();
-                    }
-                }
-                
-                return fileData;
-            }
-        }
+        }      
     }
 }
