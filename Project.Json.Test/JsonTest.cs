@@ -30,7 +30,7 @@ namespace Project.Json.Test
             }
             finally
             {
-                DeleteTempFile(jsonFile);
+                File.Delete(jsonFile);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Project.Json.Test
             }
             finally
             {
-                DeleteTempFile(jsonFile);
+                File.Delete(jsonFile);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Project.Json.Test
             }
             finally
             {
-                DeleteTempFile(jsonFile);
+                File.Delete(jsonFile);
             }
         }
 
@@ -193,18 +193,6 @@ namespace Project.Json.Test
             }
 
             return file;
-        }
-
-        /// <summary>
-        /// DeleteTempFile
-        /// </summary>
-        /// <param name="file">temp file name to delete</param>
-        void DeleteTempFile(string file)
-        {
-            if (File.Exists(file))
-            {
-                File.Delete(file);
-            }
         }
 
         #endregion
