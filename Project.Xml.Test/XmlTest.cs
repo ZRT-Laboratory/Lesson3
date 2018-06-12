@@ -77,6 +77,9 @@ namespace Project.Xml.Test
         }
 
         [TestMethod]
+        public void Arguments_WithInvalidXMLFileName() => Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "-xml", "BadFile.txt"}));
+
+        [TestMethod]
         public void File_WithValidXMLFormat()
         {
             //arrange
