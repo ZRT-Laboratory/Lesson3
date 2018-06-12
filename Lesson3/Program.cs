@@ -8,6 +8,23 @@ namespace Project.ConsoleApp
 {
     public class Program
     {
+
+        private static string GetFilePath(string[] clArguments, string argumentNameValue)
+        {
+            string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
+                .Skip(1)
+                .DefaultIfEmpty("")
+                .First()
+                .ToString();
+
+            if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
+            {
+                throw new FileNotFoundException("Invalid file name.", filePath);
+            }
+
+            return filePath;
+        }
+
         [STAThread]
         public static void Main(string[] clArguments)
         {
@@ -17,7 +34,9 @@ namespace Project.ConsoleApp
                 IFileHandling ifhJson = null;
                 IFileHandling ifhXml = null;
 
-                string[] fileData = ifhJson?.GetParsedData(File.ReadAllText(GetFilePath("-json"))).Concat(ifhXml?.GetParsedData(File.ReadAllText(GetFilePath("-xml")))).ToArray();
+                string[] fileData = ifhJson?.GetParsedData(File.ReadAllText(GetFilePath(clArguments,"-json")))
+                    .Concat(ifhXml?.GetParsedData(File.ReadAllText(GetFilePath(clArguments,"-xml"))))
+                    .ToArray();
 
                 List<string> parsedData = fileData?.OrderBy(fd => fd == null).ThenBy(fd => fd).ToList();
 
@@ -26,22 +45,6 @@ namespace Project.ConsoleApp
             else
             {
                 throw new ArgumentException("Invalid arguments.");
-            }
-
-            string GetFilePath(string argumentNameValue)
-            {
-                string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
-                    .Skip(1)
-                    .DefaultIfEmpty("")
-                    .First()
-                    .ToString();
-
-                if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
-                {
-                    throw new FileNotFoundException("Invalid file name.", filePath);
-                }
-
-                return filePath;
             }
         }      
     }
