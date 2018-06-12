@@ -77,6 +77,9 @@ namespace Project.Json.Test
         }
 
         [TestMethod]
+        public void Arguments_WithInvalidJSONFileName() => Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "-json", "BadFile.txt" }));
+
+        [TestMethod]
         public void File_WithValidJSONFormat()
         {
             //arrange
