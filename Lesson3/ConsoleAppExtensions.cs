@@ -9,17 +9,17 @@ namespace Project.ConsoleApp
     public static class ConsoleAppExtensions
     {
         /// <summary>
-        /// GetData
+        /// GetSortedFileData
         /// </summary>
         /// <param name="parsedData">sorted string collection of file data</param>
         /// <param name="clArguments">command line arguments</param>
         /// <returns></returns>
-        public static IEnumerable<string> GetFileData(this IEnumerable<string> parsedData, string[] clArguments)
+        public static IEnumerable<string> GetSortedFileData(this IEnumerable<string> parsedData, string[] clArguments)
         {
-            bool haveJsonArgument = clArguments.Any(a => string.Compare(a, "-json", true) == 0);
-            bool haveXmlArgument = clArguments.Any(a => string.Compare(a, "-xml", true) == 0);
+            bool haveJson = clArguments.Any(a => string.Compare(a, "-json", true) == 0);
+            bool haveXml = clArguments.Any(a => string.Compare(a, "-xml", true) == 0);
             
-            if (haveJsonArgument || haveXmlArgument)
+            if (haveJson || haveXml)
             {
                 //use interface
                 IFileHandling ifhJson = null;
@@ -28,12 +28,12 @@ namespace Project.ConsoleApp
                 string jsonData = string.Empty;
                 string xmlData = string.Empty;
 
-                if (haveJsonArgument)
+                if (haveJson)
                 {
                     jsonData = File.ReadAllText(GetFilePath(clArguments, "-json"));
                 }
 
-                if (haveXmlArgument)
+                if (haveXml)
                 {
                     xmlData = File.ReadAllText(GetFilePath(clArguments, "-xml"));
                 }
@@ -68,7 +68,7 @@ namespace Project.ConsoleApp
 
             if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
             {
-                throw new FileNotFoundException("Invalid file name.", filePath);
+                throw new FileNotFoundException($"Invalid file name - {filePath}.");
             }
 
             return filePath;

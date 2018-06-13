@@ -17,7 +17,7 @@ namespace Project.ConsoleApp.Test
             try
             {
                 //act
-                testArray.GetFileData(new string[] { "-json", testFile, "-xml", testFile });
+                testArray.GetSortedFileData(new string[] { "-json", testFile, "-xml", testFile });
                 
             }
             catch (ArgumentException aex)
@@ -36,7 +36,7 @@ namespace Project.ConsoleApp.Test
         {
             string[] testArray = Array.Empty<string>();
 
-            Assert.ThrowsException<ArgumentException>(() => testArray.GetFileData(new string[] { "json", string.Empty, "xml", string.Empty }));
+            Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileData(new string[] { "json", string.Empty, "xml", string.Empty }));
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Project.ConsoleApp.Test
             try
             {
                 //act
-                testArray.GetFileData(new string[] { "-json", testFile, "-xml", testFile, "-test", testFile });
+                testArray.GetSortedFileData(new string[] { "-json", testFile, "-xml", testFile, "-test", testFile });
             }
             catch (ArgumentException aex)
             {
@@ -66,14 +66,14 @@ namespace Project.ConsoleApp.Test
         public void Arguments_WithMissingArguments()
         {
             string[] testArray = Array.Empty<string>();
-            Assert.ThrowsException<ArgumentException>(() => testArray.GetFileData(Array.Empty<string>()));
+            Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileData(Array.Empty<string>()));
         }
 
         [TestMethod]
         public void Arguments_WithInvalidFileNames()
         {
             string[] testArray = Array.Empty<string>();
-            Assert.ThrowsException<FileNotFoundException>(() => testArray.GetFileData(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
+            Assert.ThrowsException<FileNotFoundException>(() => testArray.GetSortedFileData(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
         }
 
         #region  " Non Test Methods "
