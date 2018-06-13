@@ -26,27 +26,20 @@ namespace Project.ConsoleApp
                 IFileHandling ifhJson = null;
                 IFileHandling ifhXml = null;
 
-                string jsonData = string.Empty;
-                string xmlData = string.Empty;
+                //json data
+                string jsonData = haveJson ? File.ReadAllText(GetFilePath(clArguments, "-json")) : string.Empty;
+                string[] jsonParsed = ifhJson != null ? ifhJson.GetParsedData(jsonData) : Array.Empty<string>();
 
-                //get json file data
-                if (haveJson)
-                {
-                    jsonData = File.ReadAllText(GetFilePath(clArguments, "-json"));
-                }
-
-                //get xml file data
-                if (haveXml)
-                {
-                    xmlData = File.ReadAllText(GetFilePath(clArguments, "-xml"));
-                }
+                //xml data
+                string xmlData = haveXml ?  File.ReadAllText(GetFilePath(clArguments, "-xml")) : string.Empty;
+                string[] xmlParsed = ifhXml != null ? ifhXml.GetParsedData(xmlData) : Array.Empty<string>();
 
                 //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
-                parsedData = ifhJson?.GetParsedData(jsonData)
-                    .Concat(ifhXml?.GetParsedData(xmlData))
+                parsedData = jsonParsed
+                    .Concat(xmlParsed)
                     .SortNullValuesToBottom()
                     .ReplaceNullsWithStringValue("No Value")
-                    .ToArray();
+                    .ToArray();                
 
                 //if null then return empty array
                 parsedData = parsedData ?? Array.Empty<string>();
