@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Project.ConsoleApp;
 using Project.Interface;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -38,22 +37,25 @@ namespace Project.Json.Test
         public void File_WithValidJSONNonNumericDataSorted()
         {
             //arrange
-            IFileHandling ifhJson = new JsonParser();
-
-            //create json string
-            string json = "[{'Name':'Red Apple'},{'Name':'Green Apple'},{'Name':'Granny Smith Apple'},{'Name':null}]";
-
-            //create the expected results in the expected sort order
-            string[] expectedResults = new string[] { "Granny Smith Apple","Green Apple", "Red Apple", null };
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] { "[{'Name':'Red Apple'},{'Name':'Green Apple'},{'Name':'Granny Smith Apple'},{'Name':null}]" });
+            string[] expectedResults = new string[] { "Granny Smith Apple", "Green Apple", "Red Apple", "No Value" };
 
             //act
-            //create the testresults sorted with nulls at the end
-            string[] testResults = ifhJson.GetParsedData(json);
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
 
-            //assert
-            for (int i = 0; i < expectedResults.Length; i++)
+            //assert            
+            try
             {
-                Assert.AreEqual(testResults[i], expectedResults[i]);
+                //validate that the sorted testresults match the sorted expected results
+                for (int i = 0; i < expectedResults.Length; i++)
+                {
+                    Assert.AreEqual(testResults[i], expectedResults[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(testFile);
             }
         }
 
@@ -61,22 +63,25 @@ namespace Project.Json.Test
         public void File_WithValidJSONNumericDataSorted()
         {
             //arrange
-            IFileHandling ifhJson = new JsonParser();
-
-            //create json string
-            string json = "[{'Age':55},{'Age':92},{'Age':25},{'Age':null}]";
-
-            //create the expected results in the expected sort order
-            string[] expectedResults = new string[] { "25", "55", "92", null };
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] { "[{'Age':55},{'Age':92},{'Age':25},{'Age':null}]" });
+            string[] expectedResults = new string[] { "25", "55", "92", "No Value" };
 
             //act
-            //create the testresults sorted with nulls at the end
-            string[] testResults = ifhJson.GetParsedData(json);
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
 
-            //assert
-            for (int i = 0; i < expectedResults.Length; i++)
+            //assert            
+            try
             {
-                Assert.AreEqual(testResults[i], expectedResults[i]);
+                //validate that the sorted testresults match the sorted expected results
+                for (int i = 0; i < expectedResults.Length; i++)
+                {
+                    Assert.AreEqual(testResults[i], expectedResults[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(testFile);
             }
         }
 
@@ -84,22 +89,25 @@ namespace Project.Json.Test
         public void File_WithValidJSONAlphaNumericDataSorted()
         {
             //arrange
-            IFileHandling ifhJson = new JsonParser();
-
-            //create json string
-            string json = "[{'Name':'Red Apple'},{'Name':'Green Apple'},{'Name':null},{'Age':92},{'Age':55},{'Age':null}]";
-
-            //create the expected results in the expected sort order
-            string[] expectedResults = new string[] { "55", "92", "Green Apple", "Red Apple", null, null};
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] { "[{'Name':'Red Apple'},{'Name':'Green Apple'},{'Name':null},{'Age':92},{'Age':55},{'Age':null}]" });
+            string[] expectedResults = new string[] { "55", "92", "Green Apple", "Red Apple", "No Value", "No Value" };
 
             //act
-            //create the testresults sorted with nulls at the end
-            string[] testResults = ifhJson.GetParsedData(json);
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
 
-            //assert
-            for (int i = 0; i < expectedResults.Length; i++)
+            //assert            
+            try
             {
-                Assert.AreEqual(testResults[i], expectedResults[i]);
+                //validate that the sorted testresults match the sorted expected results
+                for (int i = 0; i < expectedResults.Length; i++)
+                {
+                    Assert.AreEqual(testResults[i], expectedResults[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(testFile);
             }
         }
 
@@ -107,13 +115,21 @@ namespace Project.Json.Test
         public void File_WithValidJSONNoValue()
         {
             //arrange
-            IFileHandling ifhJson = new JsonParser();
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] { "[{ 'Name':'Red Apple'},{ 'Name':'Green Apple'},{'Name':null}]" });
 
-            List<string> parsedData = ifhJson.GetParsedData("[{ 'Name':'Red Apple'},{ 'Name':'Green Apple'},{'Name':null}]").ToList();
-            parsedData = parsedData.Select(x => x != null ? x : "No Value").ToList();
+            //act
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
 
-            //assert
-            Assert.IsTrue(parsedData.Any(pd => pd == "No Value"));
+            //assert            
+            try
+            {
+                Assert.IsTrue(testResults.Any(pd => pd == "No Value"));
+            }
+            finally
+            {
+                File.Delete(testFile);
+            }
         }
 
         #endregion

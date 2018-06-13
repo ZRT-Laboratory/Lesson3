@@ -1,4 +1,5 @@
 ﻿using Project.Interface;
+using Project.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +24,7 @@ namespace Project.ConsoleApp
             if (haveJson || haveXml)
             {
                 //use interface
-                IFileHandling ifhJson = null;
+                IFileHandling ifhJson = new JsonParser();
                 IFileHandling ifhXml = null;
 
                 //json data
