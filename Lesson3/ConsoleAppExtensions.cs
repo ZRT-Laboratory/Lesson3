@@ -1,4 +1,5 @@
 ﻿using Project.Interface;
+using Project.Xml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,7 @@ namespace Project.ConsoleApp
             {
                 //use interface
                 IFileHandling ifhJson = null;
-                IFileHandling ifhXml = null;
+                IFileHandling ifhXml = new XmlParser();
 
                 string jsonData = string.Empty;
                 string xmlData = string.Empty;
@@ -42,8 +43,7 @@ namespace Project.ConsoleApp
                 }
 
                 //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
-                parsedData = ifhJson?.GetParsedData(jsonData)
-                    .Concat(ifhXml?.GetParsedData(xmlData))
+                parsedData = ifhXml.GetParsedData(xmlData)
                     .SortNullValuesToBottom()
                     .ReplaceNullsWithStringValue("No Value")
                     .ToArray();
