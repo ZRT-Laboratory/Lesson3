@@ -33,9 +33,6 @@ namespace Project.ConsoleApp
                 IFileHandling ifhJson = null;
                 IFileHandling ifhXml = null;
 
-                string jsonData = string.Empty;
-                string xmlData = string.Empty;
-
                 List<string> parsedData = ifhJson?.GetParsedData(File.ReadAllText(GetFilePath(clArguments, "-json")))
                     .Concat(ifhXml?.GetParsedData(File.ReadAllText(GetFilePath(clArguments, "-xml"))))
                     .SortNullValuesToBottom()
