@@ -8,7 +8,6 @@ namespace Project.ConsoleApp
 {
     public class Program
     {
-
         private static string GetFilePath(string[] clArguments, string argumentNameValue)
         {
             string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
@@ -34,11 +33,14 @@ namespace Project.ConsoleApp
                 IFileHandling ifhJson = null;
                 IFileHandling ifhXml = null;
 
-                string[] fileData = ifhJson?.GetParsedData(File.ReadAllText(GetFilePath(clArguments,"-json")))
-                    .Concat(ifhXml?.GetParsedData(File.ReadAllText(GetFilePath(clArguments,"-xml"))))
-                    .ToArray();
+                string jsonData = string.Empty;
+                string xmlData = string.Empty;
 
-                List<string> parsedData = fileData?.OrderBy(fd => fd == null).ThenBy(fd => fd).ToList();
+                List<string> parsedData = ifhJson?.GetParsedData(File.ReadAllText(GetFilePath(clArguments, "-json")))
+                    .Concat(ifhXml?.GetParsedData(File.ReadAllText(GetFilePath(clArguments, "-xml"))))
+                    .SortNullValuesToBottom()
+                    .ReplaceNullsWithStringValue("No Value")
+                    .ToList();
 
                 parsedData?.ForEach(pd => Console.WriteLine("{0}", pd));
             }

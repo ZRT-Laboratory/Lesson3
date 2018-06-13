@@ -58,6 +58,9 @@ namespace Project.ConsoleApp.Test
         [TestMethod]
         public void Arguments_WithMissingArguments() => Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
 
+        [TestMethod]
+        public void Arguments_WithInvalidFileNames() => Assert.ThrowsException<FileNotFoundException>(() => Program.Main(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
+
         #region  " Non Test Methods "
 
         /// <summary>
