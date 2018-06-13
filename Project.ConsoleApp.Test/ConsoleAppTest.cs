@@ -11,12 +11,13 @@ namespace Project.ConsoleApp.Test
         public void Arguments_WithValidArguments()
         {
             //arrange
-            string file = CreateTempFile(Array.Empty<string>());
+            string testFile = CreateTempFile(Array.Empty<string>());
+            string[] testArray = Array.Empty<string>();
 
             try
             {
                 //act
-                Program.Main(new string[] { "-json", file, "-xml", file });
+                testArray.GetFileData(new string[] { "-json", testFile, "-xml", testFile });
                 
             }
             catch (ArgumentException aex)
@@ -26,23 +27,29 @@ namespace Project.ConsoleApp.Test
             }
             finally
             {
-                File.Delete(file);
+                File.Delete(testFile);
             }
         }
 
         [TestMethod]
-        public void Arguments_WithInvalidArguments() => Assert.ThrowsException<ArgumentException>(() => Program.Main(new string[] { "json", string.Empty, "xml", string.Empty }));
+        public void Arguments_WithInvalidArguments()
+        {
+            string[] testArray = Array.Empty<string>();
+
+            Assert.ThrowsException<ArgumentException>(() => testArray.GetFileData(new string[] { "json", string.Empty, "xml", string.Empty }));
+        }
 
         [TestMethod]
         public void Arguments_WithTooManyArguments()
         {
             //arrange
-            string file = CreateTempFile(Array.Empty<string>());
+            string testFile = CreateTempFile(Array.Empty<string>());
+            string[] testArray = Array.Empty<string>();
 
             try
             {
                 //act
-                Program.Main(new string[] { "-json", file, "-xml", file, "-test", file });
+                testArray.GetFileData(new string[] { "-json", testFile, "-xml", testFile, "-test", testFile });
             }
             catch (ArgumentException aex)
             {
@@ -51,15 +58,23 @@ namespace Project.ConsoleApp.Test
             }
             finally
             {
-                File.Delete(file);
+                File.Delete(testFile);
             }
         }
 
         [TestMethod]
-        public void Arguments_WithMissingArguments() => Assert.ThrowsException<ArgumentException>(() => Program.Main(Array.Empty<string>()));
+        public void Arguments_WithMissingArguments()
+        {
+            string[] testArray = Array.Empty<string>();
+            Assert.ThrowsException<ArgumentException>(() => testArray.GetFileData(Array.Empty<string>()));
+        }
 
         [TestMethod]
-        public void Arguments_WithInvalidFileNames() => Assert.ThrowsException<FileNotFoundException>(() => Program.Main(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
+        public void Arguments_WithInvalidFileNames()
+        {
+            string[] testArray = Array.Empty<string>();
+            Assert.ThrowsException<FileNotFoundException>(() => testArray.GetFileData(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
+        }
 
         #region  " Non Test Methods "
 
@@ -70,14 +85,14 @@ namespace Project.ConsoleApp.Test
         /// <returns>filepath of new temp file</returns>
         string CreateTempFile(string[] fileData)
         {
-            string file = Path.GetTempFileName();
+            string testFile = Path.GetTempFileName();
 
             if (fileData.Length > 0)
             {
-                File.WriteAllLines(file, fileData);
+                File.WriteAllLines(testFile, fileData);
             }
 
-            return file;
+            return testFile;
         }
 
         #endregion
