@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project.ConsoleApp
 {
@@ -8,9 +9,10 @@ namespace Project.ConsoleApp
         [STAThread]
         static void Main(string[] clArguments)
         {
-            List<string> parsedData = new List<string>();
+            string[] fileData = Array.Empty<string>();
+            
+            List<string> parsedData = fileData.GetSortedFileData(clArguments).ToList();
 
-            parsedData.GetSortedFileData(clArguments);
             parsedData.ForEach(pd => Console.WriteLine("{0}", pd));
         }      
     }
