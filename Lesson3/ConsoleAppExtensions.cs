@@ -19,6 +19,7 @@ namespace Project.ConsoleApp
             bool haveJson = clArguments.Any(a => string.Compare(a, "-json", true) == 0);
             bool haveXml = clArguments.Any(a => string.Compare(a, "-xml", true) == 0);
             
+            //if we have valid json or xml return a sorted array of that data
             if (haveJson || haveXml)
             {
                 //use interface
@@ -28,27 +29,33 @@ namespace Project.ConsoleApp
                 string jsonData = string.Empty;
                 string xmlData = string.Empty;
 
+                //get json file data
                 if (haveJson)
                 {
                     jsonData = File.ReadAllText(GetFilePath(clArguments, "-json"));
                 }
 
+                //get xml file data
                 if (haveXml)
                 {
                     xmlData = File.ReadAllText(GetFilePath(clArguments, "-xml"));
                 }
 
+                //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
                 parsedData = ifhJson?.GetParsedData(jsonData)
                     .Concat(ifhXml?.GetParsedData(xmlData))
                     .SortNullValuesToBottom()
                     .ReplaceNullsWithStringValue("No Value")
-                    .ToList();
+                    .ToArray();
+
+                //if null then return empty array
+                parsedData = parsedData ?? Array.Empty<string>();
             }
             else
             {
                 throw new ArgumentException("Invalid arguments.");
             }
-
+            
             return parsedData;
         }
 
