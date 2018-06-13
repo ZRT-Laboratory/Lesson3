@@ -2,7 +2,6 @@
 using Project.ConsoleApp;
 using Project.Interface;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -38,23 +37,25 @@ namespace Project.Xml.Test
         public void File_WithValidXMLNonNumericDataSorted()
         {
             //arrange
-            IFileHandling ifhXml = new XmlParser();
-
-            //create xml string
-            string xml = "<xml> <orange id = 'Round Orange' /><orange id = 'Naval Orange' /><orange id = 'Blood Orange' /><orange /></xml>";
-
-            //create the expected results in the expected sort order
-            string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", null };
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] {"<xml>", "<orange id = 'Round Orange' />", "<orange id = 'Naval Orange' />", "<orange id = 'Blood Orange' />", "<orange /></xml>" });            
+            string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", "No Value" };
 
             //act
-            //create the testresults sorted with nulls at the end
-            string[] testResults = ifhXml.GetParsedData(xml);            
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
 
-            //assert
-            //validate that the sorted testresults match the sorted expected results
-            for (int i = 0; i < expectedResults.Length; i++)
+            //assert            
+            try
             {
-                Assert.AreEqual(testResults[i], expectedResults[i]);
+                //validate that the sorted testresults match the sorted expected results
+                for (int i = 0; i < expectedResults.Length; i++)
+                {
+                    Assert.AreEqual(testResults[i], expectedResults[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(testFile);
             }
         }
 
@@ -62,23 +63,25 @@ namespace Project.Xml.Test
         public void File_WithValidXMLNumericDataSorted()
         {
             //arrange
-            IFileHandling ifhXml = new XmlParser();
-
-            //create xml string
-            string xml = "<xml> <age id = '55' /><age id = '92' /><age id = '25' /><orange /></xml>";
-
-            //create the expected results in the expected sort order
-            string[] expectedResults = new string[] { "25", "55", "92", null };
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] { "<xml>", "<age id = '55' />", "<age id = '92' />", "<age id = '25' />", "<age /></xml>" });
+            string[] expectedResults = new string[] { "25", "55", "92", "No Value" };
 
             //act
-            //create the testresults sorted with nulls at the end
-            string[] testResults = ifhXml.GetParsedData(xml);
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
 
-            //assert
-            //validate that the sorted testresults match the sorted expected results
-            for (int i = 0; i < expectedResults.Length; i++)
+            //assert            
+            try
             {
-                Assert.AreEqual(testResults[i], expectedResults[i]);
+                //validate that the sorted testresults match the sorted expected results
+                for (int i = 0; i < expectedResults.Length; i++)
+                {
+                    Assert.AreEqual(testResults[i], expectedResults[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(testFile);
             }
         }
 
@@ -86,23 +89,25 @@ namespace Project.Xml.Test
         public void File_WithValidXMLAlphaNumericDataSorted()
         {
             //arrange
-            IFileHandling ifhXml = new XmlParser();
-
-            //create xml string
-            string xml = "<xml> <orange id = 'Round Orange' /><orange id = 'Naval Orange' /><orange /><age id = '55' /><age id = '92' /><age /></xml>";
-
-            //create the expected results in the expected sort order
-            string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Round Orange", null, null };
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] { "<xml>","<orange id = 'Round Orange' />","<orange id = 'Naval Orange' />","<orange/>","<age id = '92' />","<age id = '55' />","<age /></xml>" });
+            string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Round Orange", "No Value", "No Value" };
 
             //act
-            //create the testresults sorted with nulls at the end
-            string[] testResults = ifhXml.GetParsedData(xml);
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
 
-            //assert
-            //validate that the sorted testresults match the sorted expected results
-            for (int i = 0; i < expectedResults.Length; i++)
+            //assert            
+            try
             {
-                Assert.AreEqual(testResults[i], expectedResults[i]);
+                //validate that the sorted testresults match the sorted expected results
+                for (int i = 0; i < expectedResults.Length; i++)
+                {
+                    Assert.AreEqual(testResults[i], expectedResults[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(testFile);
             }
         }
 
@@ -110,13 +115,21 @@ namespace Project.Xml.Test
         public void File_WithValidXMNoValue()
         {
             //arrange
-            IFileHandling ifhXml = new XmlParser();
+            string[] testArray = Array.Empty<string>();
+            string testFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "<orange/>", "<age id = '55' />", "<age /></xml>" });
 
-            List<string> parsedData = ifhXml.GetParsedData("<xml>,<orange id = 'Round Orange'/>,<orange />,,</xml>").ToList();
-            parsedData = parsedData.Select(x => x != null ? x : "No Value").ToList();
+            //act
+            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
 
-            //assert
-            Assert.IsTrue(parsedData.Any(pd => pd == "No Value"));
+            //assert            
+            try
+            {
+                Assert.IsTrue(testResults.Any(pd => pd == "No Value"));
+            }
+            finally
+            {
+                File.Delete(testFile);
+            }
         }
 
         #endregion
