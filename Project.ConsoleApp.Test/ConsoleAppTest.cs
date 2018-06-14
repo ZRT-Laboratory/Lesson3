@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Project.ConsoleApp.Test
 {
@@ -17,7 +18,7 @@ namespace Project.ConsoleApp.Test
             try
             {
                 //act
-                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });                
+                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });
             }
             finally
             {
@@ -63,6 +64,38 @@ namespace Project.ConsoleApp.Test
         {
             string[] testArray = Array.Empty<string>();
             Assert.ThrowsException<FileNotFoundException>(() => testArray.GetSortedFileDataFromArguments(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
+        }
+
+        [TestMethod]
+        public void AlphaNumericDataSortedProperly()
+        {
+            //arrange
+            string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
+            string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Red Apple", "No Value", "No Value" };
+
+            //act
+            string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
+
+            //assert            
+            //validate that the sorted testresults match the sorted expected results
+            for (int i = 0; i < expectedResults.Length; i++)
+            {
+                Assert.AreEqual(testResults[i], expectedResults[i]);
+            }
+        }
+
+        [TestMethod]
+        public void AlphaNumericDataSortedWithNullsReturnedAsNoValue()
+        {
+            //arrange
+            string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
+
+            //act
+            string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
+
+            //assert            
+
+            Assert.IsTrue(testResults.Any(pd => pd == "No Value"));
         }
 
         #region  " Non Test Methods "

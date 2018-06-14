@@ -11,10 +11,10 @@ namespace Project.ConsoleApp
         /// <summary>
         /// GetSortedFileDataFromArguments
         /// </summary>
-        /// <param name="parsedData">sorted string collection of file data</param>
+        /// <param name="sortedData">sorted collection of file data</param>
         /// <param name="clArguments">command line arguments</param>
         /// <returns>an array of sorted file data or an empty array</returns>
-        public static IEnumerable<string> GetSortedFileDataFromArguments(this IEnumerable<string> parsedData, string[] clArguments)
+        public static IEnumerable<string> GetSortedFileDataFromArguments(this IEnumerable<string> sortedData, string[] clArguments)
         {
             bool haveJson = clArguments.Any(a => string.Compare(a, "-json", true) == 0);
             bool haveXml = clArguments.Any(a => string.Compare(a, "-xml", true) == 0);
@@ -35,21 +35,21 @@ namespace Project.ConsoleApp
                 string[] xmlParsed = ifhXml != null ? ifhXml.GetParsedData(xmlData) : Array.Empty<string>();
 
                 //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
-                parsedData = jsonParsed
+                sortedData = jsonParsed
                     .Concat(xmlParsed)
                     .SortNullValuesToBottom()
                     .ReplaceNullsWithStringValue("No Value")
                     .ToArray();                
 
                 //if null then return empty array
-                parsedData = parsedData ?? Array.Empty<string>();
+                sortedData = sortedData ?? Array.Empty<string>();
             }
             else
             {
                 throw new ArgumentException("Invalid arguments.");
             }
             
-            return parsedData;
+            return sortedData;
         }
 
         /// <summary>
@@ -75,24 +75,24 @@ namespace Project.ConsoleApp
         }
 
         /// <summary>
-        /// SortNullValuesToBottom
+        /// ReplaceNullsWithStringValue
         /// </summary>
-        /// <param name="arrayItems"></param>
-        /// <returns>sorted collection with nulls at the bottom of the collection</returns>
-        private static IEnumerable<string> SortNullValuesToBottom(this IEnumerable<string> arrayItems)
+        /// <param name="items"></param>
+        /// <param name="stringValue">string value used to replace null values</param>
+        /// <returns>collection with all nulls replaced with parameter</returns>
+        public static IEnumerable<string> ReplaceNullsWithStringValue(this IEnumerable<string> items, string stringValue)
         {
-            return arrayItems.OrderBy(fd => fd == null).ThenBy(fd => fd);
+            return items.Select(li => li ?? stringValue);
         }
 
         /// <summary>
-        /// ReplaceNullsWithStringValue
+        /// SortNullValuesToBottom
         /// </summary>
-        /// <param name="listItems"></param>
-        /// <param name="stringValue"></param>
-        /// <returns>collection with all nulls replaced with parameter</returns>
-        private static IEnumerable<string> ReplaceNullsWithStringValue(this IEnumerable<string> listItems, string stringValue)
+        /// <param name="items"></param>
+        /// <returns>sorted collection with nulls at the bottom of the collection</returns>
+        public static IEnumerable<string> SortNullValuesToBottom(this IEnumerable<string> items)
         {
-            return listItems.Select(li => li ?? stringValue);
+            return items.OrderBy(fd => fd == null).ThenBy(fd => fd);
         }
 
     }
