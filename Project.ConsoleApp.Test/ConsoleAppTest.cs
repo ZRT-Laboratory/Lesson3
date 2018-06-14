@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Project.ConsoleApp.Test
 {
@@ -14,10 +15,10 @@ namespace Project.ConsoleApp.Test
             string testFile = CreateTempFile(Array.Empty<string>());
             string[] testArray = Array.Empty<string>();
 
+            //act
             try
             {
-                //act
-                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });                
+                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });
             }
             finally
             {
@@ -28,8 +29,10 @@ namespace Project.ConsoleApp.Test
         [TestMethod]
         public void Arguments_WithInvalidArguments()
         {
+            //arrange
             string[] testArray = Array.Empty<string>();
 
+            //assert
             Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileDataFromArguments(new string[] { "json", string.Empty, "xml", string.Empty }));
         }
 
@@ -40,9 +43,9 @@ namespace Project.ConsoleApp.Test
             string testFile = CreateTempFile(Array.Empty<string>());
             string[] testArray = Array.Empty<string>();
 
+            //act
             try
             {
-                //act
                 testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile, "-test", testFile });
             }
             finally
@@ -54,15 +57,51 @@ namespace Project.ConsoleApp.Test
         [TestMethod]
         public void Arguments_WithMissingArguments()
         {
+            //arrange
             string[] testArray = Array.Empty<string>();
+
+            //assert
             Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileDataFromArguments(Array.Empty<string>()));
         }
 
         [TestMethod]
         public void Arguments_WithInvalidFileNames()
         {
+            //arrange
             string[] testArray = Array.Empty<string>();
+
+            //assert
             Assert.ThrowsException<FileNotFoundException>(() => testArray.GetSortedFileDataFromArguments(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
+        }
+
+        [TestMethod]
+        public void AlphaNumericDataSortedProperly()
+        {
+            //arrange
+            string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
+            string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Red Apple", "No Value", "No Value" };
+
+            //act
+            string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
+
+            //assert - validate that the sorted test results match the sorted expected results
+            for (int i = 0; i < expectedResults.Length; i++)
+            {
+                Assert.AreEqual(testResults[i], expectedResults[i]);
+            }
+        }
+
+        [TestMethod]
+        public void AlphaNumericDataSortedWithNullsReturnedAsNoValue()
+        {
+            //arrange
+            string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
+
+            //act
+            string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
+
+            //assert           
+            Assert.IsTrue(testResults.Any(pd => pd == "No Value"));
         }
 
         #region  " Non Test Methods "
