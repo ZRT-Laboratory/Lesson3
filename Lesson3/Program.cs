@@ -11,7 +11,7 @@ namespace Project.ConsoleApp
         {
             string[] fileData = Array.Empty<string>();
             
-            List<string> parsedData = fileData.GetSortedFileData(clArguments).ToList();
+            List<string> parsedData = fileData.GetSortedFileDataFromArguments(clArguments).ToList();
 
             parsedData.ForEach(pd => Console.WriteLine("{0}", pd));
         }      
