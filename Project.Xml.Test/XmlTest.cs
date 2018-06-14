@@ -42,7 +42,7 @@ namespace Project.Xml.Test
             string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", "No Value" };
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
 
             //assert            
             try
@@ -68,7 +68,7 @@ namespace Project.Xml.Test
             string[] expectedResults = new string[] { "25", "55", "92", "No Value" };
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
 
             //assert            
             try
@@ -94,7 +94,7 @@ namespace Project.Xml.Test
             string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Round Orange", "No Value", "No Value" };
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
 
             //assert            
             try
@@ -119,7 +119,7 @@ namespace Project.Xml.Test
             string testFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "<orange/>", "<age id = '55' />", "<age /></xml>" });
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-xml", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
 
             //assert            
             try
