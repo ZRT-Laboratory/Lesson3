@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Project.ConsoleApp;
 using Project.Interface;
-using System;
 using System.IO;
-using System.Linq;
 using System.Xml;
 
 namespace Project.Xml.Test
@@ -31,105 +28,6 @@ namespace Project.Xml.Test
 
             //assert
             Assert.ThrowsException<XmlException>(() => ifh.GetParsedData("<xml>, <orange id = 'Round Orange' >, </xml>"));
-        }
-
-        [TestMethod]
-        public void File_WithValidXMLNonNumericDataSorted()
-        {
-            //arrange
-            string[] testArray = Array.Empty<string>();
-            string testFile = CreateTempFile(new string[] {"<xml>", "<orange id = 'Round Orange' />", "<orange id = 'Naval Orange' />", "<orange id = 'Blood Orange' />", "<orange /></xml>" });            
-            string[] expectedResults = new string[] { "Blood Orange", "Naval Orange", "Round Orange", "No Value" };
-
-            //act
-            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
-
-            //assert            
-            try
-            {
-                //validate that the sorted testresults match the sorted expected results
-                for (int i = 0; i < expectedResults.Length; i++)
-                {
-                    Assert.AreEqual(testResults[i], expectedResults[i]);
-                }
-            }
-            finally
-            {
-                File.Delete(testFile);
-            }
-        }
-
-        [TestMethod]
-        public void File_WithValidXMLNumericDataSorted()
-        {
-            //arrange
-            string[] testArray = Array.Empty<string>();
-            string testFile = CreateTempFile(new string[] { "<xml>", "<age id = '55' />", "<age id = '92' />", "<age id = '25' />", "<age /></xml>" });
-            string[] expectedResults = new string[] { "25", "55", "92", "No Value" };
-
-            //act
-            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
-
-            //assert            
-            try
-            {
-                //validate that the sorted testresults match the sorted expected results
-                for (int i = 0; i < expectedResults.Length; i++)
-                {
-                    Assert.AreEqual(testResults[i], expectedResults[i]);
-                }
-            }
-            finally
-            {
-                File.Delete(testFile);
-            }
-        }
-
-        [TestMethod]
-        public void File_WithValidXMLAlphaNumericDataSorted()
-        {
-            //arrange
-            string[] testArray = Array.Empty<string>();
-            string testFile = CreateTempFile(new string[] { "<xml>","<orange id = 'Round Orange' />","<orange id = 'Naval Orange' />","<orange/>","<age id = '92' />","<age id = '55' />","<age /></xml>" });
-            string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Round Orange", "No Value", "No Value" };
-
-            //act
-            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
-
-            //assert            
-            try
-            {
-                //validate that the sorted testresults match the sorted expected results
-                for (int i = 0; i < expectedResults.Length; i++)
-                {
-                    Assert.AreEqual(testResults[i], expectedResults[i]);
-                }
-            }
-            finally
-            {
-                File.Delete(testFile);
-            }
-        }
-
-        [TestMethod]
-        public void File_WithValidXMNoValue()
-        {
-            //arrange
-            string[] testArray = Array.Empty<string>();
-            string testFile = CreateTempFile(new string[] { "<xml>", "<orange id = 'Round Orange' />", "<orange/>", "<age id = '55' />", "<age /></xml>" });
-
-            //act
-            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-xml", testFile }).ToArray();
-
-            //assert            
-            try
-            {
-                Assert.IsTrue(testResults.Any(pd => pd == "No Value"));
-            }
-            finally
-            {
-                File.Delete(testFile);
-            }
         }
 
         #endregion
