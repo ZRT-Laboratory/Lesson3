@@ -56,10 +56,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lesson3\Project.ConsoleApp.csproj">
-      <Project>{10c44a3a-c95a-4e9d-9db4-35d07d997a88}</Project>
-      <Name>Project.ConsoleApp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Project_Interface\Project.Interface.csproj">
       <Project>{ba1afd02-52ee-4446-a7d2-48e5748780d5}</Project>
       <Name>Project.Interface</Name>
