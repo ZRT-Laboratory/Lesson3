@@ -42,7 +42,7 @@ namespace Project.Json.Test
             string[] expectedResults = new string[] { "Granny Smith Apple", "Green Apple", "Red Apple", "No Value" };
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile }).ToArray();
 
             //assert            
             try
@@ -68,7 +68,7 @@ namespace Project.Json.Test
             string[] expectedResults = new string[] { "25", "55", "92", "No Value" };
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile }).ToArray();
 
             //assert            
             try
@@ -94,7 +94,7 @@ namespace Project.Json.Test
             string[] expectedResults = new string[] { "55", "92", "Green Apple", "Red Apple", "No Value", "No Value" };
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile }).ToArray();
 
             //assert            
             try
@@ -119,7 +119,7 @@ namespace Project.Json.Test
             string testFile = CreateTempFile(new string[] { "[{ 'Name':'Red Apple'},{ 'Name':'Green Apple'},{'Name':null}]" });
 
             //act
-            string[] testResults = testArray.GetSortedFileData(new string[] { "-json", testFile }).ToArray();
+            string[] testResults = testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile }).ToArray();
 
             //assert            
             try
