@@ -10,7 +10,7 @@ namespace Project.ConsoleApp
     public static class ConsoleAppExtensions
     {
         /// <summary>
-        /// GetSortedFileData
+        /// GetSortedFileDataFromArguments
         /// </summary>
         /// <param name="parsedData">sorted string collection of file data</param>
         /// <param name="clArguments">command line arguments</param>
@@ -54,7 +54,7 @@ namespace Project.ConsoleApp
         }
 
         /// <summary>
-        /// GetFilePath
+        /// GetFilePathFromArgument
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
         /// <param name="argumentNameValue">the command line argument being searched for. Example: -json</param>
