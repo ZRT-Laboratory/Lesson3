@@ -14,8 +14,8 @@ namespace Project.ConsoleApp
         /// </summary>
         /// <param name="parsedData">sorted string collection of file data</param>
         /// <param name="clArguments">command line arguments</param>
-        /// <returns></returns>
-        public static IEnumerable<string> GetSortedFileData(this IEnumerable<string> parsedData, string[] clArguments)
+        /// <returns>an array of sorted file data or an empty array</returns>
+        public static IEnumerable<string> GetSortedFileDataFromArguments(this IEnumerable<string> parsedData, string[] clArguments)
         {
             bool haveJson = clArguments.Any(a => string.Compare(a, "-json", true) == 0);
             bool haveXml = clArguments.Any(a => string.Compare(a, "-xml", true) == 0);
@@ -28,11 +28,11 @@ namespace Project.ConsoleApp
                 IFileHandling ifhXml = new XmlParser();
 
                 //json data
-                string jsonData = haveJson ? File.ReadAllText(GetFilePath(clArguments, "-json")) : string.Empty;
+                string jsonData = haveJson ? File.ReadAllText(GetFilePathFromArgument(clArguments, "-json")) : string.Empty;
                 string[] jsonParsed = ifhJson != null ? ifhJson.GetParsedData(jsonData) : Array.Empty<string>();
 
                 //xml data
-                string xmlData = haveXml ?  File.ReadAllText(GetFilePath(clArguments, "-xml")) : string.Empty;
+                string xmlData = haveXml ?  File.ReadAllText(GetFilePathFromArgument(clArguments, "-xml")) : string.Empty;
                 string[] xmlParsed = ifhXml != null ? ifhXml.GetParsedData(xmlData) : Array.Empty<string>();
 
                 //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
@@ -58,12 +58,12 @@ namespace Project.ConsoleApp
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
         /// <param name="argumentNameValue">the command line argument being searched for. Example: -json</param>
-        /// <returns></returns>
-        private static string GetFilePath(string[] clArguments, string argumentNameValue)
+        /// <returns>file path or empty string if can't find that argumentnamevalue</returns>
+        private static string GetFilePathFromArgument(string[] clArguments, string argumentNameValue)
         {
             string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
                 .Skip(1)
-                .DefaultIfEmpty("")
+                .DefaultIfEmpty(string.Empty)
                 .First()
                 .ToString();
 
@@ -82,7 +82,7 @@ namespace Project.ConsoleApp
         /// <returns>sorted collection with nulls at the bottom of the collection</returns>
         private static IEnumerable<string> SortNullValuesToBottom(this IEnumerable<string> arrayItems)
         {
-            return arrayItems.OrderBy(fd => fd == null).ThenBy(fd => fd);            
+            return arrayItems.OrderBy(fd => fd == null).ThenBy(fd => fd);
         }
 
         /// <summary>
