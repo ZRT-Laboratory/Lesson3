@@ -15,9 +15,9 @@ namespace Project.ConsoleApp.Test
             string testFile = CreateTempFile(Array.Empty<string>());
             string[] testArray = Array.Empty<string>();
 
+            //act
             try
             {
-                //act
                 testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });
             }
             finally
@@ -29,8 +29,10 @@ namespace Project.ConsoleApp.Test
         [TestMethod]
         public void Arguments_WithInvalidArguments()
         {
+            //arrange
             string[] testArray = Array.Empty<string>();
 
+            //assert
             Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileDataFromArguments(new string[] { "json", string.Empty, "xml", string.Empty }));
         }
 
@@ -41,9 +43,9 @@ namespace Project.ConsoleApp.Test
             string testFile = CreateTempFile(Array.Empty<string>());
             string[] testArray = Array.Empty<string>();
 
+            //act
             try
             {
-                //act
                 testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile, "-test", testFile });
             }
             finally
@@ -55,14 +57,20 @@ namespace Project.ConsoleApp.Test
         [TestMethod]
         public void Arguments_WithMissingArguments()
         {
+            //arrange
             string[] testArray = Array.Empty<string>();
+
+            //assert
             Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileDataFromArguments(Array.Empty<string>()));
         }
 
         [TestMethod]
         public void Arguments_WithInvalidFileNames()
         {
+            //arrange
             string[] testArray = Array.Empty<string>();
+
+            //assert
             Assert.ThrowsException<FileNotFoundException>(() => testArray.GetSortedFileDataFromArguments(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
         }
 
@@ -76,8 +84,7 @@ namespace Project.ConsoleApp.Test
             //act
             string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
 
-            //assert            
-            //validate that the sorted testresults match the sorted expected results
+            //assert - validate that the sorted test results match the sorted expected results
             for (int i = 0; i < expectedResults.Length; i++)
             {
                 Assert.AreEqual(testResults[i], expectedResults[i]);
@@ -93,8 +100,7 @@ namespace Project.ConsoleApp.Test
             //act
             string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
 
-            //assert            
-
+            //assert           
             Assert.IsTrue(testResults.Any(pd => pd == "No Value"));
         }
 
