@@ -17,13 +17,7 @@ namespace Project.ConsoleApp.Test
             try
             {
                 //act
-                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });
-                
-            }
-            catch (ArgumentException aex)
-            {
-                //assert
-                Assert.Fail(aex.Message);
+                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });                
             }
             finally
             {
@@ -50,11 +44,6 @@ namespace Project.ConsoleApp.Test
             {
                 //act
                 testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile, "-test", testFile });
-            }
-            catch (ArgumentException aex)
-            {
-                //assert
-                Assert.Fail(aex.Message);
             }
             finally
             {
