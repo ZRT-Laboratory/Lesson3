@@ -41,17 +41,6 @@ namespace Project.ConsoleApp
         }
 
         /// <summary>
-        /// HaveValidArgument
-        /// </summary>
-        /// <param name="clArguments">command line arguments</param>
-        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
-        /// <returns></returns>
-        private static bool HaveValidArgument(this string[] clArguments, string argumentType)
-        {
-            return clArguments.Any(a => string.Compare(a, argumentType, true) == 0);
-        }
-
-        /// <summary>
         /// GetFileData
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
@@ -89,6 +78,17 @@ namespace Project.ConsoleApp
         }
 
         /// <summary>
+        /// HaveValidArgument
+        /// </summary>
+        /// <param name="clArguments">command line arguments</param>
+        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
+        /// <returns></returns>
+        private static bool HaveValidArgument(this string[] clArguments, string argumentType)
+        {
+            return clArguments.Any(a => string.Compare(a, argumentType, true) == 0);
+        }
+
+        /// <summary>
         /// ReplaceNullsWithStringValue
         /// </summary>
         /// <param name="items"></param>
@@ -108,6 +108,5 @@ namespace Project.ConsoleApp
         {
             return items.OrderBy(fd => fd == null).ThenBy(fd => fd);
         }
-
     }
 }

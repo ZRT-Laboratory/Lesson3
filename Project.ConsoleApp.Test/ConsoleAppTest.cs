@@ -63,12 +63,11 @@ namespace Project.ConsoleApp.Test
         public void AlphaNumericDataSortedProperly()
         {
             //arrange
-            string testFile = Path.GetTempFileName();
-            string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
+            string[] testData = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
             string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Red Apple", "No Value", "No Value" };
 
             //act
-            string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
+            string[] testResults = testData.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
 
             //assert - validate that the sorted test results match the sorted expected results
             for (int i = 0; i < expectedResults.Length; i++)
@@ -77,7 +76,7 @@ namespace Project.ConsoleApp.Test
             }
 
             //assert - validate that test data has nulls         
-            Assert.IsTrue(testArray.Any(ta => ta == null));
+            Assert.IsTrue(testData.Any(ta => ta == null));
 
             //assert - validate that null values returned as no value  
             Assert.IsTrue(testResults.Any(tr => tr == "No Value"));
