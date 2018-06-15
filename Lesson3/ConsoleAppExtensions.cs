@@ -15,9 +15,8 @@ namespace Project.ConsoleApp
         /// <summary>
         /// GetSortedFileDataFromArguments
         /// </summary>
-        /// <param name="sortedData">sorted collection of file data</param>
         /// <param name="clArguments">command line arguments</param>
-        /// <returns>an array of sorted file data or an empty array</returns>
+        /// <returns>an array of sorted file data</returns>
         public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
         {
             if (!clArguments.HaveValidArgument(_json) || !clArguments.HaveValidArgument(_xml))
@@ -41,19 +40,24 @@ namespace Project.ConsoleApp
             return sortedData;
         }
 
+        /// <summary>
+        /// HaveValidArgument
+        /// </summary>
+        /// <param name="clArguments">command line arguments</param>
+        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
+        /// <returns></returns>
         private static bool HaveValidArgument(this string[] clArguments, string argumentType)
         {
             return clArguments.Any(a => string.Compare(a, argumentType, true) == 0);
         }
 
-
         /// <summary>
         /// GetFileData
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
-        /// <param name="argumentType">the command line argument being searched for. Example: -json</param>
+        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
         /// <param name="ifh">interface for the parser type example JsonParser</param>
-        /// <returns></returns>
+        /// <returns>returns properly parsed file data</returns>
         private static string[] GetFileData(this string[] clArguments, string argumentType, IFileHandling ifh)
         {
             string fileData = HaveValidArgument(clArguments, argumentType) ? File.ReadAllText(GetFilePathFromArgument(clArguments, argumentType)) : string.Empty;
@@ -66,7 +70,7 @@ namespace Project.ConsoleApp
         /// GetFilePathFromArgument
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
-        /// <param name="argumentNameValue">the command line argument being searched for. Example: -json</param>
+        /// <param name="argumentNameValue">the command line argument type being searched for. Example: -json</param>
         /// <returns>file path or empty string if can't find that argumentnamevalue</returns>
         private static string GetFilePathFromArgument(string[] clArguments, string argumentNameValue)
         {

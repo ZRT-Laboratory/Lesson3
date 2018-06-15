@@ -15,7 +15,7 @@ namespace Project.ConsoleApp.Test
         public void Arguments_WithValidArguments()
         {
             //arrange
-            string testFile = CreateTempFile(Array.Empty<string>());
+            string testFile = Path.GetTempFileName();
             string[] clArguments = new string[] { _json, testFile, _xml, testFile };
 
             //act
@@ -63,7 +63,7 @@ namespace Project.ConsoleApp.Test
         public void AlphaNumericDataSortedProperly()
         {
             //arrange
-            string testFile = CreateTempFile(Array.Empty<string>());
+            string testFile = Path.GetTempFileName();
             string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
             string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Red Apple", "No Value", "No Value" };
 
@@ -82,22 +82,5 @@ namespace Project.ConsoleApp.Test
             //assert - validate that null values returned as no value  
             Assert.IsTrue(testResults.Any(tr => tr == "No Value"));
         }
-
-        #region  " Non Test Methods "
-
-        /// <summary>
-        /// CreateTempFile
-        /// </summary>
-        /// <param name="fileData">array containing data you want to write to the file. pass an empty array if no data needed</param>
-        /// <returns>filepath of new temp file</returns>
-        private string CreateTempFile(string[] fileData)
-        {
-            string testFile = Path.GetTempFileName();
-            File.WriteAllLines(testFile, fileData);
-
-            return testFile;
-        }
-
-        #endregion
     }
 }
