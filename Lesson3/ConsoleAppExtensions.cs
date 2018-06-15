@@ -29,7 +29,7 @@ namespace Project.ConsoleApp
             string[] jsonParsed = clArguments.GetFileData(_json, null);
 
             //xml data
-            string[] xmlParsed = clArguments.GetFileData(_xml, null);
+            string[] xmlParsed = clArguments.GetFileData(_xml, new XmlParser());
 
             //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
             var sortedData = jsonParsed
