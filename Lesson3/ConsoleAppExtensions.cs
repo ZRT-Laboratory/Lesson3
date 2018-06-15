@@ -20,7 +20,7 @@ namespace Project.ConsoleApp
         /// <returns>an array of sorted file data</returns>
         public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
         {
-            if (!clArguments.HaveValidArgument(_json) || !clArguments.HaveValidArgument(_xml))
+            if (!clArguments.HaveValidArgument(_json) && !clArguments.HaveValidArgument(_xml))
             {
                 throw new ArgumentException("Invalid arguments.");
             }
