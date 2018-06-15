@@ -8,17 +8,20 @@ namespace Project.ConsoleApp.Test
     [TestClass]
     public class ConsoleAppTest
     {
+        const string _json = "-json";
+        const string _xml = "-xml";
+
         [TestMethod]
         public void Arguments_WithValidArguments()
         {
             //arrange
-            string testFile = CreateTempFile(Array.Empty<string>());
-            string[] testArray = Array.Empty<string>();
+            string testFile = Path.GetTempFileName();
+            string[] clArguments = new string[] { _json, testFile, _xml, testFile };
 
             //act
             try
             {
-                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile });
+                clArguments.GetSortedFileDataFromArguments();
             }
             finally
             {
@@ -30,54 +33,37 @@ namespace Project.ConsoleApp.Test
         public void Arguments_WithInvalidArguments()
         {
             //arrange
-            string[] testArray = Array.Empty<string>();
+            string[] clArguments = new string[] { "json", string.Empty, "xml", string.Empty };
 
             //assert
-            Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileDataFromArguments(new string[] { "json", string.Empty, "xml", string.Empty }));
+            Assert.ThrowsException<ArgumentException>(() => clArguments.GetSortedFileDataFromArguments());
         }
-
-        [TestMethod]
-        public void Arguments_WithTooManyArguments()
-        {
-            //arrange
-            string testFile = CreateTempFile(Array.Empty<string>());
-            string[] testArray = Array.Empty<string>();
-
-            //act
-            try
-            {
-                testArray.GetSortedFileDataFromArguments(new string[] { "-json", testFile, "-xml", testFile, "-test", testFile });
-            }
-            finally
-            {
-                File.Delete(testFile);
-            }
-        }
-
+                
         [TestMethod]
         public void Arguments_WithMissingArguments()
         {
             //arrange
-            string[] testArray = Array.Empty<string>();
+            string[] clArguments = Array.Empty<string>();
 
             //assert
-            Assert.ThrowsException<ArgumentException>(() => testArray.GetSortedFileDataFromArguments(Array.Empty<string>()));
+            Assert.ThrowsException<ArgumentException>(() => clArguments.GetSortedFileDataFromArguments());
         }
 
         [TestMethod]
         public void Arguments_WithInvalidFileNames()
         {
             //arrange
-            string[] testArray = Array.Empty<string>();
+            string[] clArguments = new string[] { _json, "BadFile.txt", _xml, "BadFile.txt" };
 
             //assert
-            Assert.ThrowsException<FileNotFoundException>(() => testArray.GetSortedFileDataFromArguments(new string[] { "-json", "BadFile.txt", "-xml", "BadFile.txt" }));
+            Assert.ThrowsException<FileNotFoundException>(() => clArguments.GetSortedFileDataFromArguments());
         }
 
         [TestMethod]
         public void AlphaNumericDataSortedProperly()
         {
             //arrange
+            string testFile = Path.GetTempFileName();
             string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
             string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Red Apple", "No Value", "No Value" };
 
@@ -89,40 +75,12 @@ namespace Project.ConsoleApp.Test
             {
                 Assert.AreEqual(testResults[i], expectedResults[i]);
             }
+
+            //assert - validate that test data has nulls         
+            Assert.IsTrue(testArray.Any(ta => ta == null));
+
+            //assert - validate that null values returned as no value  
+            Assert.IsTrue(testResults.Any(tr => tr == "No Value"));
         }
-
-        [TestMethod]
-        public void AlphaNumericDataSortedWithNullsReturnedAsNoValue()
-        {
-            //arrange
-            string[] testArray = new string[] { "Red Apple", "Naval Orange", null, "92", "55", null };
-
-            //act
-            string[] testResults = testArray.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
-
-            //assert           
-            Assert.IsTrue(testResults.Any(pd => pd == "No Value"));
-        }
-
-        #region  " Non Test Methods "
-
-        /// <summary>
-        /// CreateTempFile
-        /// </summary>
-        /// <param name="fileData">array containing data you want to write to the file. pass an empty array if no data needed</param>
-        /// <returns>filepath of new temp file</returns>
-        string CreateTempFile(string[] fileData)
-        {
-            string testFile = Path.GetTempFileName();
-
-            if (fileData.Length > 0)
-            {
-                File.WriteAllLines(testFile, fileData);
-            }
-
-            return testFile;
-        }
-
-        #endregion
     }
 }

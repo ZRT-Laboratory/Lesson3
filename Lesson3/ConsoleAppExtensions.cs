@@ -9,55 +9,69 @@ namespace Project.ConsoleApp
 {
     public static class ConsoleAppExtensions
     {
+        const string _json = "-json";
+        const string _xml = "-xml";
+        const string _nullReplacement = "No Value";
+
         /// <summary>
         /// GetSortedFileDataFromArguments
         /// </summary>
-        /// <param name="sortedData">sorted collection of file data</param>
         /// <param name="clArguments">command line arguments</param>
-        /// <returns>an array of sorted file data or an empty array</returns>
-        public static IEnumerable<string> GetSortedFileDataFromArguments(this IEnumerable<string> sortedData, string[] clArguments)
+        /// <returns>an array of sorted file data</returns>
+        public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
         {
-            bool haveJson = clArguments.Any(a => string.Compare(a, "-json", true) == 0);
-            bool haveXml = clArguments.Any(a => string.Compare(a, "-xml", true) == 0);
-            
-            //if we have valid json or xml return a sorted array of that data
-            if (haveJson || haveXml)
-            {
-                //use interface
-                IFileHandling ifhJson = new JsonParser();
-                IFileHandling ifhXml = null;
-
-                //json data
-                string jsonData = haveJson ? File.ReadAllText(GetFilePathFromArgument(clArguments, "-json")) : string.Empty;
-                string[] jsonParsed = ifhJson != null ? ifhJson.GetParsedData(jsonData) : Array.Empty<string>();
-
-                //xml data
-                string xmlData = haveXml ?  File.ReadAllText(GetFilePathFromArgument(clArguments, "-xml")) : string.Empty;
-                string[] xmlParsed = ifhXml != null ? ifhXml.GetParsedData(xmlData) : Array.Empty<string>();
-
-                //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
-                sortedData = jsonParsed
-                    .Concat(xmlParsed)
-                    .SortNullValuesToBottom()
-                    .ReplaceNullsWithStringValue("No Value")
-                    .ToArray();                
-
-                //if null then return empty array
-                sortedData = sortedData ?? Array.Empty<string>();
-            }
-            else
+            if (!clArguments.HaveValidArgument(_json) && !clArguments.HaveValidArgument(_xml))
             {
                 throw new ArgumentException("Invalid arguments.");
             }
-            
+
+            //json data
+            string[] jsonParsed = clArguments.GetFileData(_json, null);
+
+            //xml data
+            string[] xmlParsed = clArguments.GetFileData(_xml, null);
+
+            //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
+            var sortedData = jsonParsed
+                .Concat(xmlParsed)
+                .SortNullValuesToBottom()
+                .ReplaceNullsWithStringValue(_nullReplacement)
+                .ToArray();
+
             return sortedData;
+        }
+
+        /// <summary>
+        /// HaveValidArgument
+        /// </summary>
+        /// <param name="clArguments">command line arguments</param>
+        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
+        /// <returns></returns>
+        private static bool HaveValidArgument(this string[] clArguments, string argumentType)
+        {
+            return clArguments.Any(a => string.Compare(a, argumentType, true) == 0);
+        }
+
+        /// <summary>
+        /// GetFileData
+        /// </summary>
+        /// <param name="clArguments">command line arguments</param>
+        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
+        /// <param name="ifh">interface for the parser type example JsonParser</param>
+        /// <returns>returns properly parsed file data</returns>
+        private static string[] GetFileData(this string[] clArguments, string argumentType, IFileHandling ifh)
+        {
+            string fileData = HaveValidArgument(clArguments, argumentType) ? File.ReadAllText(GetFilePathFromArgument(clArguments, argumentType)) : string.Empty;
+            string[] parsedData = ifh != null ? ifh.GetParsedData(fileData) : Array.Empty<string>();
+
+            return parsedData;
         }
 
         /// <summary>
         /// GetFilePathFromArgument
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
-        /// <param name="argumentNameValue">the command line argument being searched for. Example: -json</param>
+        /// <param name="argumentNameValue">the command line argument type being searched for. Example: -json</param>
         /// <returns>file path or empty string if can't find that argumentnamevalue</returns>
         private static string GetFilePathFromArgument(string[] clArguments, string argumentNameValue)
         {
