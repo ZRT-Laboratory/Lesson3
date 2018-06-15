@@ -26,7 +26,7 @@ namespace Project.ConsoleApp
             }
 
             //json data
-            string[] jsonParsed = clArguments.GetFileData(_json, null);
+            string[] jsonParsed = clArguments.GetFileData(_json, new JsonParser());
 
             //xml data
             string[] xmlParsed = clArguments.GetFileData(_xml, null);
