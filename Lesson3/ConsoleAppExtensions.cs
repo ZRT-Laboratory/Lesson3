@@ -17,7 +17,6 @@ namespace Project.ConsoleApp
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
         /// <returns>an array of sorted file data</returns>
-        //public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
         public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
         {
             //json data
