@@ -9,9 +9,11 @@ namespace Project.ConsoleApp
         [STAThread]
         static void Main(string[] clArguments)
         {
-            List<string> parsedData = clArguments.GetSortedFileDataFromArguments().ToList();
-
-            parsedData.ForEach(pd => Console.WriteLine($"{pd}"));
+            if (clArguments.HaveValidArguments())
+            {
+                List<string> parsedData = clArguments.GetSortedFileDataFromArguments().ToList();
+                parsedData?.ForEach(pd => Console.WriteLine($"{pd}"));
+            }
         }      
     }
 }

@@ -17,22 +17,20 @@ namespace Project.ConsoleApp
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
         /// <returns>an array of sorted file data</returns>
+        //public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
         public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
         {
-            if (!clArguments.HaveValidArgument(_json) && !clArguments.HaveValidArgument(_xml))
-            {
-                throw new ArgumentException("Invalid arguments.");
-            }
-
             //json data
-            string[] jsonParsed = clArguments.GetFileData(_json, null);
+            string jsonFilePath = clArguments.GetFilePathFromArgument(_json);
+            string[] jsonParsed = jsonFilePath.GetFileData(null);
 
             //xml data
-            string[] xmlParsed = clArguments.GetFileData(_xml, null);
+            string xmlFilePath = clArguments.GetFilePathFromArgument(_xml);
+            string[] xmlParsed = xmlFilePath.GetFileData(null);
 
             //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
             var sortedData = jsonParsed
-                .Concat(xmlParsed)
+                .Concat(xmlParsed)                                                              
                 .SortNullValuesToBottom()
                 .ReplaceNullsWithStringValue(_nullReplacement)
                 .ToArray();
@@ -43,16 +41,20 @@ namespace Project.ConsoleApp
         /// <summary>
         /// GetFileData
         /// </summary>
-        /// <param name="clArguments">command line arguments</param>
-        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
+        /// <param name="filePath">file location for data to be parsed</param>
         /// <param name="ifh">interface for the parser type example JsonParser</param>
         /// <returns>returns properly parsed file data</returns>
-        private static string[] GetFileData(this string[] clArguments, string argumentType, IFileHandling ifh)
+        private static string[] GetFileData(this string filePath, IFileHandling ifh)
         {
-            string fileData = HaveValidArgument(clArguments, argumentType) ? File.ReadAllText(GetFilePathFromArgument(clArguments, argumentType)) : string.Empty;
-            string[] parsedData = ifh != null ? ifh.GetParsedData(fileData) : Array.Empty<string>();
+            string[] parsedData = null;
 
-            return parsedData;
+            if (ifh != null && !string.IsNullOrWhiteSpace(filePath))
+            {
+                string fileData = File.ReadAllText(filePath);
+                parsedData = ifh.GetParsedData(fileData);
+            }
+
+            return parsedData ?? Array.Empty<string>();
         }
 
         /// <summary>
@@ -61,13 +63,12 @@ namespace Project.ConsoleApp
         /// <param name="clArguments">command line arguments</param>
         /// <param name="argumentNameValue">the command line argument type being searched for. Example: -json</param>
         /// <returns>file path or empty string if can't find that argumentnamevalue</returns>
-        private static string GetFilePathFromArgument(string[] clArguments, string argumentNameValue)
+        public static string GetFilePathFromArgument(this string[] clArguments, string argumentNameValue)
         {
             string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
                 .Skip(1)
                 .DefaultIfEmpty(string.Empty)
-                .First()
-                .ToString();
+                .First();
 
             if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
             {
@@ -81,11 +82,10 @@ namespace Project.ConsoleApp
         /// HaveValidArgument
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
-        /// <param name="argumentType">the command line argument type being searched for. Example: -json</param>
         /// <returns></returns>
-        private static bool HaveValidArgument(this string[] clArguments, string argumentType)
+        public static bool HaveValidArguments(this string[] clArguments)
         {
-            return clArguments.Any(a => string.Compare(a, argumentType, true) == 0);
+            return clArguments.Any(a => string.Equals(a, _json) || string.Equals(a, _xml));
         }
 
         /// <summary>

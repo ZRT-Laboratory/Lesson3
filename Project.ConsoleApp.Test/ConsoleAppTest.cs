@@ -15,30 +15,22 @@ namespace Project.ConsoleApp.Test
         public void Arguments_WithValidArguments()
         {
             //arrange
-            string testFile = Path.GetTempFileName();
-            string[] clArguments = new string[] { _json, testFile, _xml, testFile };
+            string[] clArguments = new string[] { _json, string.Empty, _xml, string.Empty };
 
-            //act
-            try
-            {
-                clArguments.GetSortedFileDataFromArguments();
-            }
-            finally
-            {
-                File.Delete(testFile);
-            }
+            //assert
+            Assert.IsTrue(clArguments.HaveValidArguments());
         }
 
         [TestMethod]
         public void Arguments_WithInvalidArguments()
         {
             //arrange
-            string[] clArguments = new string[] { "json", string.Empty, "xml", string.Empty };
+            string[] clArguments = new string[] { "csv", string.Empty, "txt", string.Empty };
 
             //assert
-            Assert.ThrowsException<ArgumentException>(() => clArguments.GetSortedFileDataFromArguments());
+            Assert.IsFalse(clArguments.HaveValidArguments());
         }
-                
+
         [TestMethod]
         public void Arguments_WithMissingArguments()
         {
@@ -46,7 +38,7 @@ namespace Project.ConsoleApp.Test
             string[] clArguments = Array.Empty<string>();
 
             //assert
-            Assert.ThrowsException<ArgumentException>(() => clArguments.GetSortedFileDataFromArguments());
+            Assert.IsFalse(clArguments.HaveValidArguments());
         }
 
         [TestMethod]
