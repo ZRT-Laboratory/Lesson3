@@ -62,7 +62,7 @@ namespace Project.ConsoleApp
         /// <param name="clArguments">command line arguments</param>
         /// <param name="argumentNameValue">the command line argument type being searched for. Example: -json</param>
         /// <returns>file path or empty string if can't find that argumentnamevalue</returns>
-        public static string GetFilePathFromArgument(this string[] clArguments, string argumentNameValue)
+        private static string GetFilePathFromArgument(this string[] clArguments, string argumentNameValue)
         {
             string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
                 .Skip(1)
