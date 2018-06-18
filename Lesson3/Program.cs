@@ -13,7 +13,7 @@ namespace Project.ConsoleApp
             {
                 string[] fileData = clArguments.GetJsonData().Concat(clArguments.GetXmlData()).ToArray();
 
-                List<string> parsedData = fileData.SortNullsToBottomAndReplace().ToList();
+                List<string> parsedData = fileData.SortNullsToBottomAndReplaceWithStringValue("No Value").ToList();
                 parsedData.ForEach(pd => Console.WriteLine($"{pd}"));
             }
         }      
