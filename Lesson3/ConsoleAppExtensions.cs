@@ -102,7 +102,7 @@ namespace Project.ConsoleApp
         /// <returns>collection with all nulls replaced with parameter</returns>
         public static IEnumerable<string> ReplaceNullsWithStringValue(this IEnumerable<string> items, string stringValue)
         {
-            return items.Select(li => li ?? stringValue);
+            return items.Select(i => i ?? stringValue);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Project.ConsoleApp
         /// <returns>sorted collection with nulls at the bottom of the collection</returns>
         public static IEnumerable<string> SortNullValuesToBottom(this IEnumerable<string> items)
         {
-            return items.OrderBy(fd => fd == null).ThenBy(fd => fd);
+            return items.OrderBy(i => i == null).ThenBy(i => i);
         }
     }
 }
