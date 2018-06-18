@@ -18,7 +18,7 @@ namespace Project.ConsoleApp
         /// <param name="fileData">merged data from command line argument files</param>
         /// <param name="nullReplacement">string literal to replace nulls with. Example: "No Value"/param>
         /// <returns>an array of sorted file data</returns>
-        public static string[] SortNullsToBottomAndReplaceWithStringValue(this string[] fileData, string nullReplacement)
+        public static IEnumerable<string> SortNullsToBottomAndReplaceWithStringValue(this IEnumerable<string> fileData, string nullReplacement)
         {
             //sort null values to the bottom then replace null values with string literal parameter
             var sortedData = fileData
