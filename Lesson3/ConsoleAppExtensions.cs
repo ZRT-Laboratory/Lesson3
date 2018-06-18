@@ -14,12 +14,12 @@ namespace Project.ConsoleApp
         /// <summary>
         /// SortNullsToBottomAndReplaceWithStringValue
         /// </summary>
-        /// <param name="fileData">merged data from command line argument files</param>
+        /// <param name="items">string collection of items to sort</param>
         /// <param name="nullReplacement">string literal to replace nulls with. Example: "No Value"/param>
-        /// <returns>an array of sorted file data with nulls at the bottom and replaced with string literal</returns>
-        public static IEnumerable<string> SortNullsToBottomAndReplaceWithStringValue(this IEnumerable<string> fileData, string nullReplacement)
+        /// <returns>an array of sorted items with nulls at the bottom and replaced with a string literal</returns>
+        public static string[] SortNullsToBottomAndReplaceWithStringValue(this IEnumerable<string> items, string nullReplacement)
         {
-            return fileData
+            return items
                 .SortNullValuesToBottom()
                 .ReplaceNullsWithStringValue(nullReplacement)
                 .ToArray();
