@@ -11,19 +11,19 @@ namespace Project.ConsoleApp
     {
         const string _json = "-json";
         const string _xml = "-xml";
-        const string _nullReplacement = "No Value";
 
         /// <summary>
-        /// SortNullsToBottomAndReplace
+        /// SortNullsToBottomAndReplaceWithStringValue
         /// </summary>
         /// <param name="fileData">merged data from command line argument files</param>
+        /// /// <param name="fileData">merged data from command line argument files</param>
         /// <returns>an array of sorted file data</returns>
-        public static string[] SortNullsToBottomAndReplace(this string[] fileData)
+        public static string[] SortNullsToBottomAndReplaceWithStringValue(this string[] fileData, string nullReplacement)
         {
-            //sort null values to the bottom then replace null values with string literal 'No Value'
+            //sort null values to the bottom then replace null values with string literal parameter
             var sortedData = fileData
                 .SortNullValuesToBottom()
-                .ReplaceNullsWithStringValue(_nullReplacement)
+                .ReplaceNullsWithStringValue(nullReplacement)
                 .ToArray();
 
             return sortedData;
