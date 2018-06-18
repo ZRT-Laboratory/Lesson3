@@ -14,11 +14,11 @@ namespace Project.ConsoleApp
         const string _nullReplacement = "No Value";
 
         /// <summary>
-        /// GetSortedFileData
+        /// SortNullsToBottomAndReplace
         /// </summary>
         /// <param name="fileData">merged data from command line argument files</param>
         /// <returns>an array of sorted file data</returns>
-        public static string[] SortWithNullsToBottom(this string[] fileData)
+        public static string[] SortNullsToBottomAndReplace(this string[] fileData)
         {
             //sort null values to the bottom then replace null values with string literal 'No Value'
             var sortedData = fileData
