@@ -19,9 +19,7 @@ namespace Project.ConsoleApp
         /// <returns>an array of sorted items with nulls at the bottom and replaced with a string literal</returns>
         public static IEnumerable<string> SortNullsToBottomAndReplaceWithStringValue(this IEnumerable<string> items, string nullReplacement)
         {
-            return items
-                .SortNullValuesToBottom()
-                .ReplaceNullsWithStringValue(nullReplacement);
+            return items.SortNullValuesToBottom().ReplaceNullsWithStringValue(nullReplacement);
         }
 
         /// <summary>
