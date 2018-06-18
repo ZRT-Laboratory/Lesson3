@@ -13,28 +13,41 @@ namespace Project.ConsoleApp
         const string _nullReplacement = "No Value";
 
         /// <summary>
-        /// GetSortedFileDataFromArguments
+        /// GetSortedFileData
         /// </summary>
-        /// <param name="clArguments">command line arguments</param>
+        /// <param name="fileData">merged data from command line argument files</param>
         /// <returns>an array of sorted file data</returns>
-        public static string[] GetSortedFileDataFromArguments(this string[] clArguments)
+        public static string[] SortWithNullsToBottom(this string[] fileData)
         {
-            //json data
-            string jsonFilePath = clArguments.GetFilePathFromArgument(_json);
-            string[] jsonParsed = jsonFilePath.GetFileData(null);
-
-            //xml data
-            string xmlFilePath = clArguments.GetFilePathFromArgument(_xml);
-            string[] xmlParsed = xmlFilePath.GetFileData(null);
-
-            //parse and merge the data, sort null values to the bottom then replace null values with string literal 'No Value'
-            var sortedData = jsonParsed
-                .Concat(xmlParsed)                                                              
+            //sort null values to the bottom then replace null values with string literal 'No Value'
+            var sortedData = fileData
                 .SortNullValuesToBottom()
                 .ReplaceNullsWithStringValue(_nullReplacement)
                 .ToArray();
 
             return sortedData;
+        }
+
+        /// <summary>
+        /// GetJsonData
+        /// </summary>
+        /// <param name="clArguments">command line arguments</param>
+        /// <returns></returns>
+        public static string[] GetJsonData(this string[] clArguments)
+        {
+            string jsonFilePath = clArguments.GetFilePathFromArgument(_json);
+            return jsonFilePath.GetFileData(null);
+        }
+
+        /// <summary>
+        /// GetXmlData
+        /// </summary>
+        /// <param name="clArguments">command line arguments</param>
+        /// <returns></returns>
+        public static string[] GetXmlData(this string[] clArguments)
+        {
+            string xmlFilePath = clArguments.GetFilePathFromArgument(_xml);
+            return xmlFilePath.GetFileData(null);
         }
 
         /// <summary>

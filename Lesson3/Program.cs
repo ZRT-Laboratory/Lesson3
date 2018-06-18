@@ -11,8 +11,10 @@ namespace Project.ConsoleApp
         {
             if (clArguments.HaveValidArguments())
             {
-                List<string> parsedData = clArguments.GetSortedFileDataFromArguments().ToList();
-                parsedData?.ForEach(pd => Console.WriteLine($"{pd}"));
+                string[] fileData = clArguments.GetJsonData().Concat(clArguments.GetXmlData()).ToArray();
+
+                List<string> parsedData = fileData.SortWithNullsToBottom().ToList();
+                parsedData.ForEach(pd => Console.WriteLine($"{pd}"));
             }
         }      
     }
