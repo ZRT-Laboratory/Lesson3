@@ -11,7 +11,7 @@ namespace Project.ConsoleApp
         {
             if (clArguments.HaveValidArguments())
             {
-                string[] fileData = clArguments.GetJsonData().Concat(clArguments.GetXmlData()).ToArray();
+                var fileData = clArguments.GetJsonData().Concat(clArguments.GetXmlData()).ToArray();
 
                 List<string> parsedData = fileData.SortNullsToBottomAndReplaceWithStringValue("No Value").ToList();
                 parsedData.ForEach(pd => Console.WriteLine($"{pd}"));

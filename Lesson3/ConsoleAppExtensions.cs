@@ -17,12 +17,11 @@ namespace Project.ConsoleApp
         /// <param name="items">string collection of items to sort</param>
         /// <param name="nullReplacement">string literal to replace nulls with. Example: "No Value"/param>
         /// <returns>an array of sorted items with nulls at the bottom and replaced with a string literal</returns>
-        public static string[] SortNullsToBottomAndReplaceWithStringValue(this IEnumerable<string> items, string nullReplacement)
+        public static IEnumerable<string> SortNullsToBottomAndReplaceWithStringValue(this IEnumerable<string> items, string nullReplacement)
         {
             return items
                 .SortNullValuesToBottom()
-                .ReplaceNullsWithStringValue(nullReplacement)
-                .ToArray();
+                .ReplaceNullsWithStringValue(nullReplacement);
         }
 
         /// <summary>
