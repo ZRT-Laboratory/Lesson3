@@ -48,7 +48,8 @@ namespace Project.ConsoleApp.Test
             string[] clArguments = new string[] { _json, "BadFile.txt", _xml, "BadFile.txt" };
 
             //assert
-            Assert.ThrowsException<FileNotFoundException>(() => clArguments.GetSortedFileDataFromArguments());
+            Assert.ThrowsException<FileNotFoundException>(() => clArguments.GetJsonData());
+            Assert.ThrowsException<FileNotFoundException>(() => clArguments.GetXmlData());
         }
 
         [TestMethod]
