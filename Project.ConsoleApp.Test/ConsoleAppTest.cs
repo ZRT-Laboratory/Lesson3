@@ -8,14 +8,11 @@ namespace Project.ConsoleApp.Test
     [TestClass]
     public class ConsoleAppTest
     {
-        const string _json = "-json";
-        const string _xml = "-xml";
-
         [TestMethod]
         public void Arguments_WithValidArguments()
         {
             //arrange
-            string[] clArguments = new string[] { _json, string.Empty, _xml, string.Empty };
+            string[] clArguments = new string[] { ConsoleAppExtensions.Json, string.Empty, ConsoleAppExtensions.Xml, string.Empty };
 
             //assert
             Assert.IsTrue(clArguments.HaveValidArguments());
@@ -45,7 +42,7 @@ namespace Project.ConsoleApp.Test
         public void Arguments_WithInvalidFileNames()
         {
             //arrange
-            string[] clArguments = new string[] { _json, "BadFile.txt", _xml, "BadFile.txt" };
+            string[] clArguments = new string[] { ConsoleAppExtensions.Json, "BadFile.txt", ConsoleAppExtensions.Xml, "BadFile.txt" };
 
             //assert
             Assert.ThrowsException<FileNotFoundException>(() => clArguments.GetJsonData());
