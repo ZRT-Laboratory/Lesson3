@@ -18,8 +18,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static string[] GetJsonData(this string[] clArguments)
         {
-            string jsonFilePath = clArguments.GetFilePathFromArgument(_json);
-            return jsonFilePath.GetFileData(null);
+            return clArguments.GetFilePathFromArgument(_json).GetFileData(null);
         }
 
         /// <summary>
@@ -29,8 +28,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static string[] GetXmlData(this string[] clArguments)
         {
-            string xmlFilePath = clArguments.GetFilePathFromArgument(_xml);
-            return xmlFilePath.GetFileData(null);
+            return clArguments.GetFilePathFromArgument(_xml).GetFileData(null);
         }
 
         /// <summary>
