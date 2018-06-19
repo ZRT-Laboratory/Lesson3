@@ -1,4 +1,5 @@
 ﻿using Project.Interface;
+using Project.Xml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,7 +30,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static string[] GetXmlData(this string[] clArguments)
         {
-            return clArguments.GetFilePathFromArgument(Xml).GetFileData(null);
+            return clArguments.GetFilePathFromArgument(Xml).GetFileData(new XmlParser());
         }
 
         /// <summary>

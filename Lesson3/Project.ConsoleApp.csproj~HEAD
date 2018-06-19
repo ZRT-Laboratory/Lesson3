@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -38,10 +38,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleAppExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,7 +51,7 @@
       <Project>{BA1AFD02-52EE-4446-A7D2-48E5748780D5}</Project>
       <Name>Project.Interface</Name>
     </ProjectReference>
-	<ProjectReference Include="..\Project_Xml\Project.Xml.csproj">
+    <ProjectReference Include="..\Project_Xml\Project.Xml.csproj">
       <Project>{b7a28822-43c6-45ec-9689-aeafeeb20906}</Project>
       <Name>Project.Xml</Name>
     </ProjectReference>
