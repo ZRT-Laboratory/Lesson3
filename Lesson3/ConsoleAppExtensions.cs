@@ -62,7 +62,6 @@ namespace Project.ConsoleApp
         {
             string filePath = clArguments.SkipWhile(a => string.Compare(a, argumentNameValue, true) != 0)
                 .Skip(1)
-                .DefaultIfEmpty(string.Empty)
                 .FirstOrDefault();
 
             if (!string.IsNullOrEmpty(filePath) && !File.Exists(filePath))
