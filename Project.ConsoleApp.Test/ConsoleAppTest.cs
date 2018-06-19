@@ -65,11 +65,8 @@ namespace Project.ConsoleApp.Test
                 Assert.AreEqual(testResults[i], expectedResults[i]);
             }
 
-            //assert - validate that test data has nulls         
-            Assert.IsTrue(testData.Any(ta => ta == null));
-
-            //assert - validate that null values returned as no value  
-            Assert.IsTrue(testResults.Any(tr => tr == "No Value"));
+            //assert - validate that we have 2 null No Values returned
+            Assert.IsTrue(testResults.Count(tr => tr == "No Value") == 2);
         }
     }
 }
