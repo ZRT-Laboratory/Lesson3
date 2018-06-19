@@ -9,8 +9,9 @@ namespace Project.ConsoleApp
 {
     public static class ConsoleAppExtensions
     {
-        const string _json = "-json";
-        const string _xml = "-xml";
+        //argument types
+        public static readonly string Json = "-json";
+        public static readonly string Xml = "-xml";
 
         /// <summary>
         /// GetJsonData
@@ -19,7 +20,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static string[] GetJsonData(this string[] clArguments)
         {
-            return clArguments.GetFilePathFromArgument(_json).GetFileData(null);
+            return clArguments.GetFilePathFromArgument(Json).GetFileData(null);
         }
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static string[] GetXmlData(this string[] clArguments)
         {
-            return clArguments.GetFilePathFromArgument(_xml).GetFileData(new XmlParser());
+            return clArguments.GetFilePathFromArgument(Xml).GetFileData(new XmlParser());
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static bool HaveValidArguments(this string[] clArguments)
         {
-            return clArguments.Any(a => string.Equals(a, _json) || string.Equals(a, _xml));
+            return clArguments.Any(a => string.Equals(a, Json) || string.Equals(a, Xml));
         }
 
         /// <summary>
