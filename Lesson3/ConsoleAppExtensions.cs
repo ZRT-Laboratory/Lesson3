@@ -1,4 +1,5 @@
 ﻿using Project.Interface;
+using Project.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static string[] GetJsonData(this string[] clArguments)
         {
-            return clArguments.GetFilePathFromArgument(Json).GetFileData(null);
+            return clArguments.GetFilePathFromArgument(Json).GetFileData(new JsonParser());
         }
 
         /// <summary>
