@@ -12,17 +12,6 @@ namespace Project.ConsoleApp
         const string _xml = "-xml";
 
         /// <summary>
-        /// SortNullsToBottomAndReplaceWithStringValue
-        /// </summary>
-        /// <param name="items">string collection of items to sort</param>
-        /// <param name="nullReplacement">string literal to replace nulls with. Example: "No Value"/param>
-        /// <returns>an array of sorted items with nulls at the bottom and replaced with a string literal</returns>
-        public static IEnumerable<string> SortNullsToBottomAndReplaceWithStringValue(this IEnumerable<string> items, string nullReplacement)
-        {
-            return items.SortNullValuesToBottom().ReplaceNullsWithStringValue(nullReplacement);
-        }
-
-        /// <summary>
         /// GetJsonData
         /// </summary>
         /// <param name="clArguments">command line arguments</param>
