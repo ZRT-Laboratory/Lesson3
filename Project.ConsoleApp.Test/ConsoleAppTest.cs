@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Project.ConsoleApp;
 
 namespace Project.ConsoleApp.Test
 {
@@ -60,7 +61,7 @@ namespace Project.ConsoleApp.Test
             string[] expectedResults = new string[] { "55", "92", "Naval Orange", "Red Apple", "No Value", "No Value" };
 
             //act
-            string[] testResults = testData.SortNullsToBottomAndReplaceWithStringValue("No Value").ToArray();
+            string[] testResults = testData.SortNullValuesToBottom().ReplaceNullsWithStringValue("No Value").ToArray();
 
             //assert - validate that the sorted test results match the sorted expected results
             for (int i = 0; i < expectedResults.Length; i++)
