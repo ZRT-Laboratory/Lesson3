@@ -19,7 +19,7 @@ namespace Project.ConsoleApp
         /// <returns></returns>
         public static string[] GetJsonData(this string[] clArguments)
         {
-            return clArguments.GetFilePathFromArgument(_json).GetFileData(null);
+            return clArguments.GetFilePathFromArgument(_json).GetFileData(new JsonParser());
         }
 
         /// <summary>
