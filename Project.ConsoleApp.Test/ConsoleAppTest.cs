@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Project.ConsoleApp;
 
 namespace Project.ConsoleApp.Test
 {
